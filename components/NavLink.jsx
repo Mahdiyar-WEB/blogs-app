@@ -8,7 +8,7 @@ const NavLink = ({ path, text }) => {
   return (
     <Link
       className={`font-medium ${
-        pathName === path ? "text-primary-900" : "text-secondary-400"
+        pathName === path ? "text-primary-900" : "text-secondary-400 hover:text-secondary-600"
       }`}
       href={path}
     >
