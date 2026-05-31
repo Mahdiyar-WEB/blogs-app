@@ -1,5 +1,6 @@
-import React from "react";
+import React, { Suspense } from "react";
 import CategoryList from "./_components/CategoryList";
+import CategoryListLoading from "./_components/CategoryListLoading";
 
 const Layout = ({ children }) => {
   return (
@@ -23,7 +24,9 @@ const Layout = ({ children }) => {
             </svg>
             <span>دسته بندی ها:</span>
           </h2>
-          <CategoryList />
+          <Suspense fallback={<CategoryListLoading />}>
+            <CategoryList />
+          </Suspense>
         </aside>
         <section className="col-span-12 border md:col-span-8 xl:col-span-9 ">
           <div>search bar</div>

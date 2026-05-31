@@ -1,18 +1,20 @@
 import NavLink from "@/components/NavLink";
+import callAPI from "app/utils/callAPI";
+
 import React from "react";
 
 const CategoryList = async () => {
-  const res = await fetch(`http://localhost:5000/api/category/list`);
+  const res = await callAPI.get("category/list");
   const {
     data: { categories = [{ title: "", slug: "" }] },
   } = await res.json();
   return (
     <ul className="text-md md:text-lg space-y-3 ms-3">
-      <NavLink path="/blogs" text="همه" />
+      <NavLink listOption path="/blogs" text="همه" />
       {categories.map(({ title, slug }, id) => {
         return (
           <li key={id}>
-            <NavLink path={`/blogs/category/${slug}`} text={title} />
+            <NavLink listOption path={`/blogs/category/${slug}`} text={title} />
           </li>
         );
       })}
