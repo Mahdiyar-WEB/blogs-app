@@ -4,8 +4,8 @@ import React from "react";
 const Header = () => {
   const user = false;
   return (
-    <header className="py-3 shadow-md border-b border-secondary-300 sticky transition-all duration-200 top-0 left-0 w-full bg-inherit z-10 mb-10">
-      <nav className="mx-10 2xl:mx-auto flex xl:max-w-screen-xl justify-between">
+    <header className="py-3 shadow-md border border-secondary-200 rounded-md w-11/12 mx-auto 2xl:max-w-screen-2xl sticky top-3 left-0 bg-inherit z-10 mb-10">
+      <nav className="mx-3 lg:mx-10 flex justify-between">
         <ul className="flex gap-10">
           <li>
             <NavLink path="/" text="خانه" />
