@@ -4,6 +4,11 @@ import callAPI from "app/utils/callAPI";
 import React from "react";
 
 const CategoryList = async () => {
+  await new Promise((res) =>
+    setTimeout(() => {
+      res();
+    }, 3000)
+  );
   const res = await callAPI.get("category/list");
   const {
     data: { categories = [{ title: "", slug: "" }] },

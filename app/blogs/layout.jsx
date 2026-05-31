@@ -28,10 +28,10 @@ const Layout = ({ children }) => {
             <CategoryList />
           </Suspense>
         </aside>
-        <section className="col-span-12 border md:col-span-8 xl:col-span-9 ">
-          <div>search bar</div>
-          {children}
-          <div>pagination</div>
+        <section className="col-span-12 md:col-span-8 xl:col-span-9 ">
+          <div className="mb-5">search bar</div>
+          <Suspense fallback={<CategoryListLoading/>}>{children}</Suspense>
+          <div className="mt-5">pagination</div>
         </section>
       </div>
     </main>
