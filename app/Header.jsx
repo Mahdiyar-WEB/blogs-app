@@ -4,7 +4,7 @@ import React from "react";
 const Header = () => {
   const user = false;
   return (
-    <header className="py-3 shadow-md border-b border-secondary-300 sticky transition-all duration-200 top-0 left-0 w-full z-10 mb-10">
+    <header className="py-3 shadow-md border-b border-secondary-300 sticky transition-all duration-200 top-0 left-0 w-full bg-inherit z-10 mb-10">
       <nav className="mx-10 2xl:mx-auto flex xl:max-w-screen-xl justify-between">
         <ul className="flex gap-10">
           <li>
