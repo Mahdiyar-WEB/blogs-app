@@ -3,13 +3,15 @@ import Link from "next/link";
 import React from "react";
 import { usePathname } from "next/navigation";
 
-const NavLink = ({ path, text }) => {
+const NavLink = ({ path, text, className }) => {
   const pathName = usePathname();
   return (
     <Link
       className={`font-medium transition-all duration-200 ease-out ${
-        pathName === path ? "text-primary-900" : "text-secondary-400 hover:text-secondary-900"
-      }`}
+        pathName === path
+          ? "text-primary-900"
+          : "text-secondary-400 hover:text-secondary-900"
+      } ${className}`}
       href={path}
     >
       {text}
