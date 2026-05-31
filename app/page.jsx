@@ -1,11 +1,15 @@
 import Button from "@/components/Button";
 import Link from "next/link";
 
+export const metadata = {
+  title: 'خانه | بلاگیتو',
+}
+
 export default function Home() {
   return (
-    <main className="my-20">
+    <main className="my-20 container xl:max-w-screen-xl">
       <h1 className="text-center text-2xl md:text-5xl font-bold text-secondary-800">
-        اپلیکیشن مدیریت بلاگ
+        بلاگیتو: خوش اومدی 👋
       </h1>
       <p className="text-center mt-10 text-secondary-500 text-lg">
         جایی که قراره بتونی یک اپلیکیشن بلاگ رو مدیریت کنی!
