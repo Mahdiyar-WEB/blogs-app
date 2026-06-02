@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
-import CategoryList from "./_components/CategoryList";
-import CategoryListLoading from "./_components/CategoryListLoading";
+import CategoryList from "../_components/CategoryList";
+import CategoryListLoading from "../_components/CategoryListLoading";
 
 const Layout = ({ children }) => {
   return (
