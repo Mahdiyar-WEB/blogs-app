@@ -1,5 +1,5 @@
-import ButtonIcon from "@/components/ButtonIcon";
-import toPersianDigits from "@/utils/toPersianDigits";
+import ButtonIcon from "components/ButtonIcon";
+import toPersianDigits from "utils/toPersianDigits";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";

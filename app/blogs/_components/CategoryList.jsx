@@ -1,5 +1,5 @@
-import NavLink from "@/components/NavLink";
-import callAPI from "utils/callAPI";
+import NavLink from "components/NavLink";
+import callAPI from "services/callAPI";
 
 import React from "react";
 

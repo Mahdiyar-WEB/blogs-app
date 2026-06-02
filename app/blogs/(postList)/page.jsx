@@ -1,4 +1,4 @@
-import callAPI from "utils/callAPI";
+import callAPI from "services/callAPI";
 import React from "react";
 import Post from "../_components/Post";
 
