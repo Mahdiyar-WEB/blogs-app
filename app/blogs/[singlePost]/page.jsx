@@ -1,12 +1,19 @@
-import callAPI from "@/utils/callAPI";
 import { notFound } from "next/navigation";
 import React from "react";
+import postServices from "services/postServices";
+
+export async function generateMetadata({ params }) {
+  const { singlePost } = await params;
+  const post = await postServices.getPostBySlug(singlePost);
+  return {
+    title: post.title,
+    description: post.briefText,
+  };
+}
 
 const SinglePost = async ({ params }) => {
   const { singlePost } = await params;
-  const res = await callAPI.get(`/post/slug/${singlePost}`);
-  const { data = {} } = await res.json();
-  const { post } = data || null;
+  const post = await postServices.getPostBySlug(singlePost);
 
   if (!post) notFound();
   console.log("🚀 ~ SinglePost ~ data:", post);
