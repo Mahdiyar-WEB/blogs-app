@@ -3,7 +3,7 @@ const nextConfig = {
   /* config options here */
   reactCompiler: true,
   images: {
-    remotePatterns: [new URL('http://localhost:5000/uploads/coverImage/**')],
+    remotePatterns: [new URL('http://localhost:5000/uploads/**')],
     dangerouslyAllowLocalIP: true
   },
 };
