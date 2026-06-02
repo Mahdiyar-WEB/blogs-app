@@ -1,7 +1,6 @@
 import NavLink from "components/NavLink";
-import callAPI from "services/callAPI";
-
 import React from "react";
+import categoryServices from "services/categoryServices";
 
 const CategoryList = async () => {
   await new Promise((res) =>
@@ -9,10 +8,7 @@ const CategoryList = async () => {
       res();
     }, 3000)
   );
-  const res = await callAPI.get("category/list");
-  const {
-    data: { categories = [{ title: "", slug: "" }] },
-  } = await res.json();
+  const categories = await categoryServices.getAllCategories();
   return (
     <ul className="text-md md:text-lg space-y-3 ms-3">
       <NavLink listOption path="/blogs" text="همه" />
