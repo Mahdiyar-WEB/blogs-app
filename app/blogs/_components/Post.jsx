@@ -16,18 +16,19 @@ const Post = ({
   const slugURL = `/blogs/${slug}`;
   return (
     <div className="col-span-12 md:col-span-6 lg:col-span-4 border rounded-lg shadow-md ">
-      <div className="relative aspect-video h-56 rounded-t-lg overflow-hidden">
-        <Link href={slugURL}>
-          <Image
-            fill
-            quality={75}
-            alt={title}
-            sizes="100%"
-            src={coverImageUrl}
-            className="object-cover object-center hover:scale-110 transition-all duration-200 ease-out"
-          />
-        </Link>
-      </div>
+      <Link
+        href={slugURL}
+        className="relative aspect-video h-56 rounded-t-lg overflow-hidden"
+      >
+        <Image
+          fill
+          quality={75}
+          alt={title}
+          sizes="100%"
+          src={coverImageUrl}
+          className="object-cover object-center hover:scale-110 transition-all duration-200 ease-out"
+        />
+      </Link>
       {/* body */}
       <div className="mt-5 pb-4 px-3">
         {/* title */}
