@@ -8,7 +8,8 @@ export async function generateStaticParams() {
   return posts.slice(0, 3).map((post) => ({ slug: post.slug }));
 }
 
-export async function generateMetadata({ params: { slug } }) {
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
   const post = (await postServices.getPostBySlug(slug)) || {
     title: "",
     briefText: "",
