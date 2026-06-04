@@ -1,7 +1,12 @@
-import { cacheLife, cacheTag } from "next/cache";
+import { cacheLife } from "next/cache";
 import { notFound } from "next/navigation";
-import React, { Suspense } from "react";
 import postServices from "services/postServices";
+
+async function getCachedPost(slug) {
+  "use cache";
+  cacheLife("hours");
+  return await postServices.getPostBySlug(slug);
+}
 
 export async function generateStaticParams() {
   const posts = await postServices.getAllPosts();
@@ -10,19 +15,17 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const post = (await postServices.getPostBySlug(slug)) || {
-    title: "",
-    briefText: "",
-  };
+  const post = (await getCachedPost(slug)) || { title: "", briefText: "" };
   return { title: post.title, description: post.briefText };
 }
 
 const SinglePost = async ({ params }) => {
   const { slug } = await params;
-  const post = await postServices.getPostBySlug(slug);
-
+  const post = await getCachedPost(slug);
   if (!post) notFound();
-  return <>{post.title}</>;
+  return (
+    <main className="w-11/12 mx-auto 2xl:max-w-screen-2xl">{post.title}</main>
+  );
 };
 
 export default SinglePost;
