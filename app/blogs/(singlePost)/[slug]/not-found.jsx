@@ -6,7 +6,7 @@ const NotFound = () => {
   return (
     <main className="my-20 container">
       <h1 className="text-center text-xl md:text-3xl font-bold text-secondary-800">
-        پست ای که دنبالش بودی پیدا نشد! 😢
+        پستی که دنبالش بودی پیدا نشد! 😢
       </h1>
       <Link
         href="/blogs"
