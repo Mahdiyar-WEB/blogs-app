@@ -77,7 +77,16 @@
     @apply flex flex-col gap-y-8 bg-secondary-0 p-4 rounded-xl w-full max-w-lg;
   }
   .textField__input {
-    @apply w-full py-3 px-4 rounded-xl text-secondary-900 border border-secondary-100 bg-secondary-100 hover:border-primary-500 focus:border-primary-500 focus:bg-secondary-0 transition-all duration-300 ease-out focus:shadow-lg focus:shadow-primary-200 dark:focus:shadow-secondary-200;
+    @apply text-secondary-900 w-full py-3 px-4 rounded-xl border border-secondary-300 bg-secondary-0 hover:border-primary-500 focus:border-primary-500 transition-all duration-300 ease-out focus:shadow-sm focus:shadow-primary-100  dark:focus:shadow-secondary-200;
+  }
+  .textField__label {
+    @apply block text-sm font-medium mb-1.5 text-secondary-600;
+  }
+  .textField__icon {
+    @apply absolute inset-y-0 left-3 flex items-center pointer-events-none text-secondary-400;
+  }
+  .textField__icon--btn {
+    @apply absolute inset-y-0 left-3 flex items-center text-secondary-400 transition-colors hover:text-primary-900;
   }
   .btn {
     @apply px-3 py-3 rounded-xl transition-all duration-300;
@@ -135,12 +144,70 @@
       transform: rotate(1turn);
     }
   }
+
+  /* ───────── Auth page ───────── */
+
+  .auth-card {
+    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0, 0, 0, 0.04);
+    @apply bg-secondary-0 h-fit rounded-2xl overflow-hidden border max-w-xl w-11/12 mx-auto;
+  }
+
+  /* tab switcher */
+  .auth-tabs {
+    @apply p-1.5 bg-secondary-100;
+  }
+
+  .auth-tab {
+    @apply flex-1 py-2.5 rounded-xl text-sm transition-all duration-200;
+  }
+
+  .auth-tab--active {
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+    @apply bg-secondary-0 text-secondary-900 font-semibold;
+  }
+
+  .auth-tab--inactive {
+    @apply text-secondary-400;
+  }
+
+
+
+  /* submit button */
+  .auth-submit {
+    transition: background 0.18s, transform 0.1s, box-shadow 0.18s;
+    @apply btn w-full text-white font-semibold bg-primary-900 hover:bg-primary-700;
+  }
+
+  .auth-submit:hover:not(:disabled) {
+    box-shadow: 0 4px 16px rgba(var(--color-primary-900), 0.28);
+  }
+
+  .auth-submit:active:not(:disabled) {
+    transform: scale(0.985);
+  }
+
+
+
+  /* slide-down animation for conditional fields */
+  .slide-down-enter {
+    animation: slideDown 0.28s ease forwards;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
 * {
   box-sizing: border-box;
   scroll-behavior: smooth;
-  /* border: none; */
   outline: none;
   padding: 0;
   margin: 0;
@@ -168,16 +235,15 @@ button:disabled {
   box-shadow: none;
 }
 
-/* inupt number */
+/* input number */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  /* display: none; <- Crashes Chrome on hover */
   -webkit-appearance: none;
-  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  margin: 0;
 }
 
 input[type="number"] {
-  -moz-appearance: textfield; /* Firefox */
+  -moz-appearance: textfield;
 }
 
 /* TABLE */
@@ -213,7 +279,7 @@ table td {
   color: rgb(var(--color-secondary-600));
 }
 
-/* comment  indicator */
+/* comment indicator */
 
 .post-comments .post-comments__answer {
   position: relative;
