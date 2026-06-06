@@ -79,6 +79,9 @@
   .textField__input {
     @apply text-secondary-900 w-full py-3 px-4 rounded-xl border border-secondary-300 bg-secondary-0 hover:border-primary-500 focus:border-primary-500 transition-all duration-300 ease-out focus:shadow-sm focus:shadow-primary-100  dark:focus:shadow-secondary-200;
   }
+  .textField__input_error {
+    @apply text-secondary-900 w-full py-3 px-4 rounded-xl border border-red-500 bg-secondary-0 transition-all duration-300 ease-out focus:shadow-sm focus:shadow-primary-100  dark:focus:shadow-secondary-200;
+  }
   .textField__label {
     @apply block text-sm font-medium mb-1.5 text-secondary-600;
   }
@@ -168,22 +171,6 @@
 
   .auth-tab--inactive {
     @apply text-secondary-400;
-  }
-
-
-
-  /* submit button */
-  .auth-submit {
-    transition: background 0.18s, transform 0.1s, box-shadow 0.18s;
-    @apply btn w-full text-white font-semibold bg-primary-900 hover:bg-primary-700;
-  }
-
-  .auth-submit:hover:not(:disabled) {
-    box-shadow: 0 4px 16px rgba(var(--color-primary-900), 0.28);
-  }
-
-  .auth-submit:active:not(:disabled) {
-    transform: scale(0.985);
   }
 
 
