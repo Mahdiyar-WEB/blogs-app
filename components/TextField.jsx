@@ -1,17 +1,19 @@
+"use client";
+
 function TextField({
   type = "text",
   label,
   name,
-  value,
-  dir = "rtl",
-  onChange,
-  required = false,
-  className,
+  dir = "ltr",
   placeholder,
-  haveIcon = false,
   icon,
   customIcon,
+  register,
+  hasError = false,
+  ...rest
 }) {
+  const hasLeftIcon = !!icon || !!customIcon;
+
   return (
     <div>
       <label className="textField__label">{label}</label>
@@ -19,17 +21,13 @@ function TextField({
         <input
           type={type}
           name={name}
-          value={value}
-          onChange={onChange}
-          placeholder={placeholder}
-          required={required}
           dir={dir}
-          className={`textField__input pl-10 ${className ?? ""}`}
+          placeholder={placeholder}
+          className={`${hasError ? "textField__input_error" : "textField__input"} ${hasLeftIcon ? "pl-10" : ""}`}
+          {...register(name)}
+          {...rest}
         />
-        {haveIcon && !customIcon && (
-          <span className="textField__icon">{icon ?? "icon"}</span>
-        )}
-        {customIcon}
+        {customIcon ?? (icon && <span className="textField__icon">{icon}</span>)}
       </div>
     </div>
   );

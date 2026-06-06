@@ -197,7 +197,6 @@ export default function AuthForm() {
                   name="name"
                   dir="rtl"
                   placeholder="مهدیار مروی"
-                  haveIcon
                   icon={<UserIcon />}
                   register={register}
                   hasError={!!errors.name}
@@ -213,7 +212,6 @@ export default function AuthForm() {
                 name="email"
                 type="email"
                 placeholder="test@example.com"
-                haveIcon
                 icon={<EmailIcon />}
                 register={register}
                 hasError={!!errors.email}
