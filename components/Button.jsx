@@ -8,6 +8,7 @@ const buttonVariants = {
 };
 
 const Button = ({
+  type = "button",
   onClick,
   children,
   className,
@@ -16,6 +17,7 @@ const Button = ({
 }) => {
   return (
     <button
+      type={type}
       onClick={onClick}
       className={`btn ${buttonVariants[variant]} ${className}`}
       {...rest}
