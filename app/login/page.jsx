@@ -148,11 +148,13 @@ export default function AuthForm() {
   const isSignup = mode === "signup";
 
   const onSubmit = async ({ email = "", name = "", password = "" }) => {
-    const inputs =
-      mode === "login" ? { email, password } : { email, password, name };
+    const isLogin = mode === "login";
+    const inputs = isLogin ? { email, password } : { email, password, name };
 
     try {
-      const { data } = await authentication.signUp(inputs);
+      const { data } = await authentication[isLogin ? "signIn" : "signUp"](
+        inputs
+      );
       toast.success(data.message);
     } catch (error) {
       toast.error(error.message);
