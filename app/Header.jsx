@@ -17,7 +17,7 @@ const Header = () => {
         {user ? (
           <NavLink path="/profile" text="پروفایل" />
         ) : (
-          <NavLink path="/login" text="ورود" />
+          <NavLink path="/login" text="ورود/ ثبت‌نام" />
         )}
       </nav>
     </header>
