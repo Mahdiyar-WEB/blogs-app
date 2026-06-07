@@ -5,8 +5,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import authentication from "services/authentication";
-import toast from "react-hot-toast";
+import { useUser } from "context/UserContext";
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
 const EyeIcon = () => (
@@ -135,11 +134,12 @@ export default function AuthForm() {
   const [mode, setMode] = useState("login");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { signUp, signIn, isLoading } = useUser();
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isLoading },
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(schemas[mode]),
     mode: "onTouched",
@@ -150,14 +150,10 @@ export default function AuthForm() {
   const onSubmit = async ({ email = "", name = "", password = "" }) => {
     const isLogin = mode === "login";
     const inputs = isLogin ? { email, password } : { email, password, name };
-
-    try {
-      const { data } = await authentication[isLogin ? "signIn" : "signUp"](
-        inputs
-      );
-      toast.success(data.message);
-    } catch (error) {
-      toast.error(error.message);
+    if (isLogin) {
+      await signIn(inputs);
+    } else {
+      await signUp(inputs);
     }
   };
 
