@@ -1,6 +1,7 @@
 import "styles/globals.css";
 import vazirFont from "constants/localFont";
 import Header from "./Header";
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: {
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fa" dir="rtl" data-scroll-behavior="smooth">
       <body className={`${vazirFont.variable} font-sans min-h-screen relative`}>
+        <Toaster/>
         <Header />
         {children}
       </body>
