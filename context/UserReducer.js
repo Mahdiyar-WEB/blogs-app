@@ -1,3 +1,5 @@
+import error from "next/dist/api/error";
+
 export const initialState = {
   user: null,
   isAuthenticated: false,
@@ -18,26 +20,35 @@ const reducer = (state, action) => {
         ...state,
         error: action.payload,
         loading: false,
+        isAuthenticated: false,
       };
     }
     case "signUp": {
       return {
+        ...state,
         user: action.payload,
         isAuthenticated: true,
-        error: null,
         loading: false,
       };
     }
     case "signIn": {
       return {
+        ...state,
         user: action.payload,
         isAuthenticated: true,
-        error: null,
+        loading: false,
+      };
+    }
+    case "getUserData": {
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.payload,
         loading: false,
       };
     }
     default:
-      break;
+      return state;
   }
 };
 
