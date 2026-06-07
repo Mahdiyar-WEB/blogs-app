@@ -5,6 +5,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import authentication from "services/authentication";
+import toast from "react-hot-toast";
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
 const EyeIcon = () => (
@@ -108,7 +110,7 @@ const sharedFields = {
   email: yup.string().email("ایمیل نامعتبر است").required("ایمیل را وارد کنید"),
   password: yup
     .string()
-    .min(5, "حداقل ۵ حرف وارد کنید")
+    .min(8, "حداقل ۸ حرف وارد کنید")
     .max(20, "تعداد حروف زیاد است")
     .required("رمز خود را وارد کنید"),
 };
@@ -145,8 +147,16 @@ export default function AuthForm() {
 
   const isSignup = mode === "signup";
 
-  const onSubmit = async (data) => {
-    console.log("🚀 ~ onSubmit ~ data:", data);
+  const onSubmit = async ({ email = "", name = "", password = "" }) => {
+    const inputs =
+      mode === "login" ? { email, password } : { email, password, name };
+
+    try {
+      const { data } = await authentication.signUp(inputs);
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   const switchMode = (newMode) => {
