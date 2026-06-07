@@ -3,51 +3,9 @@ import React, { createContext, useContext, useReducer } from "react";
 import authentication from "services/authentication";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-
-const initialState = {
-  user: null,
-  isAuthenticated: false,
-  loading: true,
-  error: null,
-};
+import reducer, { initialState } from "./UserReducer";
 
 const UserContext = createContext();
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "loading": {
-      return {
-        ...state,
-        loading: true,
-      };
-    }
-    case "rejected": {
-      return {
-        ...state,
-        error: action.payload,
-        loading: false,
-      };
-    }
-    case "signUp": {
-      return {
-        user: action.payload,
-        isAuthenticated: true,
-        error: null,
-        loading: false,
-      };
-    }
-    case "signIn": {
-      return {
-        user: action.payload,
-        isAuthenticated: true,
-        error: null,
-        loading: false,
-      };
-    }
-    default:
-      break;
-  }
-};
 
 const UserProvider = ({ children }) => {
   const router = useRouter();
