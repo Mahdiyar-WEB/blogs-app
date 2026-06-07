@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext, useReducer } from "react";
+import React, { createContext, useContext, useEffect, useReducer } from "react";
 import authentication from "services/authentication";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -42,11 +42,39 @@ const UserProvider = ({ children }) => {
     }
   };
 
+  const getUserData = async () => {
+    dispatch({ type: "loading" });
+    try {
+      const { data } = await authentication.getUser();
+      dispatch({ type: "getUserData", payload: data.user });
+    } catch (error) {
+      const { message } = error;
+      dispatch({ type: "rejected", payload: message });
+      toast.error(message);
+    }
+  };
+
   const logOut = () => {};
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getUserData();
+    };
+    fetchData();
+  }, []);
 
   return (
     <UserContext.Provider
-      value={{ user, isAuthenticated, loading, error, signIn, signUp, logOut }}
+      value={{
+        user,
+        isAuthenticated,
+        loading,
+        error,
+        signIn,
+        signUp,
+        logOut,
+        getUserData,
+      }}
     >
       {children}
     </UserContext.Provider>
