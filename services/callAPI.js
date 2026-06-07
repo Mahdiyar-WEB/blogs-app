@@ -1,6 +1,8 @@
 const callAPI = {
   get: async (endPoint) => {
-    return await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/${endPoint}`);
+    return await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/${endPoint}`, {
+      credentials: "include",
+    });
   },
   post: async (endPoint, inputs) => {
     const response = await fetch(
