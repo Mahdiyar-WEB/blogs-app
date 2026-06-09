@@ -5,7 +5,7 @@ const categoryServices = {
     const res = await callAPI.get("category/list");
     const {
       data: { categories = [{ title: "", slug: "" }] },
-    } = await res.json();
+    } = res
     return categories;
   },
 };
