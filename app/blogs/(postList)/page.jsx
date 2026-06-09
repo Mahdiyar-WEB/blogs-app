@@ -8,7 +8,6 @@ export const metadata = {
 
 const Blogs = async () => {
   const posts = await postServices.getAllPosts();
-  console.log("🚀 ~ Blogs ~ data:", posts);
   return (
     <div className="grid grid-cols-12 gap-5">
       {posts.map((post, id) => {
