@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
   return (
     <main className="w-11/12 mx-auto 2xl:max-w-screen-2xl">
       <div className="grid grid-cols-12 md:gap-x-8">
-        <aside className="col-span-12 md:col-span-4 xl:col-span-3 border p-5 rounded-xl shadow-md ">
+        <aside className="col-span-12 md:col-span-4 xl:col-span-3 border p-5 rounded-xl shadow-md h-fit">
           <h2 className="text-secondary-600 text-md xl:text-xl mb-5 font-semibold flex items-center gap-x-1">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +30,7 @@ const Layout = ({ children }) => {
         </aside>
         <section className="col-span-12 md:col-span-8 xl:col-span-9 ">
           <div className="mb-5">search bar</div>
-          <Suspense fallback={<CategoryListLoading/>}>{children}</Suspense>
+          <Suspense fallback={<CategoryListLoading />}>{children}</Suspense>
           <div className="mt-5">pagination</div>
         </section>
       </div>
