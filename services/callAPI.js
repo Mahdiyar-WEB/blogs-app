@@ -2,10 +2,35 @@ const callAPI = {
   get: async (endPoint) => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/${endPoint}`,
-      {
-        credentials: "include",
-      },
+      { credentials: "include" },
     );
+
+    if (response.status === 401 && endPoint === "user/profile") {
+      try {
+        const refreshRes = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/user/refresh-token`,
+          { credentials: "include" },
+        );
+
+        if (!refreshRes.ok) throw new Error("refresh failed");
+
+        const retryResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/${endPoint}`,
+          { credentials: "include" },
+        );
+
+        const retryData = await retryResponse.json();
+        if (!retryResponse.ok)
+          throw new Error(
+            retryData?.message ?? `HTTP error! status: ${retryResponse.status}`,
+          );
+
+        return retryData;
+      } catch (error) {
+        throw new Error("session expired");
+      }
+    }
+
     const data = await response.json();
     if (!response.ok)
       throw new Error(
@@ -24,12 +49,12 @@ const callAPI = {
         },
         body: JSON.stringify(inputs),
         credentials: "include",
-      }
+      },
     );
     const data = await response.json();
     if (!response.ok)
       throw new Error(
-        data?.message ?? `HTTP error! status: ${response.status}`
+        data?.message ?? `HTTP error! status: ${response.status}`,
       );
 
     return data;
