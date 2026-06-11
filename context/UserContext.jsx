@@ -11,7 +11,7 @@ const UserProvider = ({ children }) => {
   const router = useRouter();
   const [{ user, isAuthenticated, loading, error }, dispatch] = useReducer(
     reducer,
-    initialState
+    initialState,
   );
 
   const signIn = async (inputs) => {
@@ -50,7 +50,6 @@ const UserProvider = ({ children }) => {
     } catch (error) {
       const { message } = error;
       dispatch({ type: "rejected", payload: message });
-      toast.error(message);
     }
   };
 
