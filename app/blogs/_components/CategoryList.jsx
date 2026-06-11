@@ -3,11 +3,6 @@ import React from "react";
 import categoryServices from "services/categoryServices";
 
 const CategoryList = async () => {
-  await new Promise((res) =>
-    setTimeout(() => {
-      res();
-    }, 3000)
-  );
   const categories = await categoryServices.getAllCategories();
   return (
     <ul className="text-md md:text-lg space-y-3 ms-3">
