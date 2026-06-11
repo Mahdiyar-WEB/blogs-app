@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import CategoryList from "../_components/CategoryList";
 import CategoryListLoading from "../_components/CategoryListLoading";
+import PostsLoading from "../_components/PostsLoading";
 
 const Layout = ({ children }) => {
   return (
@@ -28,9 +29,9 @@ const Layout = ({ children }) => {
             <CategoryList />
           </Suspense>
         </aside>
-        <section className="col-span-12 md:col-span-8 xl:col-span-9 ">
+        <section className="col-span-12 md:col-span-8 xl:col-span-9">
           <div className="mb-5">search bar</div>
-          <Suspense fallback={<CategoryListLoading />}>{children}</Suspense>
+          <Suspense fallback={<PostsLoading />}>{children}</Suspense>
           <div className="mt-5">pagination</div>
         </section>
       </div>
