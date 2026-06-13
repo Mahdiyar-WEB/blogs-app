@@ -3,9 +3,10 @@ import ButtonIcon from "components/ButtonIcon";
 import toPersianDigits from "utils/toPersianDigits";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import postServices from "api/postServices";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const Post = ({
   title,
@@ -18,13 +19,12 @@ const Post = ({
   _id,
   isLiked,
 }) => {
-  const [likeValue, setLikeValue] = useState(isLiked);
-  const [bookmarkValue, setBookmarkValue] = useState(isBookmarked);
+  const router = useRouter();
 
   const likePostHandler = async (id) => {
     try {
       const { data } = await postServices.likePost(id);
-      setLikeValue(!likeValue);
+      router.refresh();
       toast.success(data.message);
     } catch (error) {
       toast.error(error?.message);
@@ -34,7 +34,7 @@ const Post = ({
   const bookmarkPostHandler = async (id) => {
     try {
       const { data } = await postServices.bookmarkPost(id);
-      setBookmarkValue(!bookmarkValue);
+      router.refresh();
       toast.success(data.message);
     } catch (error) {
       toast.error(error?.message);
@@ -143,7 +143,7 @@ const Post = ({
             </ButtonIcon>
             {/* like */}
             <ButtonIcon variant="red" onClick={() => likePostHandler(_id)}>
-              {likeValue ? (
+              {isLiked ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -174,7 +174,7 @@ const Post = ({
               variant="primary"
               onClick={() => bookmarkPostHandler(_id)}
             >
-              {bookmarkValue ? (
+              {isBookmarked ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
