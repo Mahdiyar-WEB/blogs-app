@@ -1,6 +1,6 @@
 import NavLink from "components/NavLink";
 import React from "react";
-import categoryServices from "services/categoryServices";
+import categoryServices from "api/categoryServices";
 
 const CategoryList = async () => {
   const categories = await categoryServices.getAllCategories();

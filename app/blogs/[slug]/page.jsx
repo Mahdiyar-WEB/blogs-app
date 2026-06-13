@@ -1,6 +1,6 @@
 import { cacheLife } from "next/cache";
 import { notFound } from "next/navigation";
-import postServices from "services/postServices";
+import postServices from "api/postServices";
 
 async function getCachedPost(slug) {
   "use cache";

@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, useContext, useEffect, useReducer } from "react";
-import authentication from "services/authentication";
+import authentication from "api/authentication";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import reducer, { initialState } from "./UserReducer";
