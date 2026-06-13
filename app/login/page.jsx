@@ -134,12 +134,12 @@ export default function AuthForm() {
   const [mode, setMode] = useState("login");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const { signUp, signIn, isLoading } = useUser();
+  const { signUp, signIn } = useUser();
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isLoading },
   } = useForm({
     resolver: yupResolver(schemas[mode]),
     mode: "onTouched",
