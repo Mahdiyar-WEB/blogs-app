@@ -6,12 +6,14 @@ const postServices = {
     const { post } = data || null;
     return post;
   },
-
   getAllPosts: async () => {
     const {
       data: { posts },
     } = await callAPI.get("post/list");
     return posts;
+  },
+  likePost: async (id) => {
+    return await callAPI.post(`post/like/${id}`);
   },
 };
 

@@ -1,8 +1,11 @@
+"use client";
 import ButtonIcon from "components/ButtonIcon";
 import toPersianDigits from "utils/toPersianDigits";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import postServices from "services/postServices";
+import toast from "react-hot-toast";
 
 const Post = ({
   title,
@@ -12,7 +15,18 @@ const Post = ({
   readingTime,
   commentsCount,
   isBookmarked,
+  _id,
 }) => {
+
+  const likePostHandler = async (id) => {
+    try {
+      const { data } = await postServices.likePost(id);
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error?.message);
+    }
+  };
+  
   const slugURL = `/blogs/${slug}`;
   return (
     <div className="col-span-12 md:col-span-6 lg:col-span-4 border rounded-lg shadow-md ">
@@ -113,7 +127,7 @@ const Post = ({
               <span>{toPersianDigits(commentsCount)}</span>
             </ButtonIcon>
             {/* like */}
-            <ButtonIcon variant="red">
+            <ButtonIcon variant="red" onClick={() => likePostHandler(_id)}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
