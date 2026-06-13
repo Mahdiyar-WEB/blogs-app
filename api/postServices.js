@@ -16,6 +16,9 @@ const postServices = {
   likePost: async (id) => {
     return await callAPI.post(`post/like/${id}`);
   },
+  bookmarkPost: async (id) => {
+    return await callAPI.post(`post/bookmark/${id}`);
+  },
 };
 
 export default postServices;
