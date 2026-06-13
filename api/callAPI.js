@@ -1,8 +1,14 @@
 const callAPI = {
-  get: async (endPoint) => {
+  get: async (endPoint, cookies) => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/${endPoint}`,
-      { credentials: "include" },
+      {
+        credentials: "include",
+        method: "GET",
+        headers: {
+          Cookie: cookies || "",
+        },
+      },
     );
 
     if (response.status === 401 && endPoint === "user/profile") {

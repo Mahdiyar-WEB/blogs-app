@@ -1,4 +1,4 @@
-const { default: callAPI } = require("services/callAPI");
+const { default: callAPI } = require("api/callAPI");
 
 const categoryServices = {
   getAllCategories: async () => {

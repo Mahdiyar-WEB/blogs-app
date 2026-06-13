@@ -1,4 +1,5 @@
-import callAPI from "services/callAPI";
+import { cookies } from "next/navigation";
+import callAPI from "api/callAPI";
 
 const postServices = {
   getPostBySlug: async (postSlug) => {
@@ -6,10 +7,10 @@ const postServices = {
     const { post } = data || null;
     return post;
   },
-  getAllPosts: async () => {
+  getAllPosts: async (cookies) => {
     const {
       data: { posts },
-    } = await callAPI.get("post/list");
+    } = await callAPI.get("post/list", cookies);
     return posts;
   },
   likePost: async (id) => {

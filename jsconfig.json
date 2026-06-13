@@ -7,7 +7,7 @@
       "public/*": ["public/*"],
       "hooks/*": ["hooks/*"],
       "utils/*": ["utils/*"],
-      "services/*": ["services/*"],
+      "services/*": ["api/*"],
       "context/*": ["context/*"],
     }
   }
