@@ -7,16 +7,19 @@ const postServices = {
     const { post } = data || null;
     return post;
   },
-  getAllPosts: async (cookies) => {
+  getAllPosts: async (cookies, searchOption) => {
     const {
       data: { posts },
-    } = await callAPI.get("post/list", cookies);
+    } = await callAPI.get(`post/list?${searchOption}`, cookies);
     return posts;
   },
-  getPostsByCategory: async (category = "", cookies) => {
+  getPostsByCategory: async (category = "", searchOption, cookies) => {
     const {
       data: { posts },
-    } = await callAPI.get(`post/list?categorySlug=${category}`, cookies);
+    } = await callAPI.get(
+      `post/list?categorySlug=${category}&${searchOption}`,
+      cookies,
+    );
     return posts;
   },
   likePost: async (id) => {
