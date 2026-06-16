@@ -53,10 +53,24 @@ function PostComments({ post: { comments = [], _id: postId = "" } }) {
         <h2 className="text-2xl font-bold text-secondary-800">نظرات:</h2>
         <Button
           onClick={() => addNewCommentHandler(null)}
-          variant="outline"
-          className="flex items-center py-2"
+          variant="secondary"
+          className="flex items-center gap-1 py-2"
         >
-          <QuestionMarkCircleIcon className="w-4 ml-2" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-5 "
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 4.5v15m7.5-7.5h-15"
+            />
+          </svg>
+
           <span>ثبت نظر جدید</span>
         </Button>
       </div>
