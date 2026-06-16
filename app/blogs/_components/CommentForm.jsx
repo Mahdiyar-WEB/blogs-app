@@ -1,12 +1,11 @@
 "use client";
 import commentServices from "api/commentServices";
-import Button from "components/Button";
 import SubmitButton from "components/SubmitButton";
 import TextArea from "components/TextArea";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-const CommentForm = ({ parentId, postId }) => {
+const CommentForm = ({ parentId, postId, onClose }) => {
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -20,6 +19,7 @@ const CommentForm = ({ parentId, postId }) => {
         parentId,
       });
       toast.success(data.message);
+      onClose();
     } catch (error) {
       toast.error(error?.message);
     } finally {
@@ -34,10 +34,7 @@ const CommentForm = ({ parentId, postId }) => {
         label="متن نظر"
         onChange={(e) => setValue(e.target.value)}
       />
-      <SubmitButton
-        loading={loading}
-        className="w-full rounded-md"
-      >
+      <SubmitButton loading={loading} className="w-full rounded-md">
         {parent ? "ثبت پاسخ" : "ثبت نظر جدید"}
       </SubmitButton>
     </form>
