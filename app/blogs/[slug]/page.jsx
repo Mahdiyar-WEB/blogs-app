@@ -2,6 +2,7 @@ import { cacheLife } from "next/cache";
 import { notFound } from "next/navigation";
 import postServices from "api/postServices";
 import RelatedPosts from "../_components/RelatedPosts";
+import PostComments from "../_components/PostComments";
 
 async function getCachedPost(slug) {
   "use cache";
@@ -28,6 +29,7 @@ const SinglePost = async ({ params }) => {
     <main className="w-11/12 mx-auto 2xl:max-w-screen-2xl">
       {post.title}
       {post.related.length > 0 && <RelatedPosts posts={post.related} />}
+      <PostComments {...post} />
     </main>
   );
 };
