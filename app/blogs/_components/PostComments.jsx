@@ -43,7 +43,11 @@ function PostComments({ post: { comments = [], _id: postId = "" } }) {
         open={isOpen}
         onClose={onCloseHandler}
       >
-        <CommentForm parentId={parent ? parent?._id : null} postId={postId} />
+        <CommentForm
+          parentId={parent ? parent?._id : null}
+          postId={postId}
+          onClose={onCloseHandler}
+        />
       </Modal>
       <div className="flex flex-col items-center lg:flex-row justify-between gap-y-3 mb-8">
         <h2 className="text-2xl font-bold text-secondary-800">نظرات:</h2>
