@@ -9,6 +9,7 @@
       "api/*": ["./api/*"],
       "constants/*": ["./constants/*"],
       "context/*": ["./context/*"],
+      "lib/*": ["./lib/*"],
     }
   }
 }
