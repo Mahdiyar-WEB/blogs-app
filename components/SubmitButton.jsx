@@ -3,7 +3,7 @@ import Button from "./Button";
 
 const SubmitButton = ({ children, loading = false, className = "" }) => {
   return (
-    <Button className={className} type="submit">
+    <Button className={`${className} font-bold`} type="submit">
       {loading ? <Spinner /> : children}
     </Button>
   );

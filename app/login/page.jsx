@@ -275,7 +275,7 @@ export default function AuthForm() {
             )}
 
             {/* Submit */}
-            <SubmitButton loading={isLoading} className="w-full font-bold">
+            <SubmitButton loading={isLoading} className="w-full">
               {isSignup ? "ثبت‌نام" : "ورود به حساب"}
             </SubmitButton>
           </div>
