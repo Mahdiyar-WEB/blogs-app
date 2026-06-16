@@ -45,13 +45,14 @@ const callAPI = {
 
     return data;
   },
-  post: async (endPoint, inputs) => {
+  post: async (endPoint, inputs, cookies) => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/${endPoint}`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json; charset=utf-8",
+          Cookie: cookies || "",
         },
         body: JSON.stringify(inputs),
         credentials: "include",
