@@ -42,7 +42,7 @@ const RelatedPosts = ({ posts }) => {
                     className="rounded-full ring-1 ring-secondary-300"
                     width={30}
                     height={30}
-                    src={author?.avatarUrl}
+                    src={author?.avatarUrl || "/avatar.svg"}
                   />
                   <span className="font-medium text-sm">{author?.name}</span>
                 </div>

@@ -73,7 +73,7 @@ const Post = ({
               className="rounded-full ring-1 ring-secondary-300"
               width={30}
               height={30}
-              src={author?.avatarUrl}
+              src={author?.avatarUrl || "/avatar.svg"}
             />
             <span>{author?.name}</span>
           </div>

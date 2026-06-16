@@ -12,7 +12,7 @@ function Comment({ comment, onAddComment }) {
             className="rounded-full ring-1 ring-secondary-300"
             width={34}
             height={34}
-            src={comment.user.avatarUrl}
+            src={comment.user.avatarUrl || "/avatar.svg"}
           />
           <div className="text-sm w-full text-secondary-600">
             <span className="font-bold block mb-1">{comment.user.name}</span>
