@@ -29,7 +29,7 @@ const SinglePost = async ({ params }) => {
     <main className="w-11/12 mx-auto 2xl:max-w-screen-2xl">
       {post.title}
       {post.related.length > 0 && <RelatedPosts posts={post.related} />}
-      <PostComments {...post} />
+      <PostComments post={post} />
     </main>
   );
 };
