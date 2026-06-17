@@ -1,4 +1,3 @@
-import error from "next/dist/api/error";
 
 export const initialState = {
   user: null,

@@ -53,7 +53,7 @@ function PostComments({ post: { comments = [], _id: postId = "" } }) {
         <h2 className="text-2xl font-bold text-secondary-800">نظرات:</h2>
         <Button
           onClick={() => addNewCommentHandler(null)}
-          variant="secondary"
+          variant="primary"
           className="flex items-center gap-1 py-2"
         >
           <svg
