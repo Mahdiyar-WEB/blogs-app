@@ -39,7 +39,10 @@ const RelatedPosts = ({ posts }) => {
                 <div className="flex justify-center  items-center gap-2">
                   <Image
                     alt={author?.name}
-                    className="rounded-full ring-1 ring-secondary-300"
+                    className={
+                      author?.avatarUrl &&
+                      "rounded-full ring-1 ring-secondary-300"
+                    }
                     width={30}
                     height={30}
                     src={author?.avatarUrl || "/avatar.svg"}

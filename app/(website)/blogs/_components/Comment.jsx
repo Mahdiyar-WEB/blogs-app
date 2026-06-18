@@ -9,7 +9,7 @@ function Comment({ comment, onAddComment }) {
         <div className="flex items-center gap-2">
           <Image
             alt={comment.user?.name || "-"}
-            className="rounded-full ring-1 ring-secondary-300"
+            className={comment.user.avatarUrl && "rounded-full ring-1 ring-secondary-300"}
             width={34}
             height={34}
             src={comment.user.avatarUrl || "/avatar.svg"}
