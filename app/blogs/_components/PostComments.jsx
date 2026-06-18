@@ -36,7 +36,7 @@ function PostComments({ post: { comments = [], _id: postId = "" } }) {
   };
 
   return (
-    <div className="mt-10">
+    <div className="my-10">
       <Modal
         title={parent ? "پاسخ خودرا برای نظر  " : "نظر جدید"}
         description={parent ? parent.user?.name : "نظر خودرا وارد کنید"}
