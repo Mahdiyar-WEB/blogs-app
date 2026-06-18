@@ -34,8 +34,6 @@ const BlogsSort = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  // Get a new searchParams string by merging the current
-  // searchParams with a provided key/value pair
   const createQueryString = useCallback(
     (name, value) => {
       const params = new URLSearchParams(searchParams);
