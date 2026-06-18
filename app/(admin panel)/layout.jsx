@@ -1,33 +1,47 @@
-import "styles/globals.css";
-import vazirFont from "constants/localFont";
-import { Toaster } from "react-hot-toast";
+"use client";
 import Drawer from "./Drawer";
 import Header from "./Header";
-import UserProvider from "context/UserContext";
+import { useState } from "react";
 
-export const metadata = {
-  title: {
-    template: "%s | پنل ادمین",
-    default: "بلاگیتو", // a default is required when creating a template
-  },
-  description: "پنل ادمین",
-};
+export default function AdminLayout({ children }) {
+  const [desktopOpen, setDesktopOpen] = useState(true);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-export default function RootLayout({ children }) {
   return (
-    <html lang="fa" dir="rtl" data-scroll-behavior="smooth">
-      <body
-        className={`${vazirFont.variable} font-sans min-h-screen relative flex`}
+    <div className="flex min-h-screen">
+      {/* Mobile backdrop */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-20 lg:hidden"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+
+      {/* Desktop drawer */}
+      <div className="hidden lg:block">
+        <Drawer
+          isOpen={desktopOpen}
+          onToggle={() => setDesktopOpen((prev) => !prev)}
+        />
+      </div>
+
+      {/* Mobile drawer */}
+      <div
+        className={`
+          fixed top-0 right-0 h-full z-30 lg:hidden
+          transition-transform duration-300 ease-in-out
+          ${mobileOpen ? "translate-x-0" : "translate-x-full"}
+        `}
       >
-        <Toaster />
-        <UserProvider>
-          <Drawer />
-          <div className="border flex flex-col flex-1">
-            <Header />
-            {children}
-          </div>
-        </UserProvider>
-      </body>
-    </html>
+        <Drawer isOpen={true} onToggle={() => setMobileOpen(false)} />
+      </div>
+
+      <div className="flex flex-col flex-1 bg-secondary-0">
+        <Header onMobileToggle={() => setMobileOpen((prev) => !prev)} />
+        <main className="lg:rounded-tr-3xl h-full p-5 bg-secondary-100">
+          {children}
+        </main>
+      </div>
+    </div>
   );
 }

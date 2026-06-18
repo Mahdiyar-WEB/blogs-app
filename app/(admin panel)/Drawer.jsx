@@ -1,7 +1,6 @@
-"use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 
 const DrawerLinks = [
   {
@@ -90,18 +89,61 @@ const DrawerLinks = [
   },
 ];
 
-const Drawer = () => {
+const Drawer = ({ isOpen, onToggle }) => {
   const pathname = usePathname();
+
   return (
-    <aside className="border-secondary-300 shadow-md h-screen w-2/12 px-3 py-5 bg-secondary-0">
-      <h2 className="border-b border-b-secondary-300 flex justify-center gap-2 pb-1 text-2xl font-semibold items-center mb-5">
+    <aside
+      className={`
+        relative h-screen px-3 py-5 bg-secondary-0
+        transition-all duration-300 ease-in-out
+        ${isOpen ? "w-56" : "w-16"}
+      `}
+    >
+      {/* Toggle arrow button */}
+      <button
+        onClick={onToggle}
+        className={`
+    hidden lg:flex
+    absolute -left-3 top-1/2 -translate-y-1/2 z-10
+    bg-secondary-0 border border-secondary-300
+    rounded-full p-1 shadow-sm
+    transition-transform duration-300
+    ${!isOpen ? "" : "rotate-180"}
+  `}
+        aria-label="تغییر منو"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={2}
           stroke="currentColor"
-          className="size-7"
+          className="size-4"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15.75 19.5 8.25 12l7.5-7.5"
+          />
+        </svg>
+      </button>
+
+      <h2
+        className={`
+        border-b border-b-secondary-300 flex justify-center gap-2 pb-3
+        text-xl font-semibold items-center mb-5 overflow-hidden
+        transition-all duration-300
+        ${isOpen ? "opacity-100" : "opacity-0"}
+      `}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={2}
+          stroke="currentColor"
+          className="size-7 shrink-0"
         >
           <path
             strokeLinecap="round"
@@ -109,22 +151,31 @@ const Drawer = () => {
             d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6"
           />
         </svg>
-        <span>نکست بلاگ</span>
+        {isOpen && <span>نکست بلاگ</span>}
       </h2>
+
+      {/* Nav links */}
       <ul className="flex flex-col gap-3">
-        {DrawerLinks.map(({ id, href, icon, title }) => {
-          return (
-            <li key={id}>
-              <Link
-                className={`flex gap-3 items-start text-lg py-2 font-semibold ps-5 ${pathname === href && ""}`}
-                href={href}
-              >
-                {icon}
-                <span>{title}</span>
-              </Link>
-            </li>
-          );
-        })}
+        {DrawerLinks.map(({ id, href, icon, title }) => (
+          <li key={id}>
+            <Link
+              href={href}
+              className={`
+                flex gap-3 items-center py-2 font-semibold rounded-lg
+                transition-all duration-200
+                ${isOpen ? "ps-5" : "justify-center"}
+                ${
+                  pathname === href
+                    ? "bg-primary-100 text-primary-700"
+                    : "hover:bg-secondary-100"
+                }
+              `}
+            >
+              {icon}
+              {isOpen && <span>{title}</span>}
+            </Link>
+          </li>
+        ))}
       </ul>
     </aside>
   );

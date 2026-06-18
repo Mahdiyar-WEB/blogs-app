@@ -11,15 +11,18 @@ const CategorySlug = async ({ params, searchParams }) => {
   const cookieStore = await cookies();
   const { categorySlug } = await params;
   const options = await searchParams;
-  const posts = await postServices.getPostsByCategory(
-    categorySlug,
-    queryString.stringify(options),
-    generateSSRCookies(cookieStore),
-  );
+  let posts = [];
+  try {
+    posts = await postServices.getPostsByCategory(
+      categorySlug,
+      queryString.stringify(options),
+      generateSSRCookies(cookieStore),
+    );
+  } catch (error) {}
 
   return (
     <div className="grid grid-cols-12 gap-5">
-       {options?.search && (
+      {options?.search && (
         <>
           {posts.length === 0 ? (
             <p className="col-span-12 font-medium flex gap-1">

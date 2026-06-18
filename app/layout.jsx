@@ -1,9 +1,7 @@
 import "styles/globals.css";
 import vazirFont from "constants/localFont";
-import Header from "./Header";
 import { Toaster } from "react-hot-toast";
 import UserProvider from "context/UserContext";
-import { Suspense } from "react";
 
 export const metadata = {
   title: {
@@ -15,11 +13,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <div className={`${vazirFont.variable} font-sans min-h-screen relative`}>
-      <Suspense>
-        <Header />
-      </Suspense>
-      {children}
-    </div>
+    <html lang="fa" dir="rtl" data-scroll-behavior="smooth">
+      <body className={`${vazirFont.variable} font-sans min-h-screen relative`}>
+        <Toaster />
+        <UserProvider>
+          {children}
+        </UserProvider>
+      </body>
+    </html>
   );
 }
