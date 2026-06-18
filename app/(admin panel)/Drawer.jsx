@@ -166,7 +166,7 @@ const Drawer = ({ isOpen, onToggle }) => {
                 ${isOpen ? "ps-5" : "justify-center"}
                 ${
                   pathname === href
-                    ? "bg-primary-100 text-primary-700"
+                    ? "bg-secondary-100 text-primary-700"
                     : "hover:bg-secondary-100"
                 }
               `}
@@ -176,6 +176,32 @@ const Drawer = ({ isOpen, onToggle }) => {
             </Link>
           </li>
         ))}
+        <li>
+          <Link
+            href='/'
+            className={`
+                flex gap-3 items-center py-2 font-semibold rounded-lg
+                transition-all duration-200 hover:bg-secondary-100
+                ${isOpen ? "ps-5" : "justify-center"} 
+              `}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
+              />
+            </svg>
+            {isOpen && <span>خروج</span>}
+          </Link>
+        </li>
       </ul>
     </aside>
   );
