@@ -1,89 +1,60 @@
 "use client";
-import React, { createContext, useContext, useEffect, useReducer } from "react";
-import authentication from "api/authentication";
-import toast from "react-hot-toast";
+
+import { createContext, useContext } from "react";
 import { useRouter } from "next/navigation";
-import reducer, { initialState } from "./UserReducer";
+import toast from "react-hot-toast";
+import authentication from "api/authentication";
 
 const UserContext = createContext();
 
-const UserProvider = ({ children }) => {
+export default function UserProvider({ children }) {
   const router = useRouter();
-  const [{ user, isAuthenticated, loading, error }, dispatch] = useReducer(
-    reducer,
-    initialState,
-  );
 
   const signIn = async (inputs) => {
-    dispatch({ type: "loading" });
     try {
       const { data } = await authentication.signIn(inputs);
       toast.success(data.message);
-      dispatch({ type: "signIn", payload: data.user });
+      router.refresh();
       router.push("/profile");
     } catch (error) {
-      const { message } = error;
-      dispatch({ type: "rejected", payload: message });
-      toast.error(message);
+      toast.error(error.message);
     }
   };
 
   const signUp = async (inputs) => {
-    dispatch({ type: "loading" });
     try {
       const { data } = await authentication.signUp(inputs);
       toast.success(data.message);
-      dispatch({ type: "signUp", payload: data.user });
+      router.refresh();
       router.push("/profile");
     } catch (error) {
-      const { message } = error;
-      dispatch({ type: "rejected", payload: message });
-      toast.error(message);
+      toast.error(error.message);
     }
   };
 
-  const getUserData = async () => {
-    dispatch({ type: "loading" });
-    try {
-      const { data } = await authentication.getUser();
-      dispatch({ type: "getUserData", payload: data.user });
-    } catch (error) {
-      const { message } = error;
-      dispatch({ type: "rejected", payload: message });
-    }
-  };
+  // const logout = async () => {
+  //   try {
+  //     await authentication.logout();
 
-  const logOut = () => {};
+  //     router.refresh();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await getUserData();
-    };
-    fetchData();
-  }, []);
+  //     router.push("/");
+  //   } catch (error) {
+  //     toast.error(error.message);
+  //   }
+  // };
 
   return (
     <UserContext.Provider
       value={{
-        user,
-        isAuthenticated,
-        loading,
-        error,
         signIn,
         signUp,
-        logOut,
-        getUserData,
+        // logout,
       }}
     >
       {children}
     </UserContext.Provider>
   );
-};
+}
 
-export const useUser = () => {
-  const context = useContext(UserContext);
-  if (context === undefined) throw new Error("not found user context");
-  return context;
-};
-
-export default UserProvider;
+export const useUserActions = () => useContext(UserContext);
