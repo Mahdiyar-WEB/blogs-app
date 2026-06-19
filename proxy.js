@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import middlerWareAuth from "utils/middlewareAuth";
+import { getCurrentUser } from "utils/getCurrentUser";
 
 export async function proxy(request) {
   const pathName = request.nextUrl.pathname;
-  const user = await middlerWareAuth(request);
+  const user = await getCurrentUser();
 
   if (pathName === "/login" && user) {
     return NextResponse.redirect(new URL("/", request.url));
