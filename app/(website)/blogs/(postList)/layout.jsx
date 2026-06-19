@@ -33,10 +33,10 @@ const Layout = ({ children }) => {
         </aside>
         <section className="col-span-12 md:col-span-8 xl:col-span-9">
           <div className="flex gap-3">
-            <Suspense>
+            <Suspense fallback={null}>
               <SearchBox />
             </Suspense>
-            <Suspense>
+            <Suspense fallback={null}>
               <BlogsSort />
             </Suspense>
           </div>

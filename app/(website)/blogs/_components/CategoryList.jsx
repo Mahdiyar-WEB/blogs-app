@@ -10,7 +10,7 @@ const CategoryList = async () => {
       {categories.map(({ title, slug }, id) => {
         return (
           <li key={id}>
-            <NavLink listOption path={`/blogs/category/${slug}`} text={title} />
+            <NavLink prefetch={false} listOption path={`/blogs/category/${slug}`} text={title} />
           </li>
         );
       })}
