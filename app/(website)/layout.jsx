@@ -2,14 +2,6 @@ import Header from "./Header";
 import { Suspense } from "react";
 import Link from "next/link";
 
-export const metadata = {
-  title: {
-    template: "%s | بلاگیتو",
-    default: "بلاگیتو", // a default is required when creating a template
-  },
-  description: "وب اپلیکیشن بلاگیتو",
-};
-
 export default function RootLayout({ children }) {
   return (
     <div className={`font-sans min-h-screen relative`}>

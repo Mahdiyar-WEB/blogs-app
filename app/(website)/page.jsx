@@ -2,7 +2,7 @@ import Button from "components/Button";
 import Link from "next/link";
 
 export const metadata = {
-  title: "خانه | بلاگیتو",
+  title: "خانه",
 };
 
 export default function Home() {
