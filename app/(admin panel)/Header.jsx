@@ -1,21 +1,26 @@
-import { useUser } from "context/UserContext";
+import authentication from "api/authentication";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
-const Header = ({ onMobileToggle }) => {
-  const { user } = useUser();
+export default function Header({ onMobileToggle }) {
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data } = await authentication.getUser();
+      setUser(data?.user);
+    };
+    fetchUser();
+  }, []);
 
   return (
     <header className="ps-5 pe-10 py-5 flex justify-between items-center">
-      <button
-        onClick={onMobileToggle}
-        className="lg:hidden p-1"
-        aria-label="باز کردن منو"
-      >
+      <button onClick={onMobileToggle} className="lg:hidden p-1">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          strokeWidth={2}
+          strokeWidth={1.5}
           stroke="currentColor"
           className="size-6"
         >
@@ -34,15 +39,10 @@ const Header = ({ onMobileToggle }) => {
 
       <Image
         alt="profile"
-        className={
-          user?.avatarUrl ? "rounded-full ring-1 ring-secondary-300" : ""
-        }
         width={35}
         height={35}
-        src={user?.avatarUrl || "avatar.svg"}
+        src={user?.avatarUrl || "/avatar.svg"}
       />
     </header>
   );
-};
-
-export default Header;
+}
