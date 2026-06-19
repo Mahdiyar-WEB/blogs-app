@@ -14,11 +14,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="fa" dir="rtl" data-scroll-behavior="smooth">
-      <body className={`${vazirFont.variable} font-sans min-h-screen relative`}>
+      <body className={`${vazirFont.variable} font-sans min-h-screen`}>
         <Toaster />
-        <UserProvider>
-          {children}
-        </UserProvider>
+        <UserProvider>{children}</UserProvider>
       </body>
     </html>
   );
