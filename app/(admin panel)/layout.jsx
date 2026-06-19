@@ -1,15 +1,14 @@
 "use client";
-import Drawer from "./Drawer";
 import Header from "./Header";
+import Drawer from "./Drawer";
 import { useState } from "react";
 
-export default function AdminLayout({ children }) {
+export default function Layout({ children }) {
   const [desktopOpen, setDesktopOpen] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <div className="flex min-h-screen">
-      {/* Mobile backdrop */}
       {mobileOpen && (
         <div
           className="fixed inset-0 bg-black/40 z-20 lg:hidden"
@@ -17,7 +16,6 @@ export default function AdminLayout({ children }) {
         />
       )}
 
-      {/* Desktop drawer */}
       <div className="hidden lg:block">
         <Drawer
           isOpen={desktopOpen}
@@ -25,7 +23,6 @@ export default function AdminLayout({ children }) {
         />
       </div>
 
-      {/* Mobile drawer */}
       <div
         className={`
           fixed top-0 right-0 h-full z-30 lg:hidden
