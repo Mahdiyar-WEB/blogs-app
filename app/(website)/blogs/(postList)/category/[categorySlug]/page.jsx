@@ -57,7 +57,7 @@ const CategorySlug = async ({ params, searchParams }) => {
           <h1 className="font-semibold text-2xl">متاسفانه پستی پیدا نشد!</h1>
         </div>
       ) : (
-        posts.map((post, id) => <Post key={id} {...post} />)
+        posts.map((post) => <Post key={post._id} {...post} />)
       )}
     </div>
   );

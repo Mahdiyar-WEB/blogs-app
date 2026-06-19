@@ -7,10 +7,15 @@ const CategoryList = async () => {
   return (
     <ul className="text-md md:text-lg space-y-3 ms-3">
       <NavLink listOption path="/blogs" text="همه" />
-      {categories.map(({ title, slug }, id) => {
+      {categories.map(({ title, slug, _id }) => {
         return (
-          <li key={id}>
-            <NavLink prefetch={false} listOption path={`/blogs/category/${slug}`} text={title} />
+          <li key={_id}>
+            <NavLink
+              prefetch={false}
+              listOption
+              path={`/blogs/category/${slug}`}
+              text={title}
+            />
           </li>
         );
       })}
