@@ -1,7 +1,7 @@
 "use client";
 import Header from "./Header";
 import Drawer from "./Drawer";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 export default function Layout({ children }) {
   const [desktopOpen, setDesktopOpen] = useState(true);
@@ -36,7 +36,7 @@ export default function Layout({ children }) {
       <div className="flex flex-col flex-1 bg-secondary-0">
         <Header onMobileToggle={() => setMobileOpen((prev) => !prev)} />
         <main className="lg:rounded-tr-3xl h-full p-5 bg-secondary-100">
-          {children}
+          <Suspense>{children}</Suspense>
         </main>
       </div>
     </div>
