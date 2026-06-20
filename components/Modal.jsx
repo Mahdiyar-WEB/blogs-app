@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 const Modal = ({
   children,
   title = "title",
-  description = "description",
+  description = "",
   open = false,
   onClose,
 }) => {
