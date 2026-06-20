@@ -20,7 +20,7 @@ const postTypeValues = {
   },
 };
 
-const PostsInformation = () => {
+const PostsInformation = ({ title, fetchQueries = "" }) => {
   const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState({});
   const [postAction, setPostAction] = useState("");
@@ -29,11 +29,12 @@ const PostsInformation = () => {
     const fetchPosts = async () => {
       const posts = await postServices.getAllPosts(
         generateSSRCookies(cookieStore),
+        fetchQueries,
       );
       setPosts(posts);
     };
     fetchPosts();
-  }, []);
+  }, [fetchQueries]);
 
   const postActionHandler = (post, action) => {
     setSelectedPost(post);
@@ -47,7 +48,7 @@ const PostsInformation = () => {
 
   return (
     <section>
-      <h3 className="font-medium text-xl mb-5">اطلاعات پست ها</h3>
+      <h3 className="font-medium text-xl mb-5">{title}</h3>
       <Table>
         <Table.Header>
           <th>#</th>
