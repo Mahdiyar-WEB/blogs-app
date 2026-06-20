@@ -20,8 +20,9 @@ const postTypeValues = {
   },
 };
 
-const PostsInformation = ({ title, fetchQueries = "" }) => {
+const PostsInformation = ({ fetchQueries = "" }) => {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedPost, setSelectedPost] = useState({});
   const [postAction, setPostAction] = useState("");
 
@@ -32,6 +33,7 @@ const PostsInformation = ({ title, fetchQueries = "" }) => {
         fetchQueries,
       );
       setPosts(posts);
+      setLoading(false)
     };
     fetchPosts();
   }, [fetchQueries]);
@@ -48,7 +50,6 @@ const PostsInformation = ({ title, fetchQueries = "" }) => {
 
   return (
     <section>
-      <h3 className="font-medium text-xl mb-5">{title}</h3>
       <Table>
         <Table.Header>
           <th>#</th>
@@ -110,6 +111,32 @@ const PostsInformation = ({ title, fetchQueries = "" }) => {
               </Table.Row>
             );
           })}
+          {loading &&
+            Array.from({ length: 5 }).map((_, index) => (
+              <Table.Row key={index} className="animate-pulse">
+                <td>
+                  <div className="bg-secondary-300 rounded-md w-5 h-5"></div>
+                </td>
+                <td>
+                  <div className="bg-secondary-300 rounded-md w-20 h-5"></div>
+                </td>
+                <td>
+                  <div className="bg-secondary-300 rounded-md w-20 h-5"></div>
+                </td>
+                <td>
+                  <div className="bg-secondary-300 rounded-md w-20 h-5"></div>
+                </td>
+                <td>
+                  <div className="bg-secondary-300 rounded-md w-20 h-5"></div>
+                </td>
+                <td>
+                  <div className="bg-secondary-300 rounded-md w-20 h-5"></div>
+                </td>
+                <td>
+                  <div className="bg-secondary-300 rounded-md w-20 h-5"></div>
+                </td>
+              </Table.Row>
+            ))}
         </Table.Body>
       </Table>
       <DeletePostModal
