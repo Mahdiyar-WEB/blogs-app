@@ -28,6 +28,9 @@ const postServices = {
   bookmarkPost: async (id) => {
     return await callAPI.post(`post/bookmark/${id}`);
   },
+  deletePost: async (id) => {
+    return await callAPI.delete(`post/remove/${id}`);
+  },
 };
 
 export default postServices;
