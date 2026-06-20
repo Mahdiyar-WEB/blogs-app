@@ -101,7 +101,7 @@ const page = async () => {
       </section>
 
       {/* posts information section */}
-      <PostsInformation />
+      <PostsInformation fetchQueries="sort=latest&limit=5" title="آخرین پست ها" />
     </main>
   );
 };
