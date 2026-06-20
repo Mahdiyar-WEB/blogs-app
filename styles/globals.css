@@ -104,7 +104,7 @@
     @apply border border-secondary-300 text-secondary-400;
   }
   .btn--danger {
-    @apply border border-rose-700 text-rose-700;
+    @apply border bg-red-600 text-white;
   }
   .badge {
     @apply inline-block whitespace-nowrap rounded-xl px-2 py-0.5;
