@@ -1,4 +1,3 @@
-// import { useState } from "react";
 "use client";
 import { useCallback, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -29,8 +28,6 @@ const sortOptions = [
 
 const BlogsSort = () => {
   const searchParams = useSearchParams();
-  const [sort, setSort] = useState(searchParams.get("sort") || "latest");
-
   const router = useRouter();
   const pathname = usePathname();
 
@@ -48,12 +45,11 @@ const BlogsSort = () => {
     <div className="h-11 w-full md:w-1/2 xl:w-1/3 flex justify-between bg-white/50 border border-secondary-200 rounded-lg shadow-md">
       <Select
         onChange={(e) => {
-          setSort(e.target.value);
           router.push(
             pathname + "?" + createQueryString("sort", e.target.value),
           );
         }}
-        value={sort}
+        value={searchParams.get("sort") || "latest"}
         options={sortOptions}
       />
     </div>
