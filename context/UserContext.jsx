@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext } from "react";
+import { createContext, useContext, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import authentication from "api/authentication";
@@ -44,17 +44,15 @@ export default function UserProvider({ children }) {
   //   }
   // };
 
-  return (
-    <UserContext.Provider
-      value={{
-        signIn,
-        signUp,
-        // logout,
-      }}
-    >
-      {children}
-    </UserContext.Provider>
+  const value = useMemo(
+    () => ({
+      signIn,
+      signUp,
+    }),
+    [],
   );
+
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
 
 export const useUserActions = () => useContext(UserContext);
