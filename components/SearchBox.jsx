@@ -17,6 +17,7 @@ const SearchBox = () => {
       newParams.set("page", 1);
     } else {
       newParams.delete("search");
+      newParams.delete("page");
     }
     router.push(`${pathname}?${newParams}`);
   };
