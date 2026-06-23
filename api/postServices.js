@@ -8,19 +8,15 @@ const postServices = {
     return post;
   },
   getAllPosts: async (cookies, searchOption) => {
-    const {
-      data,
-    } = await callAPI.get(`post/list?${searchOption}`, cookies);
+    const { data } = await callAPI.get(`post/list?${searchOption}`, cookies);
     return data;
   },
   getPostsByCategory: async (category = "", searchOption, cookies) => {
-    const {
-      data: { posts },
-    } = await callAPI.get(
+    const { data } = await callAPI.get(
       `post/list?categorySlug=${category}&${searchOption}`,
       cookies,
     );
-    return posts;
+    return data;
   },
   likePost: async (id) => {
     return await callAPI.post(`post/like/${id}`);
