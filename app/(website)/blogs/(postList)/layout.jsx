@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import CategoryList from "../_components/CategoryList";
 import CategoryListLoading from "../_components/CategoryListLoading";
 import PostsLoading from "../_components/PostsLoading";
-import SearchBox from "../_components/SearchBox";
+import SearchBox from "components/SearchBox";
 import BlogsSort from "../_components/BlogsSort";
 
 const Layout = ({ children }) => {
