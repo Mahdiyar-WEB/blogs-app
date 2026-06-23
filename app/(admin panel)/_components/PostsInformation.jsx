@@ -8,6 +8,7 @@ import toLocalDateShort from "utils/toLocalDateShort";
 import toPersianDigits from "utils/toPersianDigits";
 import truncateText from "utils/truncateText";
 import DeletePostModal from "./DeletePostModal";
+import Image from "next/image";
 
 const postTypeValues = {
   free: {
@@ -33,7 +34,7 @@ const PostsInformation = ({ fetchQueries = "" }) => {
         fetchQueries,
       );
       setPosts(posts);
-      setLoading(false)
+      setLoading(false);
     };
     fetchPosts();
   }, [fetchQueries]);
@@ -139,6 +140,19 @@ const PostsInformation = ({ fetchQueries = "" }) => {
             ))}
         </Table.Body>
       </Table>
+      {posts.length === 0 && (
+        <div className="flex justify-center flex-col items-center bg-white py-3">
+          <Image
+            className="object-cover object-center"
+            width={500}
+            height={500}
+            quality={100}
+            alt=""
+            src="/no-blogs.png"
+          />
+          <p className="text-xl font-semibold">پستی پیدا نشد!</p>
+        </div>
+      )}
       <DeletePostModal
         open={selectedPost && postAction === "delete"}
         post={selectedPost}
