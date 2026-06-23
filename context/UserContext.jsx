@@ -45,6 +45,11 @@ export default function UserProvider({ children }) {
 
   const getUser = async () => {
     dispatch({ type: "loading" });
+    await new Promise((res) =>
+      setTimeout(() => {
+        res();
+      }, 500),
+    );
     try {
       const { data } = await authentication.getUser();
       dispatch({ type: "user/loaded", payload: data.user });
