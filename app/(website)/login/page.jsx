@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useUserActions } from "context/UserContext";
+import { useUser } from "context/UserContext";
 import SubmitButton from "components/SubmitButton";
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
@@ -134,7 +134,7 @@ export default function AuthForm() {
   const [mode, setMode] = useState("login");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const { signUp, signIn } = useUserActions();
+  const { signUp, signIn } = useUser();
 
   const {
     register,

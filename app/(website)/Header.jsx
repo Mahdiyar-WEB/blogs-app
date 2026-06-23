@@ -1,8 +1,11 @@
+"use client";
+import authentication from "api/authentication";
 import NavLink from "components/NavLink";
-import { getCurrentUser } from "utils/getCurrentUser";
+import { useUser } from "context/UserContext";
+import { useEffect, useState } from "react";
 
-const Header = async () => {
-  const  user  = await getCurrentUser();
+const Header = () => {
+  const { user } = useUser();
 
   return (
     <header className="py-3 shadow-md border border-secondary-200 rounded-md w-11/12 mx-auto 2xl:max-w-screen-2xl sticky top-3 left-0 bg-secondary-50 z-10 mb-10">
