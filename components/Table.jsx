@@ -1,6 +1,6 @@
 function Table({ children }) {
   return (
-    <div className="bg-secondary-0 overflow-x-auto">
+    <div className="bg-secondary-0 overflow-x-auto rounded-t-md">
       <table>{children}</table>
     </div>
   );
@@ -10,7 +10,7 @@ export default Table;
 function TableHeader({ children }) {
   return (
     <thead>
-      <tr className="title-row">{children}</tr>
+      <tr>{children}</tr>
     </thead>
   );
 }
