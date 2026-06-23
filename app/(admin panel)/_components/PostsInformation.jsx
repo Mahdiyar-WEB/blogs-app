@@ -29,7 +29,7 @@ const PostsInformation = ({ fetchQueries = "" }) => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const posts = await postServices.getAllPosts(
+      const { posts } = await postServices.getAllPosts(
         generateSSRCookies(cookieStore),
         fetchQueries,
       );

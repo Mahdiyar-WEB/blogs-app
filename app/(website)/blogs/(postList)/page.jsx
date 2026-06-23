@@ -14,7 +14,7 @@ export const metadata = {
 const Blogs = async ({ searchParams }) => {
   const cookieStore = await cookies();
   const options = await searchParams;
-  const posts = await postServices.getAllPosts(
+  const { posts } = await postServices.getAllPosts(
     generateSSRCookies(cookieStore),
     queryString.stringify(options),
   );

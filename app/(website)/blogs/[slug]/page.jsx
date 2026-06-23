@@ -12,7 +12,7 @@ async function getCachedPost(slug) {
 }
 
 export async function generateStaticParams() {
-  const posts = await postServices.getAllPosts();
+  const { posts } = await postServices.getAllPosts();
   return posts.slice(0, 3).map((post) => ({ slug: post.slug }));
 }
 

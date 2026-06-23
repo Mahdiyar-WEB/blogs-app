@@ -9,9 +9,9 @@ const postServices = {
   },
   getAllPosts: async (cookies, searchOption) => {
     const {
-      data: { posts },
+      data,
     } = await callAPI.get(`post/list?${searchOption}`, cookies);
-    return posts;
+    return data;
   },
   getPostsByCategory: async (category = "", searchOption, cookies) => {
     const {
