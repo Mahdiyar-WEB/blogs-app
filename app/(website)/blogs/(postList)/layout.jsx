@@ -41,7 +41,6 @@ const Layout = ({ children }) => {
             </Suspense>
           </div>
           <Suspense fallback={<PostsLoading />}>{children}</Suspense>
-          <div className="mt-5">pagination</div>
         </section>
       </div>
     </main>
