@@ -50,7 +50,7 @@ const PostsInformation = ({ fetchQueries = "" }) => {
   };
 
   return (
-    <section>
+    <section className="mb-5">
       <Table>
         <Table.Header>
           <th>#</th>
@@ -140,9 +140,10 @@ const PostsInformation = ({ fetchQueries = "" }) => {
             ))}
         </Table.Body>
       </Table>
-      {posts.length === 0 && (
+      {posts.length === 0 && !loading && (
         <div className="flex justify-center flex-col items-center bg-white py-3">
           <Image
+            priority
             className="object-cover object-center"
             width={500}
             height={500}
