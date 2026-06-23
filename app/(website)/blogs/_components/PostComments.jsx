@@ -1,22 +1,14 @@
 "use client";
-import { Suspense, useEffect, useState } from "react";
+import { useState } from "react";
 import Comment from "./Comment";
 import { useRouter } from "next/navigation";
 import Button from "components/Button";
 import Modal from "components/Modal";
 import CommentForm from "./CommentForm";
-import authentication from "api/authentication";
+import { useUser } from "context/UserContext";
 
 function PostComments({ post: { comments = [], _id: postId = "" } }) {
-  const [user, setUser] = useState({});
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data } = await authentication.getUser();
-      setUser(data?.user);
-    };
-    fetchUser();
-  }, []);
+  const { user } = useUser();
   const [isOpen, setIsOpen] = useState(false);
   const [parent, setParent] = useState(null);
   const router = useRouter();

@@ -1,17 +1,8 @@
-import authentication from "api/authentication";
+import { useUser } from "context/UserContext";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
 export default function Header({ onMobileToggle }) {
-  const [user, setUser] = useState({});
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data } = await authentication.getUser();
-      setUser(data?.user);
-    };
-    fetchUser();
-  }, []);
+  const { user } = useUser();
 
   return (
     <header className="ps-5 pe-10 py-5 flex justify-between items-center">
