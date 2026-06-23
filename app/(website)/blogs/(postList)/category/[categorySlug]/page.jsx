@@ -6,19 +6,17 @@ import generateSSRCookies from "utils/generateSSRCookies";
 import Image from "next/image";
 import queryString from "query-string";
 import toPersianDigits from "utils/toPersianDigits";
+import Pagination from "components/Pagination";
 
 const CategorySlug = async ({ params, searchParams }) => {
   const cookieStore = await cookies();
   const { categorySlug } = await params;
   const options = await searchParams;
-  let posts = [];
-  try {
-    posts = await postServices.getPostsByCategory(
-      categorySlug,
-      queryString.stringify(options),
-      generateSSRCookies(cookieStore),
-    );
-  } catch (error) {}
+  const { posts, totalPages } = await postServices.getPostsByCategory(
+    categorySlug,
+    queryString.stringify(options),
+    generateSSRCookies(cookieStore),
+  );
 
   return (
     <div className="grid grid-cols-12 gap-5">
@@ -59,6 +57,9 @@ const CategorySlug = async ({ params, searchParams }) => {
       ) : (
         posts.map((post) => <Post key={post._id} {...post} />)
       )}
+      <div className="my-5 col-span-12">
+        <Pagination totalPages={totalPages} />
+      </div>
     </div>
   );
 };
