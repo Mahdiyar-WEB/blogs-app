@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import queryString from "query-string";
 import Image from "next/image";
 import toPersianDigits from "utils/toPersianDigits";
+import Pagination from "components/Pagination";
 
 export const metadata = {
   title: "بلاگ ها",
@@ -14,7 +15,7 @@ export const metadata = {
 const Blogs = async ({ searchParams }) => {
   const cookieStore = await cookies();
   const options = await searchParams;
-  const { posts } = await postServices.getAllPosts(
+  const { posts, totalPages } = await postServices.getAllPosts(
     generateSSRCookies(cookieStore),
     queryString.stringify(options),
   );
@@ -57,6 +58,9 @@ const Blogs = async ({ searchParams }) => {
       ) : (
         posts.map((post) => <Post key={post._id} {...post} />)
       )}
+      <div className="my-5 col-span-12">
+        <Pagination totalPages={totalPages} />
+      </div>
     </div>
   );
 };
