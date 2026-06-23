@@ -1,11 +1,12 @@
 "use client";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const SearchBox = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+  const [search, setSearch] = useState(searchParams.get("search") || "");
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -13,11 +14,18 @@ const SearchBox = () => {
     const newParams = new URLSearchParams(searchParams.toString());
     if (searchValue) {
       newParams.set("search", searchValue);
+      newParams.set("page", 1);
     } else {
       newParams.delete("search");
     }
     router.push(`${pathname}?${newParams}`);
   };
+
+  useEffect(() => {
+    return () => {
+      setSearch("");
+    };
+  }, []);
 
   return (
     <form
@@ -27,6 +35,8 @@ const SearchBox = () => {
       <input
         type="text"
         name="search"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
         placeholder="جستجو ..."
         className="w-full bg-inherit outline-none border-none"
       />
