@@ -22,6 +22,7 @@ const schemas = yup.object({
   readingTime: yup.number(),
   slug: yup.string().required("آدرس پست خودرا وارد کنید"),
   category: yup.string().required("دسته بندی را انتخاب کنید"),
+  coverImage: yup.mixed().required("کاور پست الزامی است"),
 });
 
 const CreatePostForm = () => {
@@ -143,6 +144,7 @@ const CreatePostForm = () => {
             />
           )}
         />
+        <FieldError error={errors.coverImage} />
         {coverImageURL && (
           <div className="relative overflow-hidden aspect-1 mt-5 rounded-lg">
             <Image
