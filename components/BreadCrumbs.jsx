@@ -1,0 +1,69 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const labels = {
+  blogs: "بلاگ‌ها",
+  category: "دسته‌بندی",
+  profile: "پروفایل",
+  dashboard: "داشبورد",
+  create: "ایجاد پست",
+  login: "ورود",
+};
+
+const BreadCrumbs = ({ slugTitle = "" }) => {
+  const pathname = usePathname();
+
+  const segments = pathname.split("/").filter(Boolean);
+
+  return (
+    <nav aria-label="breadcrumb">
+      <ol className="flex items-center gap-2 flex-wrap">
+        <li>
+          <Link
+            href="/"
+            className="text-secondary-500 hover:text-secondary-700"
+          >
+            خانه
+          </Link>
+        </li>
+
+        {segments.map((segment, index) => {
+          const href = `/${segments.slice(0, index + 1).join("/")}`;
+
+          const isLast = index === segments.length - 1;
+
+          const label =
+            isLast && slugTitle
+              ? slugTitle
+              : (labels[segment] ?? decodeURIComponent(segment));
+
+          return (
+            <li key={href} className="flex items-center gap-2">
+              <span>/</span>
+
+              {isLast ? (
+                <span
+                  aria-current="page"
+                  className="font-semibold text-secondary-800"
+                >
+                  {label}
+                </span>
+              ) : (
+                <Link
+                  href={href}
+                  className="text-secondary-500 hover:text-secondary-700"
+                >
+                  {label}
+                </Link>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  );
+};
+
+export default BreadCrumbs;
