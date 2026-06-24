@@ -4,6 +4,7 @@ import postServices from "api/postServices";
 import RelatedPosts from "../_components/RelatedPosts";
 import PostComments from "../_components/PostComments";
 import Image from "next/image";
+import BreadCrumbs from "components/BreadCrumbs";
 
 async function getCachedPost(slug) {
   "use cache";
@@ -32,6 +33,7 @@ const SinglePost = async ({ params }) => {
   }
   return (
     <main className="w-11/12 mx-auto 2xl:max-w-screen-2xl">
+      <BreadCrumbs slugTitle={post.title} />
       <section className="space-y-5">
         <h1 className="text-2xl font-bold">{post.title}</h1>
         <h2 className="text-xl">{post.briefText}</h2>
