@@ -1,12 +1,10 @@
 "use client";
 import { yupResolver } from "@hookform/resolvers/yup";
-import categoryServices from "api/categoryServices";
 import SelectForm from "components/SelectForm";
 import SubmitButton from "components/SubmitButton";
 import TextField from "components/TextField";
-import React, { useEffect, useState } from "react";
+import useCategories from "hooks/useCategories";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import * as yup from "yup";
 
 const schemas = yup.object({
@@ -23,8 +21,7 @@ const schemas = yup.object({
 });
 
 const CreatePostForm = () => {
-  const [categoryList, setCategoryList] = useState([]);
-
+  const { selectOptions } = useCategories();
   const {
     register,
     handleSubmit,
@@ -34,25 +31,6 @@ const CreatePostForm = () => {
     resolver: yupResolver(schemas),
     mode: "onTouched",
   });
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const data = await categoryServices.getAllCategories();
-        const selectOptions = data.map(({ _id, title }) => {
-          return { label: title, value: _id };
-        });
-        setCategoryList([
-          { label: "انتخاب کنید", value: "" },
-          ...selectOptions,
-        ]);
-      } catch (error) {
-        toast.error("خطا در دریافت لیست دسته بندی ها");
-      }
-    };
-
-    fetchCategories();
-  }, []);
 
   const onSubmit = async (inputs) => {};
 
@@ -104,7 +82,7 @@ const CreatePostForm = () => {
           name="category"
           register={register}
           hasError={!!errors.category}
-          options={categoryList}
+          options={selectOptions}
         />
         <FieldError error={errors.category} />
       </div>
