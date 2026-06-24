@@ -146,7 +146,7 @@ const CreatePostForm = () => {
         />
         <FieldError error={errors.coverImage} />
         {coverImageURL && (
-          <div className="relative overflow-hidden aspect-1 mt-5 rounded-lg">
+          <div className="relative overflow-hidden aspect-[4/3] mt-5 rounded-lg">
             <Image
               fill
               src={coverImageURL}
