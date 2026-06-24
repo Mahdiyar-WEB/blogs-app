@@ -18,12 +18,12 @@ const BreadCrumbs = ({ slugTitle = "" }) => {
   const segments = pathname.split("/").filter(Boolean);
 
   return (
-    <nav aria-label="breadcrumb">
+    <nav aria-label="breadcrumb" className="mb-5 text-sm">
       <ol className="flex items-center gap-2 flex-wrap">
         <li>
           <Link
             href="/"
-            className="text-secondary-500 hover:text-secondary-700"
+            className="text-secondary-400 hover:text-secondary-700"
           >
             خانه
           </Link>
@@ -46,14 +46,14 @@ const BreadCrumbs = ({ slugTitle = "" }) => {
               {isLast ? (
                 <span
                   aria-current="page"
-                  className="font-semibold text-secondary-800"
+                  className="font-semibold text-secondary-600"
                 >
                   {label}
                 </span>
               ) : (
                 <Link
                   href={href}
-                  className="text-secondary-500 hover:text-secondary-700"
+                  className="text-secondary-400 hover:text-secondary-700"
                 >
                   {label}
                 </Link>
