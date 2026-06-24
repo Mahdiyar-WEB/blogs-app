@@ -6,9 +6,8 @@ import postServices from "api/postServices";
 import { cookies } from "next/headers";
 import generateSSRCookies from "utils/generateSSRCookies";
 import Pagination from "components/Pagination";
-import Button from "components/Button";
-import ButtonIcon from "components/ButtonIcon";
 import Link from "next/link";
+import BreadCrumbs from "components/BreadCrumbs";
 
 const page = async ({ searchParams }) => {
   const query = queryString.stringify(await searchParams);
@@ -19,6 +18,7 @@ const page = async ({ searchParams }) => {
   );
   return (
     <main className="p-5">
+      <BreadCrumbs />
       <div className="flex justify-between items-center">
         <Suspense>
           <SearchBox />
