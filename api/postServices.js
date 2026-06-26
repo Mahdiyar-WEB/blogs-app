@@ -7,6 +7,11 @@ const postServices = {
     const { post } = data || null;
     return post;
   },
+  getPostById: async (id) => {
+    const { data = {} } = await callAPI.get(`/post/${id}`);
+    const { post } = data || null;
+    return post;
+  },
   getAllPosts: async (cookies, searchOption) => {
     const { data } = await callAPI.get(`post/list?${searchOption}`, cookies);
     return data;
