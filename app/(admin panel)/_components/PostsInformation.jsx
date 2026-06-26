@@ -9,6 +9,7 @@ import toPersianDigits from "utils/toPersianDigits";
 import truncateText from "utils/truncateText";
 import DeletePostModal from "./DeletePostModal";
 import Image from "next/image";
+import useGetPosts from "hooks/useGetPosts";
 
 const postTypeValues = {
   free: {
@@ -22,22 +23,9 @@ const postTypeValues = {
 };
 
 const PostsInformation = ({ fetchQueries = "" }) => {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { posts = [], isLoading } = useGetPosts(fetchQueries);
   const [selectedPost, setSelectedPost] = useState({});
   const [postAction, setPostAction] = useState("");
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const { posts } = await postServices.getAllPosts(
-        generateSSRCookies(cookieStore),
-        fetchQueries,
-      );
-      setPosts(posts);
-      setLoading(false);
-    };
-    fetchPosts();
-  }, [fetchQueries]);
 
   const postActionHandler = (post, action) => {
     setSelectedPost(post);
@@ -112,7 +100,7 @@ const PostsInformation = ({ fetchQueries = "" }) => {
               </Table.Row>
             );
           })}
-          {loading &&
+          {isLoading &&
             Array.from({ length: 5 }).map((_, index) => (
               <Table.Row key={index} className="animate-pulse">
                 <td>
@@ -140,7 +128,7 @@ const PostsInformation = ({ fetchQueries = "" }) => {
             ))}
         </Table.Body>
       </Table>
-      {posts.length === 0 && !loading && (
+      {posts.length === 0 && !isLoading && (
         <div className="flex justify-center flex-col items-center bg-white py-3">
           <Image
             priority
