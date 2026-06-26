@@ -9,6 +9,7 @@ const labels = {
   profile: "پروفایل",
   dashboard: "داشبورد",
   create: "ایجاد پست",
+  edit: "ویرایش پست",
   login: "ورود",
 };
 
