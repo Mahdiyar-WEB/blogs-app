@@ -9,7 +9,7 @@ const useCreatePost = () => {
     onSuccess: ({ data }) => {
       toast.success(data?.message);
       queryClient.invalidateQueries({
-        queryKey: ["posts"],
+        queryKey: ["get-posts"],
       });
     },
     onError: (error) => {
