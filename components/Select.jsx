@@ -26,7 +26,7 @@ const Select = ({ value, onChange, options }) => {
         onClick={() => setOpen((prev) => !prev)}
         className="w-full h-full px-3 text-left text-sm rounded-md text-secondary-500 bg-secondary-50/20 flex justify-between items-center"
       >
-        <span className="font-medium">{selected?.label}</span>
+        <span className="font-medium text-xs md:text-sm">{selected?.label}</span>
         <span
           className={`${open && "rotate-180"} transition-all duration-200 ease-out`}
         >
