@@ -1,8 +1,8 @@
 import BreadCrumbs from "components/BreadCrumbs";
 import React from "react";
-import CreatePostForm from "../create/CreatePostForm";
 import postServices from "api/postServices";
 import { notFound } from "next/navigation";
+import EditPostForm from "./EditPostForm";
 
 const fetchPostById = async (postId) => {
   try {
@@ -24,12 +24,14 @@ const EditPostPage = async ({ searchParams }) => {
     category,
     coverImageUrl,
     coverImage,
+    _id,
   } = await fetchPostById(postId);
 
   return (
     <main className="p-5">
       <BreadCrumbs />
-      <CreatePostForm
+      <EditPostForm
+        key={postId}
         initialValues={{
           title,
           briefText,
@@ -39,6 +41,7 @@ const EditPostPage = async ({ searchParams }) => {
           category: category._id,
           coverImageUrl,
           coverImage,
+          _id
         }}
       />
     </main>
