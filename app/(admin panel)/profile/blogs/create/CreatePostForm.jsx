@@ -15,11 +15,21 @@ const schemas = yup.object({
   title: yup
     .string()
     .min(5, "حداقل ۵ حرف وارد کنید")
-    .max(30, "تعداد حروف زیاد است")
-    .required("نام و نام خانوادگی را وارد کنید"),
-  briefText: yup.string().required("عنوان کوتاه خودرا وارد کنید"),
-  text: yup.string().required(""),
-  readingTime: yup.number(),
+    .required("عنوان پست را وارد کنید"),
+  briefText: yup
+    .string()
+    .min(5, "حداقل ۵ حرف وارد کنید")
+    .required("توضیحات پست خود را وارد کنید"),
+  text: yup
+    .string()
+    .min(5, "حداقل ۵ حرف وارد کنید")
+    .required("متن پست را وارد کنید"),
+  readingTime: yup
+    .number()
+    .positive()
+    .integer()
+    .required("زمان مطالعه پست خود را وارد کنید")
+    .typeError("عدد وارد کنید"),
   slug: yup.string().required("آدرس پست خودرا وارد کنید"),
   category: yup.string().required("دسته بندی را انتخاب کنید"),
   coverImage: yup.mixed().required("کاور پست الزامی است"),
@@ -39,7 +49,13 @@ const CreatePostForm = () => {
     mode: "onTouched",
   });
 
-  const onSubmit = async (inputs) => {};
+  const onSubmit = async (inputs) => {
+    const formData = new FormData();
+    for (const key in inputs) {
+      formData.append(key, inputs[key]);
+    }
+    console.log("🚀 ~ onSubmit ~ formData:", formData);
+  };
 
   useEffect(() => {
     return () => {
