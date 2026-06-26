@@ -27,6 +27,9 @@ const postServices = {
   deletePost: async (id) => {
     return await callAPI.delete(`post/remove/${id}`);
   },
+  createPost: async (data) => {
+    return await callAPI.post("post/create", data);
+  },
 };
 
 export default postServices;
