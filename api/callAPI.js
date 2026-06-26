@@ -46,23 +46,30 @@ const callAPI = {
     return data;
   },
   post: async (endPoint, inputs, cookies) => {
+    const isFormData = inputs instanceof FormData;
+
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/${endPoint}`,
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json; charset=utf-8",
+          ...(isFormData
+            ? {}
+            : { "Content-Type": "application/json; charset=utf-8" }),
           Cookie: cookies || "",
         },
-        body: JSON.stringify(inputs),
+        body: isFormData ? inputs : JSON.stringify(inputs),
         credentials: "include",
       },
     );
+
     const data = await response.json();
-    if (!response.ok)
+
+    if (!response.ok) {
       throw new Error(
         data?.message ?? `HTTP error! status: ${response.status}`,
       );
+    }
 
     return data;
   },
