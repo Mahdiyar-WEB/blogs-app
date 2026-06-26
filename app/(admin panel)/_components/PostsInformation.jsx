@@ -1,15 +1,14 @@
 "use client";
-import postServices from "api/postServices";
 import ButtonIcon from "components/ButtonIcon";
 import Table from "components/Table";
-import React, { useEffect, useState } from "react";
-import generateSSRCookies from "utils/generateSSRCookies";
+import React, { useState } from "react";
 import toLocalDateShort from "utils/toLocalDateShort";
 import toPersianDigits from "utils/toPersianDigits";
 import truncateText from "utils/truncateText";
 import DeletePostModal from "./DeletePostModal";
 import Image from "next/image";
 import useGetPosts from "hooks/useGetPosts";
+import { useRouter } from "next/navigation";
 
 const postTypeValues = {
   free: {
@@ -23,18 +22,12 @@ const postTypeValues = {
 };
 
 const PostsInformation = ({ fetchQueries = "" }) => {
+  const router = useRouter();
   const { posts = [], isLoading } = useGetPosts(fetchQueries);
-  const [selectedPost, setSelectedPost] = useState({});
-  const [postAction, setPostAction] = useState("");
-
-  const postActionHandler = (post, action) => {
-    setSelectedPost(post);
-    setPostAction(action);
-  };
+  const [selectedPost, setSelectedPost] = useState(null);
 
   const onClosePostAction = () => {
-    setPostAction("");
-    setPostAction({});
+    setSelectedPost(null);
   };
 
   return (
@@ -67,7 +60,9 @@ const PostsInformation = ({ fetchQueries = "" }) => {
                   <div className="flex gap-3">
                     <ButtonIcon
                       variant="primary"
-                      onClick={() => postActionHandler(post, "edit")}
+                      onClick={() =>
+                        router.push(`/profile/blogs/edit?postId=${post._id}`)
+                      }
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +75,7 @@ const PostsInformation = ({ fetchQueries = "" }) => {
                     </ButtonIcon>
                     <ButtonIcon
                       variant="red"
-                      onClick={() => postActionHandler(post, "delete")}
+                      onClick={() => setSelectedPost(post)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -143,7 +138,7 @@ const PostsInformation = ({ fetchQueries = "" }) => {
         </div>
       )}
       <DeletePostModal
-        open={selectedPost && postAction === "delete"}
+        open={selectedPost}
         post={selectedPost}
         onClose={onClosePostAction}
       />
