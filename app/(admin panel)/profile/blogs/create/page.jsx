@@ -2,7 +2,7 @@ import BreadCrumbs from "components/BreadCrumbs";
 import React from "react";
 import CreatePostForm from "./CreatePostForm";
 
-const CreatePost = () => {
+const CreatePostPage = () => {
   return (
     <main className="p-5">
       <BreadCrumbs />
@@ -11,4 +11,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default CreatePostPage;
