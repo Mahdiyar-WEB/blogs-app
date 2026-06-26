@@ -35,6 +35,9 @@ const postServices = {
   createPost: async (data) => {
     return await callAPI.post("post/create", data);
   },
+  updatePost: async ({ id, data }) => {
+    return await callAPI.patch(`post/update/${id}`, data);
+  },
 };
 
 export default postServices;
