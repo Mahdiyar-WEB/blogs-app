@@ -6,7 +6,9 @@ import SelectForm from "components/SelectForm";
 import SubmitButton from "components/SubmitButton";
 import TextField from "components/TextField";
 import useCategories from "hooks/useCategories";
+import useCreatePost from "hooks/useCreatePost";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
@@ -36,14 +38,17 @@ const schemas = yup.object({
 });
 
 const CreatePostForm = () => {
+  const router = useRouter();
   const [coverImageURL, setCoverImageURL] = useState(null);
   const { selectOptions } = useCategories();
+  const { createPost, isCreating } = useCreatePost();
   const {
     register,
     handleSubmit,
     setValue,
     control,
-    formState: { errors, isLoading },
+    reset,
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(schemas),
     mode: "onTouched",
@@ -54,7 +59,13 @@ const CreatePostForm = () => {
     for (const key in inputs) {
       formData.append(key, inputs[key]);
     }
-    console.log("🚀 ~ onSubmit ~ formData:", formData);
+    createPost(formData, {
+      onSuccess: () => {
+        router.push("/profile/blogs");
+        reset();
+        setCoverImageURL(null);
+      },
+    });
   };
 
   useEffect(() => {
@@ -83,11 +94,11 @@ const CreatePostForm = () => {
       </div>
       <div>
         <TextField
-          label="عنوان کوتاه"
+          label="توضیح کوتاه"
           name="briefText"
           type="text"
           dir="rtl"
-          placeholder="عنوان کوتاه"
+          placeholder="توضیح کوتاه"
           register={register}
           hasError={!!errors.briefText}
         />
@@ -195,7 +206,7 @@ const CreatePostForm = () => {
           </div>
         )}
       </div>
-      <SubmitButton loading={isLoading} className="w-full">
+      <SubmitButton loading={isCreating} className="w-full">
         ثبت پست
       </SubmitButton>
     </form>
