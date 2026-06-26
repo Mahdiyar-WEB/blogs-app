@@ -7,7 +7,7 @@ const DeletePostModal = ({ open, post, onClose }) => {
     <Modal open={open} title="حذف پست" onClose={onClose}>
       <p className="flex gap-2 mb-5">
         <span>آیا از حذف پست</span>
-        <span className="font-semibold">&quot;{post.title}&quot;</span>
+        <span className="font-semibold">&quot;{post?.title}&quot;</span>
         <span>اطمینان دارید؟</span>
       </p>
       <div className="flex gap-3 justify-end">
