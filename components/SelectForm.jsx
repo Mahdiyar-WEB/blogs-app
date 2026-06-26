@@ -8,6 +8,7 @@ function SelectForm({
   icon,
   options = [],
   setValue,
+  value
 }) {
   return (
     <div>
@@ -15,6 +16,7 @@ function SelectForm({
       <div className="relative">
         <select
           {...register(name)}
+          value={value || ''}
           onChange={(e) =>
             setValue(name, e.target.value, { shouldValidate: true })
           }
