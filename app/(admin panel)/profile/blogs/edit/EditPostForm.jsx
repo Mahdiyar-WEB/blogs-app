@@ -6,11 +6,12 @@ import SelectForm from "components/SelectForm";
 import SubmitButton from "components/SubmitButton";
 import TextField from "components/TextField";
 import useCategories from "hooks/useCategories";
-import useCreatePost from "hooks/useCreatePost";
+import useUpdatePost from "hooks/useUpdatePost";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { imageUrlToFile } from "utils/fileFormatter";
 import * as yup from "yup";
 
 const schemas = yup.object({
@@ -34,14 +35,26 @@ const schemas = yup.object({
     .typeError("عدد وارد کنید"),
   slug: yup.string().required("آدرس پست خودرا وارد کنید"),
   category: yup.string().required("دسته بندی را انتخاب کنید"),
-  coverImage: yup.mixed().required("کاور پست الزامی است"),
+  coverImage: yup.mixed().required("عکس پست خود را وارد کنید"),
 });
 
-const CreatePostForm = () => {
-  const router = useRouter();
-  const [coverImageURL, setCoverImageURL] = useState(null);
-  const { selectOptions } = useCategories();
-  const { createPost, isCreating } = useCreatePost();
+const EditPostForm = ({
+  initialValues,
+  postId,
+  coverImageUrl,
+  coverImage,
+  coverImageName,
+}) => {
+  const defaultValues = useMemo(
+    () => ({
+      ...initialValues,
+      coverImage: new File([coverImage], coverImageName, {
+        type: coverImage.type,
+      }),
+    }),
+    [initialValues, coverImage, coverImageName],
+  );
+
   const {
     register,
     handleSubmit,
@@ -51,30 +64,32 @@ const CreatePostForm = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schemas),
-    mode: "onTouched",
+    defaultValues,
+    mode: "all",
   });
+  
+  const router = useRouter();
+  const [coverImageURL, setCoverImageURL] = useState(coverImageUrl || "");
+  const { selectOptions } = useCategories();
+
+  const { isUpdating, updatePost } = useUpdatePost();
 
   const onSubmit = async (inputs) => {
     const formData = new FormData();
     for (const key in inputs) {
       formData.append(key, inputs[key]);
     }
-    createPost(formData, {
-      onSuccess: () => {
-        router.push("/profile/blogs");
-        reset();
-        setCoverImageURL(null);
+    updatePost(
+      { id: postId, data: formData },
+      {
+        onSuccess: () => {
+          router.push("/profile/blogs");
+          reset();
+        },
       },
-    });
+    );
   };
 
-  useEffect(() => {
-    return () => {
-      if (coverImageURL) {
-        URL.revokeObjectURL(coverImageURL);
-      }
-    };
-  }, [coverImageURL]);
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -118,6 +133,7 @@ const CreatePostForm = () => {
       </div>
       <div>
         <SelectForm
+          setValue={setValue}
           label="دسته بندی"
           name="category"
           register={register}
@@ -205,7 +221,7 @@ const CreatePostForm = () => {
           </div>
         )}
       </div>
-      <SubmitButton loading={isCreating} className="w-full">
+      <SubmitButton loading={isUpdating} className="w-full">
         ثبت پست
       </SubmitButton>
     </form>
@@ -215,4 +231,4 @@ const CreatePostForm = () => {
 const FieldError = ({ error }) =>
   error ? <span className="text-xs text-red-500">{error.message}</span> : null;
 
-export default CreatePostForm;
+export default EditPostForm;

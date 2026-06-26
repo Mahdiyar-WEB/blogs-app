@@ -3,6 +3,7 @@ import React from "react";
 import postServices from "api/postServices";
 import { notFound } from "next/navigation";
 import EditPostForm from "./EditPostForm";
+import { imageUrlToFile } from "utils/fileFormatter";
 
 const fetchPostById = async (postId) => {
   try {
@@ -23,10 +24,10 @@ const EditPostPage = async ({ searchParams }) => {
     slug,
     category,
     coverImageUrl,
-    coverImage,
     _id,
   } = await fetchPostById(postId);
 
+  const coverImageFile = await imageUrlToFile(coverImageUrl);
   return (
     <main className="p-5">
       <BreadCrumbs />
@@ -39,10 +40,11 @@ const EditPostPage = async ({ searchParams }) => {
           readingTime,
           slug,
           category: category._id,
-          coverImageUrl,
-          coverImage,
-          _id
         }}
+        postId={_id}
+        coverImage={coverImageFile}
+        coverImageName={coverImageFile.name}
+        coverImageUrl={coverImageUrl}
       />
     </main>
   );
