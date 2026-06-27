@@ -11,6 +11,7 @@ const labels = {
   create: "ایجاد پست",
   edit: "ویرایش پست",
   login: "ورود",
+  comments:'نظرات'
 };
 
 const BreadCrumbs = ({ slugTitle = "" }) => {
