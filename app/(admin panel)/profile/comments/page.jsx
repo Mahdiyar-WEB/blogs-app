@@ -17,8 +17,7 @@ const CommentsPage = async ({ searchParams }) => {
       <Suspense>
         <SearchBox />
       </Suspense>
-      <CommentsInformation comments={data.comments} />
-
+      <CommentsInformation fetchQueries={query} />
       <Pagination totalPages={data.totalPages} />
     </main>
   );
