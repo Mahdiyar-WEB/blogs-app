@@ -8,7 +8,7 @@ import BreadCrumbs from "components/BreadCrumbs";
 
 async function getCachedPost(slug) {
   "use cache";
-  cacheLife("hours");
+  cacheLife("minutes");
   return await postServices.getPostBySlug(slug);
 }
 
