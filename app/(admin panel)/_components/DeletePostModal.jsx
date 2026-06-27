@@ -1,17 +1,14 @@
 import Button from "components/Button";
 import Modal from "components/Modal";
 import useDeletePost from "hooks/useDeletePost";
-import { useRouter } from "next/navigation";
 import React from "react";
 
 const DeletePostModal = ({ post, onClose }) => {
   const { deletePost } = useDeletePost();
-  const router = useRouter();
 
   const deletePostHandler = async () => {
     deletePost(post?._id);
     onClose();
-    router.refresh();
   };
 
   return (
