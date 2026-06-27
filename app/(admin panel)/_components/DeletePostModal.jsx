@@ -1,22 +1,14 @@
-import { useQueryClient } from "@tanstack/react-query";
-import postServices from "api/postServices";
 import Button from "components/Button";
 import Modal from "components/Modal";
+import useDeletePost from "hooks/useDeletePost";
 import React from "react";
-import toast from "react-hot-toast";
 
 const DeletePostModal = ({ open, post, onClose }) => {
-  const queryClient = useQueryClient();
-  
+  const { deletePost } = useDeletePost();
+
   const deletePostHandler = async () => {
-    try {
-      const { data } = await postServices.deletePost(post._id);
-      toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ["get-posts"] });
-      onClose();
-    } catch (error) {
-      toast.error(error.message);
-    }
+    deletePost(post?._id);
+    onClose();
   };
 
   return (
