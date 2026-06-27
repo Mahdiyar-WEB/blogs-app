@@ -4,8 +4,8 @@ const commentServices = {
   addNewComment: async (values) => {
     return await callAPI.post("comment/add", values);
   },
-  getAllComments: async (cookies) => {
-    return await callAPI.get("comment/list", cookies);
+  getAllComments: async (cookies, searchOption) => {
+    return await callAPI.get(`comment/list?${searchOption}`, cookies);
   },
 };
 
