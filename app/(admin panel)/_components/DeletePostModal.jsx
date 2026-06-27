@@ -1,18 +1,21 @@
 import Button from "components/Button";
 import Modal from "components/Modal";
 import useDeletePost from "hooks/useDeletePost";
+import { useRouter } from "next/navigation";
 import React from "react";
 
-const DeletePostModal = ({ open, post, onClose }) => {
+const DeletePostModal = ({ post, onClose }) => {
   const { deletePost } = useDeletePost();
+  const router = useRouter();
 
   const deletePostHandler = async () => {
     deletePost(post?._id);
     onClose();
+    router.refresh();
   };
 
   return (
-    <Modal open={open} title="حذف پست" onClose={onClose}>
+    <Modal open={!!post} title="حذف پست" onClose={onClose}>
       <p className="flex gap-2 mb-5">
         <span>آیا از حذف پست</span>
         <span className="font-semibold">&quot;{post?.title}&quot;</span>
