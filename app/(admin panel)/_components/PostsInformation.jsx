@@ -156,7 +156,6 @@ const PostsInformation = ({ fetchQueries = "" }) => {
         </div>
       )}
       <DeletePostModal
-        open={selectedPost}
         post={selectedPost}
         onClose={onClosePostAction}
       />
