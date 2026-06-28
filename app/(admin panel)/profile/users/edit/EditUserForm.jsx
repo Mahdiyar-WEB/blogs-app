@@ -14,10 +14,8 @@ import { useRouter } from "next/navigation";
 
 const schema = yup.object({
   name: yup.string().min(3, "حداقل ۳ حرف وارد کنید").required("نام الزامی است"),
-
   email: yup.string().email("ایمیل معتبر نیست").required("ایمیل الزامی است"),
-
-  avatar: yup.mixed().required("عکس پروفایل الزامی است"),
+  avatar: yup.mixed().nullable(),
 });
 
 const EditUserForm = ({
@@ -32,9 +30,12 @@ const EditUserForm = ({
   const defaultValues = useMemo(
     () => ({
       ...initialValues,
-      avatar: new File([avatar], avatarName, {
-        type: avatar.type,
-      }),
+      avatar:
+        avatar && avatarName
+          ? new File([avatar], avatarName, {
+              type: avatar?.type || "image/jpeg",
+            })
+          : null,
     }),
     [initialValues, avatar, avatarName],
   );
@@ -60,7 +61,18 @@ const EditUserForm = ({
     const formData = new FormData();
 
     for (const key in inputs) {
-      formData.append(key, inputs[key]);
+      if (key === "avatar") continue;
+      if (inputs[key] !== null && inputs[key] !== undefined) {
+        formData.append(key, inputs[key]);
+      }
+    }
+
+    if (inputs.avatar instanceof File) {
+      formData.append("filename", inputs.avatar.name);
+      formData.append("fileUploadPath", "uploads/avatars");
+      formData.append("avatar", inputs.avatar);
+    } else if (inputs.avatar === null) {
+      formData.append("removeAvatar", true);
     }
 
     updateUser(
@@ -120,6 +132,7 @@ const EditUserForm = ({
               {...rest}
               onChange={(e) => {
                 const file = e.target.files?.[0];
+                if (!file) return;
                 onChange(file);
                 setAvatarURL(URL.createObjectURL(file));
                 e.target.value = null;
@@ -129,7 +142,7 @@ const EditUserForm = ({
         />
         <FieldError error={errors.avatar} />
 
-        {avatarURL && (
+        {avatarURL ? (
           <div className="relative overflow-hidden aspect-[4/3] mt-5 rounded-lg">
             <Image
               fill
@@ -161,6 +174,10 @@ const EditUserForm = ({
                 />
               </svg>
             </ButtonIcon>
+          </div>
+        ) : (
+          <div className="mt-5 p-4 rounded-lg border border-dashed text-center text-gray-500 text-sm">
+            👤 فاقد عکس پروفایل
           </div>
         )}
       </div>
