@@ -9,9 +9,8 @@ import useCategories from "hooks/useCategories";
 import useUpdatePost from "hooks/useUpdatePost";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { imageUrlToFile } from "utils/fileFormatter";
 import * as yup from "yup";
 
 const schemas = yup.object({
@@ -67,7 +66,7 @@ const EditPostForm = ({
     defaultValues,
     mode: "all",
   });
-  
+
   const router = useRouter();
   const [coverImageURL, setCoverImageURL] = useState(coverImageUrl || "");
   const { selectOptions } = useCategories();
@@ -222,7 +221,7 @@ const EditPostForm = ({
         )}
       </div>
       <SubmitButton loading={isUpdating} className="w-full">
-        ثبت پست
+        ذخیره تغییرات
       </SubmitButton>
     </form>
   );
