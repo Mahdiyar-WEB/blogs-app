@@ -16,7 +16,7 @@ const fetchAppInformation = async () => {
       postServices.getAllPosts(generateSSRCookies(cookieStore)),
       commentServices.getAllComments(),
     ]);
-    const usersCount = Number(data[0].data.users.length ?? "0");
+    const usersCount = Number(data[0].data.totalUsers ?? "0");
 
     const postsCount = Number(data[1].length ?? "0");
 
