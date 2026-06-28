@@ -18,9 +18,9 @@ const fetchAppInformation = async () => {
     ]);
     const usersCount = Number(data[0].data.totalUsers ?? "0");
 
-    const postsCount = Number(data[1].length ?? "0");
+    const postsCount = Number(data[1].totalPosts ?? "0");
 
-    const commentsCount = Number(data[2].data.comments.length ?? "0");
+    const commentsCount = Number(data[2].data.totalComments ?? "0");
 
     return { usersCount, postsCount, commentsCount };
   } catch (error) {
