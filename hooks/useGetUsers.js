@@ -6,7 +6,7 @@ const useGetUsers = (params) => {
     queryFn: () => {
       return userServices.getAllUsers("", params);
     },
-    queryKey: ["get-comments", params],
+    queryKey: ["get-users", params],
   });
   return { users: data?.data?.users || [], isLoading };
 };
