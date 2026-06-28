@@ -32,6 +32,7 @@ export default function Header({ onMobileToggle }) {
         alt="profile"
         width={35}
         height={35}
+        className={user?.avatarUrl && 'rounded-full ring-1 ring-secondary-300'}
         src={user?.avatarUrl || "/avatar.svg"}
       />
     </header>
