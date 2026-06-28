@@ -19,8 +19,8 @@ function TableBody({ children }) {
   return <tbody>{children}</tbody>;
 }
 
-function TableRow({ children }) {
-  return <tr>{children}</tr>;
+function TableRow({ children, className }) {
+  return <tr className={className}>{children}</tr>;
 }
 
 Table.Header = TableHeader;
