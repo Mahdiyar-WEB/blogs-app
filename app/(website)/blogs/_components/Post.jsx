@@ -68,13 +68,14 @@ const Post = ({
         <div className="flex justify-between items-center mt-3">
           {/* author */}
           <div className="flex justify-center items-center gap-2">
-            <Image
-              alt={author?.name}
-              className={author?.avatarUrl && "rounded-full ring-1 ring-secondary-300"}
-              width={30}
-              height={30}
-              src={author?.avatarUrl || "/avatar.svg"}
-            />
+            <div className="relative w-8 h-8 ">
+              <Image
+                alt={author?.name}
+                className={`${author?.avatarUrl && "rounded-full ring-1 ring-secondary-300"} object-cover object-center`}
+                fill
+                src={author?.avatarUrl || "/avatar.svg"}
+              />
+            </div>
             <span>{author?.name}</span>
           </div>
           {/* reading time */}
