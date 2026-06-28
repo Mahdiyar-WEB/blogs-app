@@ -1,8 +1,8 @@
 import callAPI from "api/callAPI";
 
 const userServices = {
-  getAllUsers: async (cookies) => {
-    return await callAPI.get("user/list",cookies);
+  getAllUsers: async (cookies, searchOptions = "") => {
+    return await callAPI.get(`user/list?${searchOptions}`, cookies);
   },
 };
 
