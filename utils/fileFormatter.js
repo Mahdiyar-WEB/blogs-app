@@ -7,10 +7,22 @@ const getFilename = (url) => {
 };
 
 export const imageUrlToFile = async (imgUrl) => {
-  const response = await fetch(imgUrl);
-  const blob = await response.blob();
-  const file = new File([blob], getFilename(imgUrl), {
-    type: blob.type,
-  });
-  return file;
+  if (!imgUrl) return null;
+
+  try {
+    const response = await fetch(imgUrl);
+
+    if (!response.ok) {
+      throw new Error("Image fetch failed");
+    }
+
+    const blob = await response.blob();
+
+    return new File([blob], getFilename(imgUrl), {
+      type: blob.type,
+    });
+  } catch (err) {
+    console.error("imageUrlToFile error:", err);
+    return null;
+  }
 };
