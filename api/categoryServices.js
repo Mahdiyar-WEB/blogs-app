@@ -1,9 +1,8 @@
 const { default: callAPI } = require("api/callAPI");
 
 const categoryServices = {
-  getAllCategories: async () => {
-    const res = await callAPI.get("category/list");
-    const { data } = res;
+  getAllCategories: async (searchOptions = "") => {
+    const data = await callAPI.get(`category/list?${searchOptions}`);
     return data;
   },
 };
