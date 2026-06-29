@@ -5,7 +5,7 @@ import FileInput from "components/FileInput";
 import SelectForm from "components/SelectForm";
 import SubmitButton from "components/SubmitButton";
 import TextField from "components/TextField";
-import useCategories from "hooks/categories/useCategories";
+import useGetCategories from "hooks/categories/useGetCategories";
 import useUpdatePost from "hooks/posts/useUpdatePost";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -69,7 +69,7 @@ const EditPostForm = ({
 
   const router = useRouter();
   const [coverImageURL, setCoverImageURL] = useState(coverImageUrl || "");
-  const { selectOptions } = useCategories();
+  const { selectOptions } = useGetCategories();
 
   const { isUpdating, updatePost } = useUpdatePost();
 
