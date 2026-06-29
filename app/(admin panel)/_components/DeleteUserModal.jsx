@@ -1,6 +1,6 @@
 import Button from "components/Button";
 import Modal from "components/Modal";
-import useDeleteUser from "hooks/useDeleteUser";
+import useDeleteUser from "hooks/users/useDeleteUser";
 import React from "react";
 
 const DeleteUserModal = ({ user, onClose }) => {

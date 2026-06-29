@@ -6,7 +6,7 @@ import toLocalDateShort from "utils/toLocalDateShort";
 import toPersianDigits from "utils/toPersianDigits";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import useGetUsers from "hooks/useGetUsers";
+import useGetUsers from "hooks/users/useGetUsers";
 import DeleteUserModal from "./DeleteUserModal";
 
 const UsersInformation = ({ fetchQueries }) => {

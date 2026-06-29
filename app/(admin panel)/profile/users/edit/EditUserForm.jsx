@@ -9,7 +9,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
-import useUpdateUser from "hooks/useUpdateUser";
+import useUpdateUser from "hooks/users/useUpdateUser";
 import { useRouter } from "next/navigation";
 
 const schema = yup.object({

@@ -9,7 +9,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Button from "components/Button";
 import DeleteCommentModal from "./DeleteCommentModal";
-import useGetComments from "hooks/useGetComments";
+import useGetComments from "hooks/comments/useGetComments";
 
 const CommentsInformation = ({ fetchQueries }) => {
   const { comments, isLoading } = useGetComments(fetchQueries);
@@ -153,7 +153,7 @@ const CommentsInformation = ({ fetchQueries }) => {
 
               {openedComments.includes(comment._id) &&
                 comment.answers.map((answer) => (
-                  <Table.Row key={answer._id} className='bg-secondary-50'>
+                  <Table.Row key={answer._id} className="bg-secondary-50">
                     <td>↲</td>
 
                     <td className="pr-10">

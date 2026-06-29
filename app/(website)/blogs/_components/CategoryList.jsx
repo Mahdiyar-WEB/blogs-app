@@ -3,11 +3,11 @@ import React from "react";
 import categoryServices from "api/categoryServices";
 
 const CategoryList = async () => {
-  const categories = await categoryServices.getAllCategories();
+  const data = await categoryServices.getAllCategories();
   return (
     <ul className="text-md md:text-lg space-y-3 ms-3">
       <NavLink listOption path="/blogs" text="همه" />
-      {categories.map(({ title, slug, _id }) => {
+      {data?.categories.map(({ title, slug, _id }) => {
         return (
           <li key={_id}>
             <NavLink

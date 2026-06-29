@@ -7,7 +7,7 @@ import toPersianDigits from "utils/toPersianDigits";
 import truncateText from "utils/truncateText";
 import DeletePostModal from "./DeletePostModal";
 import Image from "next/image";
-import useGetPosts from "hooks/useGetPosts";
+import useGetPosts from "hooks/posts/useGetPosts";
 import { useRouter } from "next/navigation";
 
 const postTypeValues = {

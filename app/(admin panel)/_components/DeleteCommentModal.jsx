@@ -1,6 +1,6 @@
 import Button from "components/Button";
 import Modal from "components/Modal";
-import useDeleteComment from "hooks/useDeleteComment";
+import useDeleteComment from "hooks/comments/useDeleteComment";
 import React from "react";
 
 const DeleteCommentModal = ({ comment, onClose }) => {
