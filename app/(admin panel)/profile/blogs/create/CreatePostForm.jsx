@@ -5,7 +5,7 @@ import FileInput from "components/FileInput";
 import SelectForm from "components/SelectForm";
 import SubmitButton from "components/SubmitButton";
 import TextField from "components/TextField";
-import useCategories from "hooks/categories/useCategories";
+import useGetCategories from "hooks/categories/useGetCategories";
 import useCreatePost from "hooks/posts/useCreatePost";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -40,7 +40,7 @@ const schemas = yup.object({
 const CreatePostForm = () => {
   const router = useRouter();
   const [coverImageURL, setCoverImageURL] = useState(null);
-  const { selectOptions } = useCategories();
+  const { selectOptions } = useGetCategories();
   const { createPost, isCreating } = useCreatePost();
   const {
     register,
