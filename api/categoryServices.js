@@ -15,6 +15,9 @@ const categoryServices = {
   updateCategory: async ({ id, data }) => {
     return await callAPI.patch(`category/update/${id}`, data);
   },
+  createCategory: async (data) => {
+    return await callAPI.post("category/add", data);
+  },
 };
 
 export default categoryServices;
