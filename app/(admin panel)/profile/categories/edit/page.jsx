@@ -21,8 +21,9 @@ const EditCategoryPage = async ({ searchParams }) => {
 
   return (
     <main className="p-5">
-      <BreadCrumbs slugTitle="ویرایش دسته بندی"/>
+      <BreadCrumbs slugTitle="ویرایش دسته بندی" />
       <EditCategoryForm
+        key={category._id}
         initialValues={{
           title: category.title,
           englishTitle: category.englishTitle,
