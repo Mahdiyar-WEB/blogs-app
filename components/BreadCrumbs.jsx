@@ -12,7 +12,8 @@ const labels = {
   edit: "ویرایش پست",
   login: "ورود",
   comments:'نظرات',
-  users: 'کاربران'
+  users: 'کاربران',
+  categories:'دسته بندی ها'
 };
 
 const BreadCrumbs = ({ slugTitle = "" }) => {
