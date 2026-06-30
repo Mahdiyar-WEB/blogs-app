@@ -4,7 +4,6 @@ import SubmitButton from "components/SubmitButton";
 import TextField from "components/TextField";
 import useUpdateCategory from "hooks/categories/useUpdateCategory";
 import { useRouter } from "next/navigation";
-import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
@@ -24,17 +23,13 @@ const schemas = yup.object({
 });
 
 const EditCategoryForm = ({ initialValues, categoryId }) => {
-  console.log("🚀 ~ EditCategoryForm ~ initialValues:", initialValues);
-  const defaultValues = useMemo(() => initialValues, [initialValues]);
-
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schemas),
-    defaultValues,
+    defaultValues: initialValues,
     mode: "all",
   });
 
@@ -47,7 +42,6 @@ const EditCategoryForm = ({ initialValues, categoryId }) => {
       { id: categoryId, data: inputs },
       {
         onSuccess: () => {
-          reset({}, { keepValues: false });
           router.push("/profile/categories");
         },
       },
