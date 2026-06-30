@@ -39,7 +39,7 @@ const EditPostPage = async ({ searchParams }) => {
           text,
           readingTime,
           slug,
-          category: category._id,
+          category: category?._id || "",
         }}
         postId={_id}
         coverImage={coverImageFile}
