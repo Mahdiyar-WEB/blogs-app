@@ -2,10 +2,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import categoryServices from "api/categoryServices";
 import toast from "react-hot-toast";
 
-const useUpdateCategory = () => {
+const useCreateCategory = () => {
   const queryClient = useQueryClient();
-  const { mutate: updateCategory, isPending: isUpdating } = useMutation({
-    mutationFn: categoryServices.updateCategory,
+  const { mutate: createCategory, isPending: isUpdating } = useMutation({
+    mutationFn: categoryServices.createCategory,
     onSuccess: ({ data }) => {
       toast.success(data?.message);
       queryClient.invalidateQueries({
@@ -17,7 +17,7 @@ const useUpdateCategory = () => {
     },
   });
 
-  return { updateCategory, isUpdating };
+  return { createCategory, isUpdating };
 };
 
-export default useUpdateCategory;
+export default useCreateCategory;
