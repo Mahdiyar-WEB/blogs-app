@@ -151,7 +151,9 @@
   /* ───────── Auth page ───────── */
 
   .auth-card {
-    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0, 0, 0, 0.04);
+    box-shadow:
+      0 2px 24px rgba(0, 0, 0, 0.07),
+      0 1px 4px rgba(0, 0, 0, 0.04);
     @apply bg-secondary-0 h-fit rounded-2xl overflow-hidden border max-w-xl w-11/12 mx-auto;
   }
 
@@ -172,8 +174,6 @@
   .auth-tab--inactive {
     @apply text-secondary-400;
   }
-
-
 
   /* slide-down animation for conditional fields */
   .slide-down-enter {
@@ -198,6 +198,14 @@
   outline: none;
   padding: 0;
   margin: 0;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 html,
@@ -315,5 +323,15 @@ table td {
     right: 11px;
     top: -13px;
     position: absolute;
+  }
+}
+
+
+@keyframes hint {
+  0%,100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-4px);
   }
 }
