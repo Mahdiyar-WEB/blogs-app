@@ -18,14 +18,23 @@ const page = async ({ searchParams }) => {
   );
   return (
     <main className="p-5">
-      <BreadCrumbs />
+      <div className="flex justify-between items-baseline">
+        <BreadCrumbs />
+        <Link
+          href="/profile/blogs/create"
+          className="border md:hidden w-fit ms-auto mb-2 gap-1 items-center bg-primary-800 text-sm text-secondary-0 px-2 rounded-md py-2 flex"
+        >
+          <span>ایجاد پست</span>
+        </Link>
+      </div>
+
       <div className="flex justify-between items-center">
         <Suspense>
           <SearchBox />
         </Suspense>
         <Link
           href="/profile/blogs/create"
-          className="border flex gap-1 items-center bg-primary-800 text-secondary-0 px-4 rounded-md py-2"
+          className="border md:flex gap-1 items-center bg-primary-800 text-secondary-0 px-4 rounded-md py-2 hidden"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

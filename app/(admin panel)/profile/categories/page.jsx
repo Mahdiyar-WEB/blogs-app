@@ -5,6 +5,7 @@ import Link from "next/link";
 import React, { Suspense } from "react";
 import CategoriesInformation from "../../_components/CategoriesInformation";
 import queryString from "query-string";
+import BreadCrumbs from "components/BreadCrumbs";
 
 const CategoriesPage = async ({ searchParams }) => {
   const query = queryString.stringify(await searchParams);
@@ -12,13 +13,22 @@ const CategoriesPage = async ({ searchParams }) => {
 
   return (
     <main className="p-5">
+      <div className="flex justify-between items-baseline">
+        <BreadCrumbs />
+        <Link
+          href="/profile/categories/create"
+          className="border md:hidden w-fit ms-auto mb-2 gap-1 items-center bg-primary-800 text-sm text-secondary-0 px-2 rounded-md py-2 flex"
+        >
+          <span>ایجاد دسته‌بندی</span>
+        </Link>
+      </div>
       <div className="flex justify-between items-center">
         <Suspense>
           <SearchBox />
         </Suspense>
         <Link
           href="/profile/categories/create"
-          className="border flex gap-1 items-center bg-primary-800 text-secondary-0 px-4 rounded-md py-2"
+          className="border hidden md:flex gap-1 items-center bg-primary-800 text-secondary-0 px-4 rounded-md py-2"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +45,7 @@ const CategoriesPage = async ({ searchParams }) => {
             />
           </svg>
 
-          <span>ایجاد دسته بندی</span>
+          <span>ایجاد دسته‌بندی</span>
         </Link>
       </div>
       <CategoriesInformation fetchQueries={query} />
