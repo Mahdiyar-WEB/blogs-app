@@ -37,7 +37,7 @@ export default function Layout({ children }) {
         <Suspense>
           <Header onMobileToggle={() => setMobileOpen((prev) => !prev)} />
         </Suspense>
-        <main className="lg:rounded-tr-3xl h-full p-5 bg-secondary-100">
+        <main className="lg:rounded-tr-3xl h-full bg-secondary-100">
           <Suspense>{children}</Suspense>
         </main>
       </div>
