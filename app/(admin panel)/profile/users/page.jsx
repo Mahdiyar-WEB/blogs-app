@@ -17,7 +17,7 @@ const UsersPage = async ({ searchParams }) => {
     query,
   );
   return (
-    <main className="p-5">
+    <main className="p-7">
       <BreadCrumbs />
       <Suspense>
         <SearchBox />

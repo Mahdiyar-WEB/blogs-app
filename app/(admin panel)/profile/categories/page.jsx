@@ -12,7 +12,7 @@ const CategoriesPage = async ({ searchParams }) => {
   const { data } = await categoryServices.getAllCategories(query);
 
   return (
-    <main className="p-5">
+    <main className="p-7">
       <div className="flex justify-between items-baseline">
         <BreadCrumbs />
         <Link

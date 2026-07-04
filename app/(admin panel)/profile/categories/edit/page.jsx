@@ -20,7 +20,7 @@ const EditCategoryPage = async ({ searchParams }) => {
   } = await fetchCategoryByTitle(categoryTitle);
 
   return (
-    <main className="p-5">
+    <main className="p-7">
       <BreadCrumbs slugTitle="ویرایش دسته بندی" />
       <EditCategoryForm
         key={category._id}

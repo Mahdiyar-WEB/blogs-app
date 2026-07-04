@@ -5,7 +5,7 @@ import CardWrapperLoading from "../_components/CardWrapperLoading";
 
 const page = () => {
   return (
-    <main className="p-5">
+    <main className="p-7">
       {/* report section */}
       <h3 className="col-span-12 font-medium text-xl mb-5">اطلاعات سایت</h3>
       <Suspense fallback={<CardWrapperLoading />}>
