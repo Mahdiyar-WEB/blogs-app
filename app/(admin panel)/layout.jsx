@@ -33,7 +33,7 @@ export default function Layout({ children }) {
         <Drawer isOpen={true} onToggle={() => setMobileOpen(false)} />
       </div>
 
-      <div className="flex flex-col flex-1 bg-secondary-0">
+      <div className="flex flex-col flex-1 bg-secondary-0 min-w-0">
         <Suspense>
           <Header onMobileToggle={() => setMobileOpen((prev) => !prev)} />
         </Suspense>

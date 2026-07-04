@@ -24,7 +24,7 @@ export default function Header({ onMobileToggle }) {
   }, []);
 
   return (
-    <header className="ps-5 pe-16 py-5 flex justify-between items-center">
+    <header className="ps-5 pe-10 lg:pe-16 py-5 flex justify-between items-center">
       <button onClick={onMobileToggle} className="lg:hidden p-1">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +47,10 @@ export default function Header({ onMobileToggle }) {
         <span>{user?.name}</span>
       </h2>
 
-      <div onClick={() => setOpen((prev) => !prev)} className="relative cursor-pointer">
+      <div
+        onClick={() => setOpen((prev) => !prev)}
+        className="relative cursor-pointer"
+      >
         <Image
           alt="profile"
           width={35}
@@ -59,7 +62,7 @@ export default function Header({ onMobileToggle }) {
         />
         <div
           ref={menuRef}
-          className="absolute border top-10 -left-12 w-36 rounded-md bg-secondary-0 shadow-md space-y-3 text-sm font-medium py-3"
+          className="absolute border top-10 -left-8 lg:-left-12 w-36 rounded-md bg-secondary-0 text-secondary-700 shadow-md space-y-3 text-sm font-medium py-3"
           hidden={!open}
         >
           <button
