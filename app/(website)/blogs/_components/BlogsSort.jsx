@@ -26,7 +26,7 @@ const sortOptions = [
   },
 ];
 
-const BlogsSort = () => {
+const BlogsSort = ({className}) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -42,7 +42,7 @@ const BlogsSort = () => {
   );
 
   return (
-    <div className="h-11 w-full md:w-1/2 xl:w-1/3 flex justify-between bg-white/50 border border-secondary-200 rounded-lg shadow-md">
+    <div className={`h-11 w-full md:w-1/2 xl:w-1/3 flex justify-between bg-white/50 border border-secondary-200 rounded-lg shadow-md ${className}`}>
       <Select
         onChange={(e) => {
           router.push(
