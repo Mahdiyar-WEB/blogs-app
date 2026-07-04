@@ -11,9 +11,9 @@ const labels = {
   create: "ایجاد پست",
   edit: "ویرایش پست",
   login: "ورود",
-  comments:'نظرات',
-  users: 'کاربران',
-  categories:'دسته بندی ها'
+  comments: "نظرات",
+  users: "کاربران",
+  categories: "دسته‌بندی ها",
 };
 
 const BreadCrumbs = ({ slugTitle = "" }) => {
@@ -22,7 +22,7 @@ const BreadCrumbs = ({ slugTitle = "" }) => {
   const segments = pathname.split("/").filter(Boolean);
 
   return (
-    <nav aria-label="breadcrumb" className="mb-5 text-sm">
+    <nav aria-label="breadcrumb" className={`mb-5 text-sm h-full`}>
       <ol className="flex items-center gap-2 flex-wrap">
         <li>
           <Link

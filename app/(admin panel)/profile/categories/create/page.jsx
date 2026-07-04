@@ -5,7 +5,7 @@ import CreateCategoryForm from "./CreateCategoryForm";
 const CreateCategoryPage = () => {
   return (
     <main className="p-5">
-      <BreadCrumbs slugTitle="ایجاد دسته بندی" />
+      <BreadCrumbs slugTitle="ایجاد دسته‌بندی" />
       <CreateCategoryForm />
     </main>
   );
