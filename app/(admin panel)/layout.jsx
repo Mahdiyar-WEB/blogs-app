@@ -34,7 +34,9 @@ export default function Layout({ children }) {
       </div>
 
       <div className="flex flex-col flex-1 bg-secondary-0">
-        <Header onMobileToggle={() => setMobileOpen((prev) => !prev)} />
+        <Suspense>
+          <Header onMobileToggle={() => setMobileOpen((prev) => !prev)} />
+        </Suspense>
         <main className="lg:rounded-tr-3xl h-full p-5 bg-secondary-100">
           <Suspense>{children}</Suspense>
         </main>
