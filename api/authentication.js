@@ -8,8 +8,11 @@ const authentication = {
     return await callAPI.post("user/signin", inputs).then((data) => data);
   },
   getUser: async (cookies) => {
-    const res = await callAPI.get("user/profile",cookies);
+    const res = await callAPI.get("user/profile", cookies);
     return res;
+  },
+  logout: async () => {
+    return await callAPI.post("user/logout").then((data) => data);
   },
 };
 
