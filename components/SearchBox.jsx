@@ -60,7 +60,7 @@ const SearchBox = () => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="جستجو ..."
-        className="w-full bg-inherit outline-none border-none"
+        className="w-full bg-white/0 outline-none border-none"
       />
 
       <div className="flex items-center gap-2">
