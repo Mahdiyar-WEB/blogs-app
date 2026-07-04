@@ -27,7 +27,7 @@ const Modal = ({
         {/* container */}
         <div
           ref={modalRef}
-          className="absolute top-1/2 left-1/2 border -translate-x-1/2 -translate-y-1/2 w-1/2 bg-white rounded-md"
+          className="absolute top-1/2 left-1/2 border -translate-x-1/2 -translate-y-1/2 w-4/5 md:w-1/2 bg-white rounded-md"
         >
           {/* header */}
           <div className="flex  justify-between items-start p-3">
