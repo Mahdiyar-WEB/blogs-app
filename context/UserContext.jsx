@@ -43,6 +43,20 @@ export default function UserProvider({ children }) {
     }
   };
 
+  const logout = async () => {
+    dispatch({ type: "loading" });
+    try {
+      await authentication.logout();
+      dispatch({ type: "logout" });
+      toast.success("از حساب کاربری خود خارج شدید");
+      router.refresh();
+      router.push("/");
+    } catch (error) {
+      dispatch({ type: "rejected", payload: error });
+      toast.error(error.message);
+    }
+  };
+
   const getUser = async () => {
     dispatch({ type: "loading" });
     await new Promise((res) =>
@@ -66,23 +80,12 @@ export default function UserProvider({ children }) {
     fetchUser();
   }, []);
 
-  // const logout = async () => {
-  //   try {
-  //     await authentication.logout();
-
-  //     router.refresh();
-
-  //     router.push("/");
-  //   } catch (error) {
-  //     toast.error(error.message);
-  //   }
-  // };
-
   return (
     <UserContext.Provider
       value={{
         signIn,
         signUp,
+        logout,
         user,
         isAuthenticated,
         isLoading,
