@@ -48,12 +48,12 @@ function PostComments({ post: { comments = [], _id: postId = "" } }) {
           onClose={onCloseHandler}
         />
       </Modal>
-      <div className="flex flex-col items-center lg:flex-row justify-between gap-y-3 mb-8">
-        <h2 className="text-2xl font-bold text-secondary-800">نظرات:</h2>
+      <div className="flex items-center flex-row justify-between gap-y-3 mb-5">
+        <h2 className="text-xl font-bold text-secondary-800">نظرات:</h2>
         <Button
           onClick={() => addNewCommentHandler(null)}
           variant="primary"
-          className="flex items-center gap-1 py-2"
+          className="flex text-sm md:text-base items-center rounded-md gap-1 py-2"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +61,7 @@ function PostComments({ post: { comments = [], _id: postId = "" } }) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="size-5 "
+            className="size-5"
           >
             <path
               strokeLinecap="round"
