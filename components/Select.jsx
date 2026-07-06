@@ -48,7 +48,7 @@ const Select = ({ value, onChange, options }) => {
       </button>
 
       {open && (
-        <ul className="absolute z-50 mt-2 w-full bg-white rounded-md border border-secondary-200 shadow-md max-h-48 overflow-y-auto ">
+        <ul className="absolute z-50 mt-2 w-full bg-white rounded-md border border-secondary-200 shadow-2xl max-h-48 overflow-y-auto">
           {options.map((item) => (
             <li
               key={item.value}
