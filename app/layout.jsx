@@ -15,7 +15,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="fa" dir="rtl" data-scroll-behavior="smooth">
-      <body className={`${vazirFont.variable} font-sans min-h-screen`}>
+      <body
+        className={`${vazirFont.variable} font-sans min-h-screen bg-transparent`}
+      >
         <Toaster />
         <ReactQueryProvider>
           <UserProvider>{children}</UserProvider>
