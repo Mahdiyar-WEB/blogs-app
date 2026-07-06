@@ -45,17 +45,17 @@ const CONFIG = {
 
   // خط قرمز شما اینجا تعریف می‌شود: تا این نسبت از ارتفاع صفحه کاملاً
   // دیده می‌شود (۰ = بالای صفحه، ۱ = پایین صفحه)
-  fadeStartRatio: 0.42,
+  fadeStartRatio: 0.1,
   // از این نسبت به بعد کاملاً محو/نامرئی می‌شود
-  fadeEndRatio: 0.62,
+  fadeEndRatio: 0.85,
 
   // ظاهر خط‌ها
-  lineColor: "175, 175, 185",
+  lineColor: "59,130,246",
   lineWidth: 1.6,
-  maxLineOpacity: 0.35,
+  maxLineOpacity: 0.18,
 
   // نقطه‌های کوچک روی هر گره برای ظاهر تمیزتر
-  nodeRadius: 2.2,
+  nodeRadius: 0.8, //1.3
   nodeColor: "160, 160, 172",
 
   // نوسان مستقل و آرام هر نقطه، حتی بدون موس
@@ -89,27 +89,28 @@ export default function SpiderwebMeshBackground() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let width = window.innerWidth;
-    let height = window.innerHeight;
+    let width = 0;
+    let height = 0;
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     function buildPoints() {
       const list = [];
       const spacing = CONFIG.spacing;
-      const fadeEndY = height * CONFIG.fadeEndRatio;
 
-      // فقط تا کمی بعد از fadeEndRatio نقطه می‌سازیم، چون بعد از آن
-      // دیگر چیزی دیده نمی‌شود و نیازی به محاسبه نیست
-      const rows = Math.ceil(fadeEndY / spacing) + 2;
+      const rows = Math.ceil(height / spacing) + 3;
       const cols = Math.ceil(width / spacing) + 2;
+
       colsRef.current = cols + 1;
 
       for (let row = 0; row <= rows; row++) {
         for (let col = 0; col <= cols; col++) {
           const jitterX = (Math.random() - 0.5) * CONFIG.jitter;
           const jitterY = (Math.random() - 0.5) * CONFIG.jitter;
+
           const baseX = col * spacing + jitterX;
-          const baseY = row * spacing + jitterY;
+
+          // از پایین canvas شروع می‌کنیم
+          const baseY = height - row * spacing + jitterY;
 
           list.push({
             baseX,
@@ -124,24 +125,33 @@ export default function SpiderwebMeshBackground() {
           });
         }
       }
+
       pointsRef.current = list;
     }
 
     function resize() {
-      width = window.innerWidth;
-      height = window.innerHeight;
+      const rect = canvas.getBoundingClientRect();
+
+      width = rect.width;
+      height = rect.height;
+
       dpr = Math.min(window.devicePixelRatio || 1, 2);
+
       canvas.width = width * dpr;
       canvas.height = height * dpr;
-      canvas.style.width = width + "px";
-      canvas.style.height = height + "px";
+
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
       buildPoints();
     }
 
     function onMouseMove(e) {
-      mouseRef.current.x = e.clientX;
-      mouseRef.current.y = e.clientY;
+      const rect = canvas.getBoundingClientRect();
+
+      mouseRef.current = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      };
     }
 
     function onMouseLeave() {
@@ -151,8 +161,12 @@ export default function SpiderwebMeshBackground() {
 
     function onTouchMove(e) {
       if (e.touches.length > 0) {
-        mouseRef.current.x = e.touches[0].clientX;
-        mouseRef.current.y = e.touches[0].clientY;
+        const rect = canvas.getBoundingClientRect();
+
+        mouseRef.current = {
+          x: e.touches[0].clientX - rect.left,
+          y: e.touches[0].clientY - rect.top,
+        };
       }
     }
 
@@ -161,11 +175,13 @@ export default function SpiderwebMeshBackground() {
     function fadeFactorForY(y) {
       const fadeStartY = height * CONFIG.fadeStartRatio;
       const fadeEndY = height * CONFIG.fadeEndRatio;
-      if (y <= fadeStartY) return 1;
-      if (y >= fadeEndY) return 0;
+
+      if (y <= fadeStartY) return 0;
+      if (y >= fadeEndY) return 1;
+
       const t = (y - fadeStartY) / (fadeEndY - fadeStartY);
-      // smoothstep برای محو شدن نرم‌تر به‌جای خطی
-      return 1 - t * t * (3 - 2 * t);
+
+      return t * t * (3 - 2 * t);
     }
 
     function update() {
@@ -224,7 +240,7 @@ export default function SpiderwebMeshBackground() {
       if (fade <= 0.01) return;
       ctx.beginPath();
       ctx.arc(p.x, p.y, CONFIG.nodeRadius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${CONFIG.nodeColor}, ${fade * 0.7})`;
+      ctx.fillStyle = `rgba(${CONFIG.nodeColor}, ${fade * 0.35})`;
       ctx.fill();
     }
 
@@ -277,7 +293,7 @@ export default function SpiderwebMeshBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed bottom-0 left-0 w-full h-72 -z-10 pointer-events-none bg-transparent border"
+      className="fixed bottom-0 left-0 w-full h-[45vh] md:h-[45vh] -z-20 bg-gradient-to-t from-blue-50/10 to-transparent"
     />
   );
 }
