@@ -52,7 +52,7 @@ const SearchBox = () => {
   return (
     <form
       onSubmit={onSubmitHandler}
-      className="mb-5 w-full md:w-1/2 xl:w-1/3 h-11 flex items-center gap-2 justify-between bg-white/50 px-3 py-2 border border-secondary-200 rounded-lg shadow-md"
+      className="mb-5 w-full md:w-1/2 xl:w-1/3 h-11 flex items-center gap-2 justify-between bg-white px-3 py-2 border border-secondary-200 rounded-lg shadow-md"
     >
       <input
         type="text"

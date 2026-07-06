@@ -25,7 +25,7 @@ const Pagination = ({ totalPages }) => {
   };
 
   return (
-    <div className="flex justify-center items-center gap-3 bg-secondary-0 w-fit mx-auto px-5 py-2 rounded-xl shadow-md">
+    <div className="flex justify-center items-center gap-3 w-fit mx-auto px-5 py-2 rounded-xl shadow-md bg-white border border-secondary-100">
       <p className="flex gap-1">
         <span>صفحه:</span>
         <span>{toPersianDigits(page)}</span>

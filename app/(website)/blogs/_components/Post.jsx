@@ -44,7 +44,7 @@ const Post = ({
   const slugURL = `/blogs/${slug}`;
 
   return (
-    <div className="col-span-12 lg:col-span-4 border rounded-lg shadow-md ">
+    <div className="col-span-12 lg:col-span-4 border rounded-lg shadow-md bg-white">
       <Link
         href={slugURL}
         className="relative aspect-video h-56 rounded-t-lg overflow-hidden"
