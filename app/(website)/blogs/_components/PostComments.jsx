@@ -48,32 +48,33 @@ function PostComments({ post: { comments = [], _id: postId = "" } }) {
           onClose={onCloseHandler}
         />
       </Modal>
-      <div className="flex items-center flex-row justify-between gap-y-3 mb-5">
-        <h2 className="text-xl font-bold text-secondary-800">نظرات:</h2>
-        <Button
-          onClick={() => addNewCommentHandler(null)}
-          variant="primary"
-          className="flex text-sm md:text-base items-center rounded-md gap-1 py-2"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-5"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 4.5v15m7.5-7.5h-15"
-            />
-          </svg>
 
-          <span>ثبت نظر جدید</span>
-        </Button>
-      </div>
-      <div className="space-y-8 post-comments bg-secondary-0 rounded-xl py-6 px-3 lg:px-6 ">
+      <div className="space-y-8 post-comments bg-white shadow-md border border-secondary-100 rounded-xl py-6 px-3 lg:px-6 ">
+        <div className="flex items-center flex-row justify-between gap-y-3 mb-5">
+          <h2 className="text-xl font-bold text-secondary-800">نظرات:</h2>
+          <Button
+            onClick={() => addNewCommentHandler(null)}
+            variant="primary"
+            className="flex text-sm md:text-base items-center rounded-md gap-1 py-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
+            </svg>
+
+            <span>ثبت نظر جدید</span>
+          </Button>
+        </div>
         {comments.length > 0 ? (
           comments.map((comment) => {
             return (
