@@ -17,7 +17,7 @@ const page = async ({ searchParams }) => {
     query,
   );
   return (
-    <main className="p-7">
+    <main className="md:p-7">
       <div className="flex justify-between items-baseline">
         <BreadCrumbs />
         <Link

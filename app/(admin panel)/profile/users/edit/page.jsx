@@ -25,7 +25,7 @@ const EditUserPage = async ({ searchParams }) => {
     : null;
 
   return (
-    <main className="p-7">
+    <main className="md:p-7">
       <BreadCrumbs slugTitle="ویرایش کاربر" />
       <EditUserForm
         key={userId}

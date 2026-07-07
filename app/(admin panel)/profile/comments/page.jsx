@@ -12,7 +12,7 @@ const CommentsPage = async ({ searchParams }) => {
   const { data } = await commentServices.getAllComments("", query);
 
   return (
-    <main className="p-7">
+    <main className="md:p-7">
       <BreadCrumbs />
       <Suspense>
         <SearchBox />

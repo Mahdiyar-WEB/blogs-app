@@ -29,7 +29,7 @@ const EditPostPage = async ({ searchParams }) => {
 
   const coverImageFile = await imageUrlToFile(coverImageUrl);
   return (
-    <main className="p-7">
+    <main className="md:p-7">
       <BreadCrumbs />
       <EditPostForm
         key={postId}
