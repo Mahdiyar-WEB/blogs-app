@@ -1,14 +1,13 @@
-import { cookies } from "next/navigation";
 import callAPI from "api/callAPI";
 
 const postServices = {
   getPostBySlug: async (postSlug) => {
-    const { data = {} } = await callAPI.get(`/post/slug/${postSlug}`);
+    const { data = {} } = await callAPI.get(`post/slug/${postSlug}`);
     const { post } = data || null;
     return post;
   },
   getPostById: async (id) => {
-    const { data = {} } = await callAPI.get(`/post/${id}`);
+    const { data = {} } = await callAPI.get(`post/${id}`);
     const { post } = data || null;
     return post;
   },
