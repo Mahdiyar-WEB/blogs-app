@@ -198,6 +198,8 @@
   outline: none;
   padding: 0;
   margin: 0;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--color-secondary-300)) transparent;
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
@@ -326,12 +328,34 @@ table td {
   }
 }
 
-
 @keyframes hint {
-  0%,100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
   50% {
     transform: translateX(-4px);
   }
+}
+
+/* ───────── Custom Scrollbar ───────── */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(var(--color-secondary-300));
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(var(--color-secondary-400));
 }
