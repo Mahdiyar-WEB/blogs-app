@@ -175,7 +175,7 @@ function MobileCloseButton({ onClose }) {
 
 function DrawerLogo({ isOpen }) {
   return (
-    <div className="border-b border-secondary-200 px-4 py-5">
+    <div className="flex h-20 shrink-0 items-center border-b border-secondary-200 px-4">
       <div className="flex items-center gap-3 overflow-hidden">
         <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary-50 ring-1 ring-primary-100">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
@@ -216,21 +216,18 @@ function DrawerItem({ item, isOpen, active, onClose }) {
           rounded-xl
           px-3 py-2.5
           font-medium
-          transition-all duration-300
+          transition-colors duration-300
 
           ${
             active
-              ? "bg-primary-50 text-primary-700 shadow-sm shadow-primary-100/60"
+              ? "bg-primary-50 text-primary-700 shadow-md border border-secondary-200 shadow-primary-100/60"
               : "text-secondary-600 hover:bg-secondary-100 hover:text-secondary-900"
           }
         `}
       >
         {active && (
           <span
-            className="
-              absolute right-0 top-2 bottom-2
-              w-1 rounded-l-full bg-primary-600
-            "
+            className="absolute right-0 top-2 bottom-2 w-1 rounded-l-full bg-primary-600"
           />
         )}
 
