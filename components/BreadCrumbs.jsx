@@ -13,7 +13,7 @@ const labels = {
   login: "ورود",
   comments: "نظرات",
   users: "کاربران",
-  categories: "دسته‌بندی ها",
+  categories: "دسته‌بندی‌ها",
 };
 
 const BreadCrumbs = ({ slugTitle = "" }) => {
