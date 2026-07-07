@@ -23,7 +23,7 @@ const Modal = ({
 
   return (
     open && (
-      <div className="fixed bg-secondary-700/80 top-0 left-0 w-full h-full z-20">
+      <div className="fixed bg-secondary-700/80 top-0 left-0 w-full h-full z-30">
         {/* container */}
         <div
           ref={modalRef}
