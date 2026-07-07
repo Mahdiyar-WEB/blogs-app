@@ -293,7 +293,7 @@ export default function SpiderwebMeshBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed bottom-0 left-0 w-full h-[45vh] md:h-[45vh] -z-20 bg-gradient-to-t from-blue-50/10 to-transparent"
+      className="fixed bottom-0 left-0 w-full h-[45vh] md:h-[32vh] -z-20 bg-gradient-to-t from-blue-50/10 to-transparent"
     />
   );
 }
