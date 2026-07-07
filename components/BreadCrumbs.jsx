@@ -22,7 +22,7 @@ const BreadCrumbs = ({ slugTitle = "" }) => {
   const segments = pathname.split("/").filter(Boolean);
 
   return (
-    <nav aria-label="breadcrumb" className={`mb-5 text-sm h-full bg-white w-fit px-3 py-1 rounded-lg shadow-sm border border-secondary-100`}>
+    <nav aria-label="breadcrumb" className={`mb-5 text-sm h-full bg-white w-fit px-3 py-2 rounded-xl shadow-sm border border-secondary-100`}>
       <ol className="flex items-center gap-2 flex-wrap">
         <li>
           <Link
