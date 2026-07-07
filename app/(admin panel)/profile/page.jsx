@@ -5,19 +5,34 @@ import CardWrapperLoading from "../_components/CardWrapperLoading";
 
 const page = () => {
   return (
-    <main className="p-7">
+    <div className="space-y-8">
       {/* report section */}
-      <h3 className="col-span-12 font-medium text-xl mb-5">اطلاعات سایت</h3>
-      <Suspense fallback={<CardWrapperLoading />}>
-        <CardWrapper />
-      </Suspense>
+      <section>
+        <div className="mb-5">
+          <h2 className="text-xl font-bold text-secondary-900">اطلاعات سایت</h2>
+          <p className="mt-1 text-sm text-secondary-500">
+            خلاصه وضعیت کاربران، محتوا و تعاملات
+          </p>
+        </div>
+        <Suspense fallback={<CardWrapperLoading />}>
+          <CardWrapper />
+        </Suspense>
+      </section>
+
       {/* posts information section */}
-      <h3 className="font-medium text-xl mb-5">آخرین پست ها</h3>
-      <PostsInformation
-        fetchQueries="sort=latest&limit=5"
-        title="آخرین پست ها"
-      />
-    </main>
+      <section>
+        <div className="mb-5">
+          <h2 className="text-xl font-bold text-secondary-900">آخرین پست ها</h2>
+          <p className="mt-1 text-sm text-secondary-500">
+            جدیدترین محتوای ثبت شده در سایت
+          </p>
+        </div>
+        <PostsInformation
+          fetchQueries="sort=latest&limit=5"
+          title="آخرین پست ها"
+        />
+      </section>
+    </div>
   );
 };
 

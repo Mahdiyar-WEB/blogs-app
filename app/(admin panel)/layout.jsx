@@ -1,4 +1,5 @@
 "use client";
+
 import Header from "./Header";
 import Drawer from "./Drawer";
 import { Suspense, useState } from "react";
@@ -7,38 +8,57 @@ export default function Layout({ children }) {
   const [desktopOpen, setDesktopOpen] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const closeMobileDrawer = () => {
+    setMobileOpen(false);
+  };
+
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-dvh bg-secondary-50 text-secondary-900">
+      {/* Mobile Overlay */}
       {mobileOpen && (
-        <div
-          className="fixed inset-0 bg-black/40 z-20 lg:hidden"
-          onClick={() => setMobileOpen(false)}
+        <button
+          type="button"
+          aria-label="بستن منوی موبایل"
+          className="fixed inset-0 z-40 bg-secondary-900/40 backdrop-blur-sm lg:hidden"
+          onClick={closeMobileDrawer}
         />
       )}
 
-      <div className="hidden lg:block">
+      {/* Desktop Drawer */}
+      <aside className="sticky top-0 hidden h-dvh shrink-0 self-start lg:block">
         <Drawer
           isOpen={desktopOpen}
           onToggle={() => setDesktopOpen((prev) => !prev)}
         />
-      </div>
+      </aside>
 
+      {/* Mobile Drawer */}
       <div
-        className={`
-          fixed top-0 right-0 h-full z-30 lg:hidden
-          transition-transform duration-300 ease-in-out
-          ${mobileOpen ? "translate-x-0" : "translate-x-full"}
-        `}
+        className={`fixed right-0 top-0 z-50 h-dvh transition-transform duration-300 ease-out lg:hidden ${
+          mobileOpen ? "translate-x-0" : "translate-x-full"
+        }`}
       >
-        <Drawer isOpen={true} onToggle={() => setMobileOpen(false)} />
+        <Drawer
+          isOpen={true}
+          onToggle={closeMobileDrawer}
+          onClose={closeMobileDrawer}
+        />
       </div>
 
-      <div className="flex flex-col flex-1 bg-secondary-0 min-w-0">
-        <Suspense>
-          <Header onMobileToggle={() => setMobileOpen((prev) => !prev)} />
-        </Suspense>
-        <main className="lg:rounded-tr-3xl h-full bg-secondary-100">
-          <Suspense>{children}</Suspense>
+      {/* Main Area */}
+      <div className="flex min-w-0 flex-1 flex-col">
+        {/* Header */}
+        <header className="sticky top-0 z-30 border-b border-secondary-200 bg-white/85 shadow-sm shadow-secondary-200/40 backdrop-blur-xl">
+          <Suspense>
+            <Header onMobileToggle={() => setMobileOpen((prev) => !prev)} />
+          </Suspense>
+        </header>
+
+        {/* Content */}
+        <main className="flex-1 overflow-x-hidden overflow-y-auto p-4 sm:p-6 lg:p-8">
+          <div className="mx-auto w-full max-w-screen-2xl">
+            <Suspense>{children}</Suspense>
+          </div>
         </main>
       </div>
     </div>

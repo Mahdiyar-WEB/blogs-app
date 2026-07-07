@@ -1,32 +1,32 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
 
 const DrawerLinks = [
   {
     id: 1,
     title: "داشبورد",
+    href: "/profile",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
-        strokeWidth={1.8}
+        strokeWidth={1.5}
         stroke="currentColor"
         className="size-6"
       >
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+          d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z"
         />
       </svg>
     ),
-    href: "/profile",
   },
   {
     id: 2,
     title: "پست ها",
+    href: "/profile/blogs",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -43,11 +43,11 @@ const DrawerLinks = [
         />
       </svg>
     ),
-    href: "/profile/blogs",
   },
   {
     id: 3,
     title: "نظرات",
+    href: "/profile/comments",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -60,15 +60,15 @@ const DrawerLinks = [
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z"
+          d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z"
         />
       </svg>
     ),
-    href: "/profile/comments",
   },
   {
     id: 4,
     title: "دسته بندی ها",
+    href: "/profile/categories",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -83,18 +83,13 @@ const DrawerLinks = [
           strokeLinejoin="round"
           d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z"
         />
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M6 6h.008v.008H6V6Z"
-        />
       </svg>
     ),
-    href: "/profile/categories",
   },
   {
     id: 5,
     title: "کاربران",
+    href: "/profile/users",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -111,127 +106,219 @@ const DrawerLinks = [
         />
       </svg>
     ),
-    href: "/profile/users",
   },
 ];
 
-const Drawer = ({ isOpen, onToggle }) => {
+function CollapseButton({ isOpen, onToggle }) {
+  return (
+    <button
+      type="button"
+      aria-label={isOpen ? "جمع کردن منو" : "باز کردن منو"}
+      onClick={onToggle}
+      className={`
+        hidden lg:flex
+        absolute -left-3 top-1/2 -translate-y-1/2
+        z-20 h-7 w-7
+        items-center justify-center
+        rounded-full
+        border border-secondary-200
+        bg-white
+        shadow-sm
+        transition-all
+        hover:border-primary-200 hover:text-primary-700 hover:shadow-md
+        ${isOpen ? "rotate-180" : ""}
+      `}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={2}
+        stroke="currentColor"
+        className="size-4"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M15.75 19.5 8.25 12l7.5-7.5"
+        />
+      </svg>
+    </button>
+  );
+}
+
+function MobileCloseButton({ onClose }) {
+  return (
+    <button
+      type="button"
+      aria-label="بستن منو"
+      onClick={onClose}
+      className="absolute left-4 top-4 flex h-9 w-9 items-center justify-center rounded-xl text-secondary-500 transition-colors hover:bg-secondary-100 hover:text-secondary-900 lg:hidden"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.8}
+        stroke="currentColor"
+        className="size-5"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M6 18 18 6M6 6l12 12"
+        />
+      </svg>
+    </button>
+  );
+}
+
+function DrawerLogo({ isOpen }) {
+  return (
+    <div className="border-b border-secondary-200 px-4 py-5">
+      <div className="flex items-center gap-3 overflow-hidden">
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary-50 ring-1 ring-primary-100">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="24" fill="#F0780C" />
+
+            <path
+              fill="#FFFFFF"
+              d="M17 12C13.7 12 11 14.7 11 18V30C11 33.3 13.7 36 17 36H31C34.3 36 37 33.3 37 30V24.5C37 23.4 36.1 22.5 35 22.5C33.9 22.5 33 21.6 33 20.5V18C33 14.7 30.3 12 27 12H17ZM18 18H26C27.7 18 29 19.3 29 21C29 22.7 27.7 24 26 24H18C16.3 24 15 22.7 15 21C15 19.3 16.3 18 18 18ZM18 26H27C28.7 26 30 27.3 30 29C30 30.7 28.7 32 27 32H18C16.3 32 15 30.7 15 29C15 27.3 16.3 26 18 26Z"
+            />
+          </svg>
+        </div>
+
+        <div
+          className={`
+            overflow-hidden whitespace-nowrap transition-all duration-300
+            ${isOpen ? "max-w-[150px] opacity-100" : "max-w-0 opacity-0"}
+          `}
+        >
+          <h2 className="font-semibold text-secondary-800">بلاگیتو</h2>
+
+          <p className="text-xs text-secondary-500">Admin Panel</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DrawerItem({ item, isOpen, active, onClose }) {
+  return (
+    <li>
+      <Link
+        href={item.href}
+        onClick={onClose}
+        title={!isOpen ? item.title : ""}
+        className={`
+          group relative
+          flex items-center gap-3
+          rounded-xl
+          px-3 py-2.5
+          font-medium
+          transition-all duration-300
+
+          ${
+            active
+              ? "bg-primary-50 text-primary-700 shadow-sm shadow-primary-100/60"
+              : "text-secondary-600 hover:bg-secondary-100 hover:text-secondary-900"
+          }
+        `}
+      >
+        {active && (
+          <span
+            className="
+              absolute right-0 top-2 bottom-2
+              w-1 rounded-l-full bg-primary-600
+            "
+          />
+        )}
+
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center">
+          {item.icon}
+        </div>
+
+        <span
+          className={`
+            overflow-hidden whitespace-nowrap transition-all duration-300
+            ${isOpen ? "opacity-100" : "w-0 opacity-0"}
+          `}
+        >
+          {item.title}
+        </span>
+      </Link>
+    </li>
+  );
+}
+
+function DrawerFooter({ isOpen, onClose }) {
+  return (
+    <div className="border-t border-secondary-200 bg-secondary-50/70 p-3">
+      <DrawerItem
+        isOpen={isOpen}
+        onClose={onClose}
+        active={false}
+        item={{
+          title: "خانه",
+          href: "/",
+          icon: (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.8}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+                />
+              </svg>
+          ),
+        }}
+      />
+    </div>
+  );
+}
+
+export default function Drawer({ isOpen, onToggle, onClose }) {
   const pathname = usePathname();
 
   return (
     <aside
       className={`
-        relative h-screen px-3 py-5 bg-secondary-0
-        transition-all duration-300 ease-in-out
-        ${isOpen ? "w-56" : "w-16"}
+        relative flex h-full min-h-dvh flex-col
+        border-l border-secondary-200
+        bg-white
+        shadow-xl shadow-secondary-200/70
+        transition-all duration-300 ease-out
+        ${isOpen ? "w-64" : "w-20"}
       `}
     >
-      {/* Toggle arrow button */}
-      <button
-        onClick={onToggle}
-        className={`
-    hidden lg:flex
-    absolute -left-3 top-1/2 -translate-y-1/2 z-10
-    bg-secondary-0 border border-secondary-300
-    rounded-full p-1 shadow-sm
-    transition-transform duration-300
-    ${!isOpen ? "" : "rotate-180"}
-  `}
-        aria-label="تغییر منو"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={2}
-          stroke="currentColor"
-          className="size-4"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 19.5 8.25 12l7.5-7.5"
-          />
-        </svg>
-      </button>
+      <CollapseButton isOpen={isOpen} onToggle={onToggle} />
+      <MobileCloseButton onClose={onClose} />
 
-      <h2
-        className={`
-        border-b border-b-secondary-300 flex justify-center gap-2 pb-3
-        text-xl font-semibold items-center mb-5 overflow-hidden
-        transition-all duration-300
-        ${isOpen ? "opacity-100" : "opacity-0"}
-      `}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={2}
-          stroke="currentColor"
-          className="size-7 shrink-0"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6"
-          />
-        </svg>
-        {isOpen && <span>نکست بلاگ</span>}
-      </h2>
+      <DrawerLogo isOpen={isOpen} />
 
-      {/* Nav links */}
-      <ul className="flex flex-col gap-3">
-        {DrawerLinks.map(({ id, href, icon, title }) => (
-          <li key={id}>
-            <Link
-              href={href}
-              className={`
-                flex gap-3 items-center py-2 font-semibold rounded-lg
-                transition-all duration-200
-                ${isOpen ? "ps-5" : "justify-center"}
-                ${
-                  pathname === href
-                    ? "bg-secondary-100 text-primary-700"
-                    : "hover:bg-secondary-100"
-                }
-              `}
-            >
-              {icon}
-              {isOpen && <span>{title}</span>}
-            </Link>
-          </li>
+      <ul className="flex-1 space-y-1 overflow-y-auto p-3">
+        {DrawerLinks.map((item) => (
+          <DrawerItem
+            key={item.id}
+            item={item}
+            isOpen={isOpen}
+            active={
+              item.href === "/profile"
+                ? pathname === item.href
+                : pathname.startsWith(item.href)
+            }
+            onClose={onClose}
+          />
         ))}
-        <li>
-          <Link
-            href="/"
-            className={`
-                flex gap-3 items-center py-2 font-semibold rounded-lg
-                transition-all duration-200 hover:bg-secondary-100
-                ${isOpen ? "ps-5" : "justify-center"} 
-              `}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.8}
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
-              />
-            </svg>
-
-            {isOpen && <span>خانه</span>}
-          </Link>
-        </li>
       </ul>
+
+      <DrawerFooter isOpen={isOpen} onClose={onClose} />
     </aside>
   );
-};
-
-export default Drawer;
+}

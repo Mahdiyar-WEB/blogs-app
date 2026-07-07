@@ -1,30 +1,29 @@
-import Card from "components/Card";
 import React from "react";
+
+function CardSkeleton() {
+  return (
+    <div className="col-span-12 rounded-2xl border border-secondary-200 bg-white p-5 shadow-sm md:col-span-6 xl:col-span-4">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <span className="h-12 w-12 rounded-2xl bg-secondary-200" />
+          <span className="space-y-2">
+            <span className="block h-4 w-24 rounded-lg bg-secondary-200" />
+            <span className="block h-3 w-32 rounded-lg bg-secondary-100" />
+          </span>
+        </div>
+        <span className="h-5 w-5 rounded-md bg-secondary-100" />
+      </div>
+      <span className="mt-6 block h-9 w-20 rounded-xl bg-secondary-200" />
+    </div>
+  );
+}
 
 const CardWrapperLoading = () => {
   return (
-    <section className="grid grid-cols-12 gap-8 mb-10 animate-pulse">
-      <div className="col-span-12 md:col-span-6 xl:col-span-4 px-6 py-4 space-y-5 border rounded-lg bg-secondary-0">
-        <p className="flex gap-2 items-center font-semibold">
-          <span className="w-8 h-8 rounded-full bg-secondary-300"></span>
-          <span className="w-20 h-6 rounded-md bg-secondary-300"></span>
-        </p>
-        <div className="flex items-center justify-center py-12 rounded-lg border bg-secondary-300"></div>
-      </div>
-      <div className="col-span-12 md:col-span-6 xl:col-span-4 px-6 py-4 space-y-5 border rounded-lg bg-secondary-0">
-        <p className="flex gap-2 items-center font-semibold">
-          <span className="w-8 h-8 rounded-full bg-secondary-300"></span>
-          <span className="w-20 h-6 rounded-md bg-secondary-300"></span>
-        </p>
-        <div className="flex items-center justify-center py-12 rounded-lg border bg-secondary-300"></div>
-      </div>
-      <div className="col-span-12 md:col-span-6 xl:col-span-4 px-6 py-4 space-y-5 border rounded-lg bg-secondary-0">
-        <p className="flex gap-2 items-center font-semibold">
-          <span className="w-8 h-8 rounded-full bg-secondary-300"></span>
-          <span className="w-20 h-6 rounded-md bg-secondary-300"></span>
-        </p>
-        <div className="flex items-center justify-center py-12 rounded-lg border bg-secondary-300"></div>
-      </div>
+    <section className="mb-8 grid animate-pulse grid-cols-12 gap-5 lg:gap-6">
+      {Array.from({ length: 3 }).map((_, index) => (
+        <CardSkeleton key={index} />
+      ))}
     </section>
   );
 };
