@@ -1,8 +1,25 @@
 const FloatingDecorationDesktop = () => {
   return (
-    <div className="absolute top-36 left-0 bottom-0 right-0 w-[95%] 2xl:w-[75%] mx-auto h-[55vh] hidden lg:flex justify-between -z-10">
+    <div className="absolute top-36 left-0 bottom-0 right-0 w-[95%] 2xl:max-w-screen-2xl 2xl:w-[75%] mx-auto h-[55vh] hidden lg:flex justify-between -z-10">
       {/* right */}
-      <div className="w-1/4">
+      <div className="w-1/4 relative">
+        {/* background dots */}
+        <div className="absolute top-16 -right-10 w-24 h-24 grid grid-cols-4 -z-20">
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+        </div>
+        {/* background circle */}
+        <div className="absolute top-60 -left-10 w-52 h-52 bg-gradient-to-r from-primary-100/50 rounded-full -z-30"></div>
         {/* categories  */}
         <div className="flex -rotate-3 justify-between items-center bg-white shadow-lg shadow-primary-200/80 rounded-lg w-56 px-3 py-3 xl:ms-6">
           <div className="text-secondary-400">
@@ -52,7 +69,7 @@ const FloatingDecorationDesktop = () => {
         </div>
 
         {/* last blogs */}
-        <div className="bg-white rounded-xl p-5 shadow-lg shadow-primary-200/80 xl:w-72 w-60 rotate-3 mt-5">
+        <div className="bg-white rounded-xl p-5 shadow-lg shadow-primary-200/80 xl:w-72 w-60 rotate-3 mt-5 -ms-5 xl:ms-0">
           <p className="font-medium mb-4">آخرین مقالات</p>
           {/* items */}
           <div className="flex flex-col gap-5">
@@ -143,7 +160,39 @@ const FloatingDecorationDesktop = () => {
         </div>
       </div>
       {/* left */}
-      <div className="w-1/4">
+      <div className="w-1/4 relative">
+        {/* background circle */}
+        <div className="absolute -top-10 -left-10 w-52 h-52 bg-gradient-to-r from-primary-100 rounded-full -z-30"></div>
+        {/* background dots */}
+        <div className="absolute top-10 -left-10 w-24 -rotate-3 h-24 grid grid-cols-4 -z-20">
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+        </div>
+        {/* background dots */}
+        <div className="absolute top-32 right-10 w-24 rotate-3 h-24 grid grid-cols-4 -z-20">
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+          <div className="w-1 h-1 bg-primary-300 rounded-full"></div>
+        </div>
         {/* new post */}
         <div className="-rotate-3 flex justify-end items-center bg-white shadow-lg shadow-primary-200/80 rounded-lg xl:w-72 w-52 ms-auto xl:ms-0 px-3 py-3">
           {/* add button */}
