@@ -9,7 +9,7 @@ function Table({ children, className = "" }) {
         rounded-2xl
         border border-secondary-200
         bg-white
-        shadow-sm
+        shadow-md
         shadow-secondary-200/60
         ${className}
       `}
