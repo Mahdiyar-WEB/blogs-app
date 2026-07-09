@@ -1,5 +1,4 @@
 "use client";
-import ButtonIcon from "components/ButtonIcon";
 import toPersianDigits from "utils/toPersianDigits";
 import Image from "next/image";
 import Link from "next/link";
@@ -104,7 +103,7 @@ const Post = ({
           </div>
         </div>
         {/* interactions */}
-        <div className="flex justify-between mt-6 ">
+        <div className="flex justify-between items-center mt-6">
           <Link
             href={slugURL}
             className="flex items-center gap-1 rounded-md bg-primary-800 px-2 py-1 hover:bg-primary-900 transition-all duration-200 ease-out text-white"
@@ -123,9 +122,12 @@ const Post = ({
             </svg>
             <span>مشاهده</span>
           </Link>
-          <div className="flex gap-3">
+          <div className="flex items-center bg-white border border-secondary-200 rounded-lg overflow-hidden">
             {/* comments */}
-            <ButtonIcon variant="secondary">
+            <button
+              type="button"
+              className="flex items-center justify-center gap-x-1 px-2.5 py-1.5 h-full text-sm bg-white text-secondary-500 hover:bg-secondary-500 hover:text-white transition-all duration-300 ease-out [&>svg]:w-5 [&>svg]:h-5 [&>svg]:text-inherit"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -141,9 +143,17 @@ const Post = ({
                 />
               </svg>
               <span>{toPersianDigits(commentsCount)}</span>
-            </ButtonIcon>
+            </button>
+
+            {/* divider */}
+            <span className="w-px h-4 bg-secondary-200 shrink-0" />
+
             {/* like */}
-            <ButtonIcon variant="red" onClick={() => likePostHandler(_id)}>
+            <button
+              type="button"
+              onClick={() => likePostHandler(_id)}
+              className="flex items-center justify-center gap-x-1 px-2.5 py-1.5 h-full text-xs bg-white text-red-500 hover:bg-red-500 hover:text-white transition-all duration-300 ease-out [&>svg]:w-5 [&>svg]:h-5 [&>svg]:text-inherit"
+            >
               {isLiked ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -169,11 +179,16 @@ const Post = ({
                   />
                 </svg>
               )}
-            </ButtonIcon>
+            </button>
+
+            {/* divider */}
+            <span className="w-px h-4 bg-secondary-200 shrink-0" />
+
             {/* bookmark */}
-            <ButtonIcon
-              variant="primary"
+            <button
+              type="button"
               onClick={() => bookmarkPostHandler(_id)}
+              className="flex items-center justify-center gap-x-1 px-2.5 py-1.5 h-full text-xs bg-white text-primary-700 hover:bg-primary-700 hover:text-white transition-all duration-300 ease-out [&>svg]:w-5 [&>svg]:h-5 [&>svg]:text-inherit"
             >
               {isBookmarked ? (
                 <svg
@@ -204,7 +219,7 @@ const Post = ({
                   />
                 </svg>
               )}
-            </ButtonIcon>
+            </button>
           </div>
         </div>
       </div>
