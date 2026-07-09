@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
 
 const LoadingHeader = () => {
   return (
-    <header className="py-3 shadow-md border border-secondary-200 rounded-md w-11/12 mx-auto 2xl:max-w-screen-2xl sticky top-3 left-0 bg-secondary-50 z-10 mb-10">
+    <header className="py-3 shadow-md border border-secondary-200 rounded-md w-11/12 mx-auto 2xl:max-w-screen-2xl sticky top-3 left-0 bg-secondary-50/80 backdrop-blur-md z-10 mb-10">
       <nav className="mx-3 lg:mx-10 flex justify-between">
         <ul className="flex gap-10">
           <li>
