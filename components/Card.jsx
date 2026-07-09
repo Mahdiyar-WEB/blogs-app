@@ -22,29 +22,7 @@ function CardIcon({ children, tone = "primary" }) {
 const Card = ({ title, icon, content, description, tone = "primary" }) => {
   return (
     <div
-      className="
-        col-span-12
-        md:col-span-6
-        xl:col-span-4
-
-        rounded-2xl
-        border
-        border-secondary-200
-
-        bg-white
-
-        p-5
-
-        shadow-sm
-
-        transition-all
-        duration-300
-
-        hover:-translate-y-0.5
-        hover:border-primary-100
-        hover:shadow-lg
-        hover:shadow-secondary-200/70
-      "
+      className=" col-span-12 md:col-span-6 xl:col-span-4 rounded-2xl border border-secondary-200 bg-white p-5 shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:border-primary-100 hover:shadow-lg hover:shadow-secondary-200/70"
     >
       <div className="flex items-center justify-between">
         <div className="flex min-w-0 items-center gap-3">
