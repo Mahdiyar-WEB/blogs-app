@@ -2,6 +2,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import ButtonIcon from "components/ButtonIcon";
 import FileInput from "components/FileInput";
+import RichTextEditor from "components/RichTextEditor";
 import SelectForm from "components/SelectForm";
 import SubmitButton from "components/SubmitButton";
 import TextField from "components/TextField";
@@ -24,8 +25,14 @@ const schemas = yup.object({
     .required("توضیحات پست خود را وارد کنید"),
   text: yup
     .string()
-    .min(5, "حداقل ۵ حرف وارد کنید")
-    .required("متن پست را وارد کنید"),
+    .test("text-required", "متن پست را وارد کنید", (value) => {
+      if (!value) return false;
+
+      const text = value.replace(/<[^>]*>/g, "");
+
+      return text.trim().length >= 5;
+    })
+    .required(),
   readingTime: yup
     .number()
     .positive()
@@ -63,10 +70,9 @@ const EditPostForm = ({
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schemas),
-    defaultValues,
+    values: defaultValues,
     mode: "all",
   });
-
   const router = useRouter();
   const [coverImageURL, setCoverImageURL] = useState(coverImageUrl || "");
   const { selectOptions } = useGetCategories();
@@ -119,14 +125,13 @@ const EditPostForm = ({
         <FieldError error={errors.briefText} />
       </div>
       <div>
-        <TextField
-          label="متن"
+        <label className="block mb-2 font-medium">متن پست</label>
+        <Controller
           name="text"
-          type="text"
-          dir="rtl"
-          placeholder="متن پست"
-          register={register}
-          hasError={!!errors.text}
+          control={control}
+          render={({ field }) => (
+            <RichTextEditor value={field.value} onChange={field.onChange} />
+          )}
         />
         <FieldError error={errors.text} />
       </div>
