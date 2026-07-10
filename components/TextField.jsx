@@ -10,8 +10,11 @@ function TextField({
   placeholder,
   icon,
   customIcon,
-  register,
   hasError = false,
+  value,
+  onChange,
+  onBlur,
+  inputRef,
   ...rest
 }) {
   const hasLeftIcon = !!icon || !!customIcon;
@@ -24,12 +27,14 @@ function TextField({
           type={type}
           min={min}
           max={max}
-          defaultValue={type === "number" ? min : ""}
           name={name}
           dir={dir}
           placeholder={placeholder}
+          value={value ?? ""}
+          onChange={onChange}
+          onBlur={onBlur}
+          ref={inputRef}
           className={`${hasError ? "textField__input_error" : "textField__input"} ${hasLeftIcon ? "pl-10" : ""}`}
-          {...register(name)}
           {...rest}
         />
         {customIcon ??
