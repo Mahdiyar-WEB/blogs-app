@@ -8,7 +8,7 @@ import CommentForm from "./CommentForm";
 import { useUser } from "context/UserContext";
 import toPersianDigits from "utils/toPersianDigits";
 
-function PostComments({ post: { comments = [], _id: postId = "" } }) {
+function PostComments({ post }) {
   const { user } = useUser();
   const [isOpen, setIsOpen] = useState(false);
   const [parent, setParent] = useState(null);
@@ -43,7 +43,7 @@ function PostComments({ post: { comments = [], _id: postId = "" } }) {
       >
         <CommentForm
           parentId={parent ? parent?._id : null}
-          postId={postId}
+          postId={post.postId}
           onClose={onCloseHandler}
         />
       </Modal>
@@ -53,7 +53,10 @@ function PostComments({ post: { comments = [], _id: postId = "" } }) {
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-6 rounded-full bg-primary-600" />
             <h2 className="text-xl font-bold text-secondary-800">
-              نظرات <span className="text-secondary-400 font-normal">({toPersianDigits(comments.length)})</span>
+              نظرات{" "}
+              <span className="text-secondary-400 font-normal">
+                ({toPersianDigits(post.commentsCount)})
+              </span>
             </h2>
           </div>
           <Button
@@ -79,8 +82,8 @@ function PostComments({ post: { comments = [], _id: postId = "" } }) {
           </Button>
         </div>
 
-        {comments.length > 0 ? (
-          comments.map((comment) => (
+        {post.comments.length > 0 ? (
+          post.comments.map((comment) => (
             <div key={comment._id}>
               <div className="border border-secondary-200 rounded-xl p-2 sm:p-4 mb-3">
                 <Comment
