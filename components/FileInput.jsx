@@ -22,7 +22,6 @@ const FileInput = ({
         className="sr-only"
         name={name}
         dir={dir}
-        value={value}
         onChange={onChange}
       />
     </label>
