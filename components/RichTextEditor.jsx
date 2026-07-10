@@ -6,7 +6,6 @@ import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
 import TextAlign from "@tiptap/extension-text-align";
 import Placeholder from "@tiptap/extension-placeholder";
-import { useState } from "react";
 
 const decodeHtml = (html) => {
   const textarea = document.createElement("textarea");
@@ -31,8 +30,7 @@ const ToolbarButton = ({ active = false, onClick, children }) => {
   );
 };
 
-const RichTextEditor = ({ value = "", onChange }) => {
-  const [currentValue, setCurrentValue] = useState(value);
+const RichTextEditor = ({ initialValue = "", onChange }) => {
   const editor = useEditor(
     {
       immediatelyRender: false,
@@ -67,7 +65,7 @@ const RichTextEditor = ({ value = "", onChange }) => {
         }),
       ],
 
-      content: currentValue,
+      content: initialValue,
 
       editorProps: {
         attributes: {
@@ -87,14 +85,10 @@ const RichTextEditor = ({ value = "", onChange }) => {
           const html = clipboardData.getData("text/html");
           const text = clipboardData.getData("text/plain");
 
-          // حالت اول:
-          // HTML واقعی مثل کپی از Word، سایت، Google Docs
           if (html) {
             return false;
           }
 
-          // حالت دوم:
-          // کسی سورس HTML خام کپی کرده
           if (text && /<\/?[a-z][\s\S]*>/i.test(text)) {
             const decoded = decodeHtml(text);
 
@@ -130,7 +124,6 @@ const RichTextEditor = ({ value = "", onChange }) => {
 
       onUpdate: ({ editor }) => {
         onChange(editor.getHTML());
-        setCurrentValue(editor.getHTML());
       },
     },
     [],
