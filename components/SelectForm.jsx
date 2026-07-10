@@ -1,10 +1,13 @@
 function SelectForm({
   label,
   name,
-  register,
   hasError = false,
   icon,
   options = [],
+  value,
+  onChange,
+  onBlur,
+  inputRef,
 }) {
   return (
     <div>
@@ -12,27 +15,24 @@ function SelectForm({
 
       <div className="relative">
         <select
-          {...register(name)}
           id={name}
+          name={name}
+          value={value ?? ""}
+          onChange={onChange}
+          onBlur={onBlur}
+          ref={inputRef}
           className={`${
             hasError ? "textField__input_error" : "textField__input"
           } appearance-none`}
         >
           {options.map((option) => (
-            <option
-              key={option.value}
-              value={option.value}
-            >
+            <option key={option.value} value={option.value}>
               {option.label}
             </option>
           ))}
         </select>
 
-        {icon && (
-          <span className="textField__icon">
-            {icon}
-          </span>
-        )}
+        {icon && <span className="textField__icon">{icon}</span>}
       </div>
     </div>
   );
