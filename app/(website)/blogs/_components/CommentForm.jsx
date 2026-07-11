@@ -11,6 +11,10 @@ const CommentForm = ({ parentId = "", postId, onClose }) => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    if (value.length < 5) {
+      toast.error("حداقل ۵ حرف وارد کنید");
+      return;
+    }
     setLoading(true);
     try {
       const { data } = await commentServices.addNewComment({
