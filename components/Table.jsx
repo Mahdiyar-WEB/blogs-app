@@ -15,9 +15,7 @@ function Table({ children, className = "" }) {
       `}
     >
       <div className="overflow-x-auto scrollbar-hide">
-        <table
-          className="w-full min-w-[900px] text-right text-sm [&_th]:border-b [&_th]:border-secondary-200 [&_th]:bg-secondary-50 [&_th]:px-5 [&_th]:py-4 [&_th]:text-xs [&_th]:font-semibold [&_th]:text-secondary-500 [&_th]:whitespace-nowrap [&_td]:border-b [&_td]:border-secondary-100 [&_td]:px-5 [&_td]:py-4 [&_td]:text-secondary-700 [&_td]:whitespace-nowrap [&_tbody_tr:last-child_td]:border-b-0"
-        >
+        <table className="w-full min-w-[900px] text-right text-sm [&_th]:border-b [&_th]:border-secondary-200 [&_th]:bg-primary-800/80 [&_th]:px-5 [&_th]:py-4 [&_th]:text-xs [&_th]:font-semibold [&_th]:text-white [&_th]:whitespace-nowrap [&_td]:border-b [&_td]:border-secondary-100 [&_td]:px-5 [&_td]:py-4 [&_td]:text-secondary-700 [&_td]:whitespace-nowrap [&_tbody_tr:last-child_td]:border-b-0">
           {children}
         </table>
       </div>
@@ -27,7 +25,7 @@ function Table({ children, className = "" }) {
 
 function TableHeader({ children }) {
   return (
-    <thead className="bg-secondary-50/80">
+    <thead>
       <tr>{children}</tr>
     </thead>
   );
@@ -62,7 +60,6 @@ function TableHead({ children, className = "" }) {
         text-xs
         font-semibold
         whitespace-nowrap
-        bg-secondary-50
         text-secondary-500
         ${className}
       `}
