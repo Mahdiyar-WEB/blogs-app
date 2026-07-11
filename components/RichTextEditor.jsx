@@ -40,6 +40,7 @@ const RichTextEditor = ({ initialValue = "", onChange }) => {
           codeBlock: {
             HTMLAttributes: {
               class: "rounded-lg bg-gray-900 text-white p-4 font-mono text-sm",
+              dir: "ltr",
             },
           },
           blockquote: {
