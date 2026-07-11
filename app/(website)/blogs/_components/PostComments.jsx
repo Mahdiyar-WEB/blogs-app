@@ -42,8 +42,8 @@ function PostComments({ post }) {
         onClose={onCloseHandler}
       >
         <CommentForm
-          parentId={parent ? parent?._id : null}
-          postId={post.postId}
+          parentId={parent ? parent?._id : ''}
+          postId={post._id}
           onClose={onCloseHandler}
         />
       </Modal>
