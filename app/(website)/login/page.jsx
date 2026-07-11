@@ -1,7 +1,7 @@
 "use client";
 import TextField from "components/TextField";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useUser } from "context/UserContext";
@@ -103,10 +103,11 @@ const GithubIcon = () => (
     <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
   </svg>
 );
+// ─── Schemas ────────────────────────────────────────────────────────────────
 
-// ─── Schemas ──────────────────────────────────────────────────────────────────
 const sharedFields = {
   email: yup.string().email("ایمیل نامعتبر است").required("ایمیل را وارد کنید"),
+
   password: yup
     .string()
     .min(8, "حداقل ۸ حرف وارد کنید")
@@ -116,13 +117,16 @@ const sharedFields = {
 
 const schemas = {
   login: yup.object(sharedFields),
+
   signup: yup.object({
     name: yup
       .string()
       .min(5, "حداقل ۵ حرف وارد کنید")
       .max(30, "تعداد حروف زیاد است")
       .required("نام و نام خانوادگی را وارد کنید"),
+
     ...sharedFields,
+
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password")], "رمز مطابقت ندارد")
@@ -130,16 +134,20 @@ const schemas = {
   }),
 };
 
+// ─── Component ─────────────────────────────────────────────────────────────
+
 export default function AuthForm() {
   const [mode, setMode] = useState("login");
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const { signUp, signIn } = useUser();
 
   const {
-    register,
     handleSubmit,
-    formState: { errors, isLoading },
+    control,
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schemas[mode]),
     mode: "onTouched",
@@ -147,49 +155,57 @@ export default function AuthForm() {
 
   const isSignup = mode === "signup";
 
-  const onSubmit = async ({ email = "", name = "", password = "" }) => {
-    const isLogin = mode === "login";
-    const inputs = isLogin ? { email, password } : { email, password, name };
-    if (isLogin) {
-      await signIn(inputs);
-    } else {
-      await signUp(inputs);
+  const onSubmit = async (inputs) => {
+    if (isSignup) {
+      await signUp({
+        name: inputs.name,
+        email: inputs.email,
+        password: inputs.password,
+      });
+
+      return;
     }
+
+    await signIn({
+      email: inputs.email,
+      password: inputs.password,
+    });
   };
 
   const switchMode = (newMode) => {
     if (newMode === mode) return;
+
     setMode(newMode);
+
     setShowPassword(false);
     setShowConfirmPassword(false);
   };
 
   return (
     <main className="auth-card">
-      {/* Tabs */}
       <div className="auth-tabs">
         <div className="flex rounded-xl gap-1">
-          {["login", "signup"].map((m) => (
+          {["login", "signup"].map((item) => (
             <button
-              key={m}
+              key={item}
               type="button"
-              onClick={() => switchMode(m)}
+              onClick={() => switchMode(item)}
               className={`auth-tab ${
-                mode === m ? "auth-tab--active" : "auth-tab--inactive"
+                mode === item ? "auth-tab--active" : "auth-tab--inactive"
               }`}
             >
-              {m === "login" ? "ورود" : "ثبت‌نام"}
+              {item === "login" ? "ورود" : "ثبت‌نام"}
             </button>
           ))}
         </div>
       </div>
 
       <div className="px-7 pt-6 pb-8">
-        {/* Heading */}
         <div className="mb-6">
           <h1 className="text-xl font-bold text-secondary-900">
             {isSignup ? "حساب جدید بساز" : "خوش برگشتی! 👋"}
           </h1>
+
           <p className="text-sm mt-1 text-secondary-400">
             {isSignup ? "فقط یک دقیقه تا عضویت" : "با اطلاعات حسابت وارد شو"}
           </p>
@@ -197,104 +213,124 @@ export default function AuthForm() {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-4">
-            {/* Full Name — signup only */}
             {isSignup && (
               <div className="slide-down-enter">
-                <TextField
-                  label="نام و نام خانوادگی"
+                <Controller
                   name="name"
-                  dir="rtl"
-                  placeholder="مهدیار مروی"
-                  icon={<UserIcon />}
-                  register={register}
-                  hasError={!!errors.name}
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      label="نام و نام خانوادگی"
+                      dir="rtl"
+                      placeholder="مهدیار مروی"
+                      icon={<UserIcon />}
+                      hasError={!!errors.name}
+                      {...field}
+                    />
+                  )}
                 />
+
                 <FieldError error={errors.name} />
               </div>
             )}
 
-            {/* Email */}
             <div>
-              <TextField
-                label="ایمیل"
+              <Controller
                 name="email"
-                type="email"
-                placeholder="test@example.com"
-                icon={<EmailIcon />}
-                register={register}
-                hasError={!!errors.email}
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    label="ایمیل"
+                    type="email"
+                    placeholder="test@example.com"
+                    icon={<EmailIcon />}
+                    hasError={!!errors.email}
+                    {...field}
+                  />
+                )}
               />
+
               <FieldError error={errors.email} />
             </div>
 
-            {/* Password */}
             <div>
-              <TextField
-                label="رمز عبور"
+              <Controller
                 name="password"
-                type={showPassword ? "text" : "password"}
-                placeholder="••••••••"
-                customIcon={
-                  <PasswordToggle
-                    show={showPassword}
-                    onToggle={() => setShowPassword((p) => !p)}
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    label="رمز عبور"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="••••••••"
+                    customIcon={
+                      <PasswordToggle
+                        show={showPassword}
+                        onToggle={() => setShowPassword((prev) => !prev)}
+                      />
+                    }
+                    hasError={!!errors.password}
+                    {...field}
                   />
-                }
-                register={register}
-                hasError={!!errors.password}
+                )}
               />
+
               <FieldError error={errors.password} />
             </div>
 
-            {/* Forgot password — login only */}
             {!isSignup && (
               <button type="button" className="text-sm text-primary-900 my-1.5">
                 فراموشی رمز؟
               </button>
             )}
 
-            {/* Confirm Password — signup only */}
             {isSignup && (
               <div className="slide-down-enter">
-                <TextField
-                  label="تایید رمز عبور"
+                <Controller
                   name="confirmPassword"
-                  type={showConfirmPassword ? "text" : "password"}
-                  placeholder="••••••••"
-                  customIcon={
-                    <PasswordToggle
-                      show={showConfirmPassword}
-                      onToggle={() => setShowConfirmPassword((p) => !p)}
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      label="تایید رمز عبور"
+                      type={showConfirmPassword ? "text" : "password"}
+                      placeholder="••••••••"
+                      customIcon={
+                        <PasswordToggle
+                          show={showConfirmPassword}
+                          onToggle={() =>
+                            setShowConfirmPassword((prev) => !prev)
+                          }
+                        />
+                      }
+                      hasError={!!errors.confirmPassword}
+                      {...field}
                     />
-                  }
-                  register={register}
-                  hasError={!!errors.confirmPassword}
+                  )}
                 />
+
                 <FieldError error={errors.confirmPassword} />
               </div>
             )}
 
-            {/* Submit */}
-            <SubmitButton loading={isLoading} className="w-full">
+            <SubmitButton loading={isSubmitting} className="w-full">
               {isSignup ? "ثبت‌نام" : "ورود به حساب"}
             </SubmitButton>
           </div>
         </form>
 
-        {/* Divider */}
         <div className="flex items-center gap-3 my-5">
           <div className="flex-1 h-px bg-secondary-200" />
+
           <span className="text-xs text-secondary-400">یا ادامه با</span>
+
           <div className="flex-1 h-px bg-secondary-200" />
         </div>
 
-        {/* Social Buttons */}
         <div className="grid grid-cols-2 gap-3">
           <SocialButton icon={<GoogleIcon />} label="گوگل" />
+
           <SocialButton icon={<GithubIcon />} label="گیت‌هاب" />
         </div>
 
-        {/* Footer switch */}
         <p className="text-center text-sm text-secondary-500 mt-6">
           {isSignup ? "قبلاً ثبت‌نام کردی؟" : "حساب نداری؟"}{" "}
           <button
@@ -310,14 +346,16 @@ export default function AuthForm() {
   );
 }
 
-// ─── PasswordToggle ───────────────────────────────────────────────────────────
+// ─── Password Toggle ───────────────────────────────────────────────────────
+
 const PasswordToggle = ({ show, onToggle }) => (
   <button type="button" onClick={onToggle} className="textField__icon--btn">
     {show ? <EyeOffIcon /> : <EyeIcon />}
   </button>
 );
 
-// ─── SocialButton ─────────────────────────────────────────────────────────────
+// ─── Social Button ─────────────────────────────────────────────────────────
+
 const SocialButton = ({ icon, label }) => (
   <button
     type="button"
@@ -328,6 +366,7 @@ const SocialButton = ({ icon, label }) => (
   </button>
 );
 
-// ─── FieldError ───────────────────────────────────────────────────────────────
+// ─── Error ────────────────────────────────────────────────────────────────
+
 const FieldError = ({ error }) =>
   error ? <span className="text-xs text-red-500">{error.message}</span> : null;
