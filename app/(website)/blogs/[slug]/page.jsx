@@ -8,6 +8,7 @@ import ShareRail from "../_components/ShareRail";
 import Image from "next/image";
 import BreadCrumbs from "components/BreadCrumbs";
 import toPersianDigits from "utils/toPersianDigits";
+import { Suspense } from "react";
 
 async function getCachedPost(slug) {
   "use cache";
@@ -150,7 +151,7 @@ const SinglePost = async ({ params }) => {
         <article className="p-5 sm:p-8 lg:p-12">
           <div
             dir="rtl"
-            className="prose prose-lg max-w-none prose-headings:text-secondary-900 prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:text-secondary-700 prose-p:leading-10 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline prose-blockquote:border-primary-500 prose-blockquote:text-secondary-600 prose-code:text-primary-700 prose-pre:bg-secondary-900 prose-pre:text-white prose-li:text-secondary-700"
+            className="article-content prose prose-lg max-w-none prose-headings:text-secondary-900 prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:text-secondary-700 prose-p:leading-10 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline prose-blockquote:border-primary-500 prose-blockquote:text-secondary-600 prose-code:text-primary-700 prose-pre:bg-secondary-900 prose-pre:text-white prose-li:text-secondary-700"
             dangerouslySetInnerHTML={{
               __html: post.text,
             }}
@@ -166,7 +167,9 @@ const SinglePost = async ({ params }) => {
       </section>
 
       {post.related.length > 0 && <RelatedPosts posts={post.related} />}
-      <PostComments post={post} />
+      <Suspense>
+        <PostComments post={post} />
+      </Suspense>
     </main>
   );
 };
