@@ -2,7 +2,7 @@
 import ButtonIcon from "components/ButtonIcon";
 import Table from "components/Table";
 import React, { useState } from "react";
-import toLocalDateShort from "utils/toLocalDateShort";
+import toLocalDateShort from "utils/toLocalDate";
 import toPersianDigits from "utils/toPersianDigits";
 import truncateText from "utils/truncateText";
 import Image from "next/image";
