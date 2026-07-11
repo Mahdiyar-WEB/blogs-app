@@ -359,3 +359,19 @@ table td {
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgb(var(--color-secondary-400));
 }
+.tiptap pre {
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: plaintext;
+}
+
+.tiptap pre code {
+  direction: ltr;
+  text-align: left;
+  display: block;
+}
+.article-content pre {
+  direction: ltr;
+  text-align: left;
+  overflow-x: auto;
+}
