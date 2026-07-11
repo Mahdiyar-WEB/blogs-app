@@ -5,16 +5,19 @@ import ButtonIcon from "components/ButtonIcon";
 import FileInput from "components/FileInput";
 import SubmitButton from "components/SubmitButton";
 import TextField from "components/TextField";
-import Image from "next/image";
-import { useMemo, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import * as yup from "yup";
+import { useUser } from "context/UserContext";
 import useUpdateUser from "hooks/users/useUpdateUser";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import * as yup from "yup";
 
 const schema = yup.object({
   name: yup.string().min(3, "حداقل ۳ حرف وارد کنید").required("نام الزامی است"),
+
   email: yup.string().email("ایمیل معتبر نیست").required("ایمیل الزامی است"),
+
   avatar: yup.mixed().nullable(),
 });
 
@@ -26,6 +29,7 @@ const EditUserForm = ({
   userId,
 }) => {
   const router = useRouter();
+  const { user, getUser } = useUser();
 
   const defaultValues = useMemo(
     () => ({
@@ -33,7 +37,7 @@ const EditUserForm = ({
       avatar:
         avatar && avatarName
           ? new File([avatar], avatarName, {
-              type: avatar?.type || "image/jpeg",
+              type: avatar.type || "image/jpeg",
             })
           : null,
     }),
@@ -41,15 +45,14 @@ const EditUserForm = ({
   );
 
   const {
-    register,
     handleSubmit,
-    setValue,
     control,
+    setValue,
     reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-    defaultValues,
+    values: defaultValues,
     mode: "all",
   });
 
@@ -62,6 +65,7 @@ const EditUserForm = ({
 
     for (const key in inputs) {
       if (key === "avatar") continue;
+
       if (inputs[key] !== null && inputs[key] !== undefined) {
         formData.append(key, inputs[key]);
       }
@@ -71,14 +75,22 @@ const EditUserForm = ({
       formData.append("filename", inputs.avatar.name);
       formData.append("fileUploadPath", "uploads/avatars");
       formData.append("avatar", inputs.avatar);
-    } else if (inputs.avatar === null) {
+    }
+
+    if (inputs.avatar === null) {
       formData.append("removeAvatar", true);
     }
 
     updateUser(
-      { id: userId, data: formData },
+      {
+        id: userId,
+        data: formData,
+      },
       {
         onSuccess: () => {
+          if (userId === user?._id) {
+            getUser();
+          }
           router.push("/profile/users");
           reset();
         },
@@ -91,55 +103,71 @@ const EditUserForm = ({
       onSubmit={handleSubmit(onSubmit)}
       className="w-full md:w-2/3 xl:w-1/3 flex flex-col gap-5"
     >
-      {/* NAME */}
       <div>
-        <TextField
-          label="نام"
+        <Controller
           name="name"
-          type="text"
-          dir="rtl"
-          placeholder="نام"
-          register={register}
-          hasError={!!errors.name}
+          control={control}
+          render={({ field: { ref, ...field } }) => (
+            <TextField
+              label="نام"
+              type="text"
+              dir="rtl"
+              placeholder="نام"
+              hasError={!!errors.name}
+              inputRef={ref}
+              {...field}
+            />
+          )}
         />
+
         <FieldError error={errors.name} />
       </div>
 
-      {/* EMAIL */}
       <div>
-        <TextField
-          label="ایمیل"
+        <Controller
           name="email"
-          type="email"
-          dir="rtl"
-          placeholder="email@example.com"
-          register={register}
-          hasError={!!errors.email}
+          control={control}
+          render={({ field: { ref, ...field } }) => (
+            <TextField
+              label="ایمیل"
+              type="email"
+              dir="rtl"
+              placeholder="email@example.com"
+              hasError={!!errors.email}
+              inputRef={ref}
+              {...field}
+            />
+          )}
         />
+
         <FieldError error={errors.email} />
       </div>
 
-      {/* AVATAR */}
       <div>
         <Controller
           name="avatar"
           control={control}
-          render={({ field: { onChange, value, ...rest } }) => (
+          render={({ field: { value, onChange, ...rest } }) => (
             <FileInput
               label="انتخاب عکس پروفایل"
               name="avatar"
-              value={value?.fileName}
+              value={value?.name}
               {...rest}
               onChange={(e) => {
                 const file = e.target.files?.[0];
+
                 if (!file) return;
+
                 onChange(file);
+
                 setAvatarURL(URL.createObjectURL(file));
+
                 e.target.value = null;
               }}
             />
           )}
         />
+
         <FieldError error={errors.avatar} />
 
         {avatarURL ? (
@@ -182,7 +210,6 @@ const EditUserForm = ({
         )}
       </div>
 
-      {/* SUBMIT */}
       <SubmitButton loading={isUpdating} className="w-full">
         ذخیره تغییرات
       </SubmitButton>
