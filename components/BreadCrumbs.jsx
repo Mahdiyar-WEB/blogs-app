@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 const labels = {
   blogs: "بلاگ‌ها",
   category: "دسته‌بندی",
-  profile: "پروفایل",
+  profile: "داشبورد",
   dashboard: "داشبورد",
   create: "ایجاد پست",
   edit: "ویرایش پست",
