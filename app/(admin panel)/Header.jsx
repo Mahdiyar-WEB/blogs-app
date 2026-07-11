@@ -94,7 +94,7 @@ function ProfileButton({ user, open, onToggle }) {
         width={44}
         height={44}
         src={user?.avatarUrl || "/avatar.svg"}
-        className="rounded-2xl border border-secondary-200 object-cover"
+        className="h-11 w-11 rounded-2xl border border-secondary-200 object-cover object-center"
       />
 
       <div className="hidden min-w-0 flex-col items-start leading-tight md:flex">
@@ -126,7 +126,13 @@ function ProfileButton({ user, open, onToggle }) {
   );
 }
 
-function ProfileMenuItem({ children, icon, href, onClick, variant = "default" }) {
+function ProfileMenuItem({
+  children,
+  icon,
+  href,
+  onClick,
+  variant = "default",
+}) {
   const className =
     variant === "danger"
       ? "flex w-full items-center gap-3 px-4 py-3 text-red-600 transition-colors hover:bg-red-50"
