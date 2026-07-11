@@ -48,7 +48,6 @@ export default function UserProvider({ children }) {
     try {
       await authentication.logout();
       dispatch({ type: "logout" });
-      toast.success("از حساب کاربری خود خارج شدید");
       router.refresh();
       router.push("/");
     } catch (error) {
@@ -86,6 +85,7 @@ export default function UserProvider({ children }) {
         signIn,
         signUp,
         logout,
+        getUser,
         user,
         isAuthenticated,
         isLoading,
