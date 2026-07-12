@@ -14,6 +14,7 @@ const Post = ({
   author,
   readingTime,
   commentsCount,
+  likesCount,
   isBookmarked,
   _id,
   isLiked,
@@ -152,7 +153,7 @@ const Post = ({
             <button
               type="button"
               onClick={() => likePostHandler(_id)}
-              className="flex items-center justify-center gap-x-1 px-2.5 py-1.5 h-full text-xs bg-white text-red-500 hover:bg-red-500 hover:text-white transition-all duration-300 ease-out [&>svg]:w-5 [&>svg]:h-5 [&>svg]:text-inherit"
+              className="flex items-center justify-center gap-x-1 px-2.5 py-1.5 h-full text-sm bg-white text-red-500 hover:bg-red-500 hover:text-white transition-all duration-300 ease-out [&>svg]:w-5 [&>svg]:h-5 [&>svg]:text-inherit"
             >
               {isLiked ? (
                 <svg
@@ -179,6 +180,7 @@ const Post = ({
                   />
                 </svg>
               )}
+              <span>{toPersianDigits(likesCount)}</span>
             </button>
 
             {/* divider */}
