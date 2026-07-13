@@ -18,15 +18,7 @@ function PostComments({ post }) {
 
   const addNewCommentHandler = (parent) => {
     if (!user) {
-      router.push(
-        {
-          pathname: "/signin",
-          query: {
-            redirect: router.asPath,
-          },
-        },
-        `/signin?redirect=${router.asPath}`,
-      );
+      router.push('/login');
       return;
     }
     setParent(parent);
@@ -42,7 +34,7 @@ function PostComments({ post }) {
         onClose={onCloseHandler}
       >
         <CommentForm
-          parentId={parent ? parent?._id : ''}
+          parentId={parent ? parent?._id : ""}
           postId={post._id}
           onClose={onCloseHandler}
         />
