@@ -126,28 +126,12 @@ const PostsInformation = ({ fetchQueries = "" }) => {
           })}
           {isLoading &&
             Array.from({ length: 5 }).map((_, index) => (
-              <Table.Row key={index} className="animate-pulse">
-                <td>
-                  <div className="bg-secondary-300 rounded-md w-5 h-5"></div>
-                </td>
-                <td>
-                  <div className="bg-secondary-300 rounded-md w-20 h-5"></div>
-                </td>
-                <td>
-                  <div className="bg-secondary-300 rounded-md w-20 h-5"></div>
-                </td>
-                <td>
-                  <div className="bg-secondary-300 rounded-md w-20 h-5"></div>
-                </td>
-                <td>
-                  <div className="bg-secondary-300 rounded-md w-20 h-5"></div>
-                </td>
-                <td>
-                  <div className="bg-secondary-300 rounded-md w-20 h-5"></div>
-                </td>
-                <td>
-                  <div className="bg-secondary-300 rounded-md w-20 h-5"></div>
-                </td>
+              <Table.Row key={index}>
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <td key={i} className="px-5 py-4 whitespace-nowrap">
+                    <div className="h-8 w-24 rounded-md bg-secondary-200 animate-pulse" />
+                  </td>
+                ))}
               </Table.Row>
             ))}
         </Table.Body>
