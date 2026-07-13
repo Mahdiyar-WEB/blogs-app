@@ -45,11 +45,8 @@ const Post = ({
 
   return (
     <div className="group relative col-span-12 lg:col-span-4">
-      <div
-        className="absolute -inset-2 rounded-3xl bg-gradient-to-r from-primary-900/20 via-primary-700/10 to-primary-900/20 blur-2xl opacity-0 transition-all duration-500 group-hover:opacity-100"
-      />
       {/* Card */}
-      <div className="relative overflow-hidden rounded-xl border border-secondary-200 bg-white shadow-sm transition-all duration-300 ease-out group-hover:-translate-y-1 group-hover:border-primary-200 group-hover:shadow-[0_20px_60px_rgba(74,109,255,0.16)]">
+      <div className="relative overflow-hidden rounded-xl border border-secondary-200 bg-white shadow-sm transition-all duration-300 ease-out group-hover:-translate-y-1 group-hover:border-primary-300 group-hover:shadow-[0_16px_40px_rgba(74,109,255,0.12)]">
         <Link
           href={slugURL}
           className="relative block aspect-video h-56 overflow-hidden rounded-t-lg"
@@ -60,7 +57,7 @@ const Post = ({
             alt={title}
             sizes="100%"
             src={coverImageUrl}
-            className=" object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
+            className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
           />
         </Link>
         {/* body */}
