@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function RootLayout({ children }) {
   return (
-    <div className={`font-sans min-h-screen relative overflow-x-hidden bg-gradient-to-r from-primary-100/20 via-transparent to-primary-100/20`}>
+    <div className={`font-sans min-h-screen relative isolate overflow-x-hidden bg-gradient-to-r from-primary-100/20 via-transparent to-primary-100/20`}>
       <Suspense fallback={<LoadingHeader />}>
         <Header />
       </Suspense>
