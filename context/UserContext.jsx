@@ -22,7 +22,6 @@ export default function UserProvider({ children }) {
       dispatch({ type: "signin", payload: data.user });
       toast.success(data.message);
       router.refresh();
-      router.push("/profile");
     } catch (error) {
       dispatch({ type: "rejected", payload: error });
       toast.error(error.message);
@@ -36,7 +35,6 @@ export default function UserProvider({ children }) {
       dispatch({ type: "signup", payload: data.user });
       toast.success(data.message);
       router.refresh();
-      router.push("/profile");
     } catch (error) {
       dispatch({ type: "rejected", payload: error });
       toast.error(error.message);
@@ -58,11 +56,6 @@ export default function UserProvider({ children }) {
 
   const getUser = async () => {
     dispatch({ type: "loading" });
-    await new Promise((res) =>
-      setTimeout(() => {
-        res();
-      }, 500),
-    );
     try {
       const { data } = await authentication.getUser();
       dispatch({ type: "user/loaded", payload: data.user });
