@@ -76,21 +76,28 @@
   .form {
     @apply flex flex-col gap-y-8 bg-secondary-0 p-4 rounded-xl w-full max-w-lg;
   }
-  .textField__input {
-    @apply text-secondary-900 w-full py-3 px-4 rounded-xl border border-secondary-300 bg-secondary-0 hover:border-primary-500 focus:border-primary-500 transition-all duration-300 ease-out focus:shadow-sm focus:shadow-primary-100  dark:focus:shadow-secondary-200;
-  }
-  .textField__input_error {
-    @apply text-secondary-900 w-full py-3 px-4 rounded-xl border border-red-500 bg-secondary-0 transition-all duration-300 ease-out focus:shadow-sm focus:shadow-primary-100  dark:focus:shadow-secondary-200;
-  }
-  .textField__label {
-    @apply block text-sm font-medium mb-1.5 text-secondary-600;
-  }
-  .textField__icon {
-    @apply absolute inset-y-0 left-3 flex items-center pointer-events-none text-secondary-400;
-  }
-  .textField__icon--btn {
-    @apply absolute inset-y-0 left-3 flex items-center text-secondary-400 transition-colors hover:text-primary-900;
-  }
+ .textField__input {
+  @apply w-full rounded-xl border border-secondary-200 bg-secondary-0 px-4 py-3 text-secondary-900 outline-none transition-all duration-300 ease-out;
+  @apply hover:border-primary-300;
+  @apply focus:border-primary-500 focus:ring-4 focus:ring-primary-100/70;
+}
+
+.textField__input_error {
+  @apply w-full rounded-xl border border-red-400 bg-secondary-0 px-4 py-3 text-secondary-900 outline-none transition-all duration-300 ease-out;
+  @apply focus:border-red-500 focus:ring-4 focus:ring-red-100;
+}
+
+.textField__label {
+  @apply mb-2 block text-sm font-medium text-secondary-700;
+}
+
+.textField__icon {
+  @apply pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-secondary-400 transition-colors duration-300;
+}
+
+.textField__icon--btn {
+  @apply absolute left-3 top-1/2 -translate-y-1/2 text-secondary-400 transition-colors duration-300 hover:text-primary-800;
+}
   .btn {
     @apply px-3 py-3 rounded-xl transition-all duration-300;
   }
@@ -148,32 +155,6 @@
     }
   }
 
-  /* ───────── Auth page ───────── */
-
-  .auth-card {
-    box-shadow:
-      0 2px 24px rgba(0, 0, 0, 0.07),
-      0 1px 4px rgba(0, 0, 0, 0.04);
-    @apply bg-secondary-0 h-fit rounded-2xl overflow-hidden border max-w-xl w-11/12 mx-auto;
-  }
-
-  /* tab switcher */
-  .auth-tabs {
-    @apply p-1.5 bg-secondary-100;
-  }
-
-  .auth-tab {
-    @apply flex-1 py-2.5 rounded-xl text-sm transition-all duration-200;
-  }
-
-  .auth-tab--active {
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
-    @apply bg-secondary-0 text-secondary-900 font-semibold;
-  }
-
-  .auth-tab--inactive {
-    @apply text-secondary-400;
-  }
 
   /* slide-down animation for conditional fields */
   .slide-down-enter {

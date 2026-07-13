@@ -182,16 +182,19 @@ export default function AuthForm() {
   };
 
   return (
-    <main className="auth-card">
-      <div className="auth-tabs">
-        <div className="flex rounded-xl gap-1">
+    <main className="mb-8 max-w-xl w-11/12 mx-auto overflow-hidden rounded-2xl border border-secondary-200 bg-white shadow-[0_10px_40px_rgba(15,23,42,0.06)] transition-all duration-300">
+      {/* Tabs */}
+      <div className="border-b border-secondary-100 bg-secondary-50 p-2">
+        <div className="grid grid-cols-2 gap-1 rounded-2xl bg-white p-1">
           {["login", "signup"].map((item) => (
             <button
               key={item}
               type="button"
               onClick={() => switchMode(item)}
-              className={`auth-tab ${
-                mode === item ? "auth-tab--active" : "auth-tab--inactive"
+              className={`rounded-xl py-3 text-sm font-medium transition-all duration-300 ${
+                mode === item
+                  ? "bg-primary-800 text-white shadow-sm"
+                  : "text-secondary-500 hover:text-secondary-700"
               }`}
             >
               {item === "login" ? "ورود" : "ثبت‌نام"}
@@ -200,21 +203,46 @@ export default function AuthForm() {
         </div>
       </div>
 
-      <div className="px-7 pt-6 pb-8">
-        <div className="mb-6">
-          <h1 className="text-xl font-bold text-secondary-900">
-            {isSignup ? "حساب جدید بساز" : "خوش برگشتی! 👋"}
+      <div className="px-8 py-8">
+        {/* Header */}
+        <div className="mb-8 text-center">
+          <div className="mb-5 flex justify-center">
+            <div className="group relative">
+              <div className="absolute -inset-3 rounded-[28px] bg-orange-100/70 blur-xl transition-all duration-500 group-hover:scale-110" />
+
+              <div className="relative flex h-20 w-20 items-center justify-center rounded-[24px] border border-secondary-100 bg-white shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 48 48"
+                  className="h-14 w-14"
+                >
+                  <circle cx="24" cy="24" r="24" fill="#F0780C" />
+
+                  <path
+                    fill="#FFFFFF"
+                    d="M17 12C13.7 12 11 14.7 11 18V30C11 33.3 13.7 36 17 36H31C34.3 36 37 33.3 37 30V24.5C37 23.4 36.1 22.5 35 22.5C33.9 22.5 33 21.6 33 20.5V18C33 14.7 30.3 12 27 12H17ZM18 18H26C27.7 18 29 19.3 29 21C29 22.7 27.7 24 26 24H18C16.3 24 15 22.7 15 21C15 19.3 16.3 18 18 18ZM18 26H27C28.7 26 30 27.3 30 29C30 30.7 28.7 32 27 32H18C16.3 32 15 30.7 15 29C15 27.3 16.3 26 18 26Z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <h1 className="text-2xl font-bold text-secondary-900">
+            {isSignup ? "ایجاد حساب کاربری" : "خوش برگشتی 👋"}
           </h1>
 
-          <p className="text-sm mt-1 text-secondary-400">
-            {isSignup ? "فقط یک دقیقه تا عضویت" : "با اطلاعات حسابت وارد شو"}
+          <p className="mt-2 text-sm text-secondary-400">
+            {isSignup
+              ? "برای شروع فقط چند ثانیه زمان نیاز داری"
+              : "برای ادامه وارد حساب کاربری خودت شو"}
           </p>
         </div>
 
+        {/* Form */}
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="space-y-4">
+          <div className="space-y-5">
             {isSignup && (
-              <div className="slide-down-enter">
+              <div className="space-y-1.5 slide-down-enter">
                 <Controller
                   name="name"
                   control={control}
@@ -229,12 +257,11 @@ export default function AuthForm() {
                     />
                   )}
                 />
-
                 <FieldError error={errors.name} />
               </div>
             )}
 
-            <div>
+            <div className="space-y-1.5">
               <Controller
                 name="email"
                 control={control}
@@ -249,11 +276,10 @@ export default function AuthForm() {
                   />
                 )}
               />
-
               <FieldError error={errors.email} />
             </div>
 
-            <div>
+            <div className="space-y-1.5">
               <Controller
                 name="password"
                 control={control}
@@ -273,24 +299,17 @@ export default function AuthForm() {
                   />
                 )}
               />
-
               <FieldError error={errors.password} />
             </div>
 
-            {!isSignup && (
-              <button type="button" className="text-sm text-primary-900 my-1.5">
-                فراموشی رمز؟
-              </button>
-            )}
-
             {isSignup && (
-              <div className="slide-down-enter">
+              <div className="space-y-1.5 slide-down-enter">
                 <Controller
                   name="confirmPassword"
                   control={control}
                   render={({ field }) => (
                     <TextField
-                      label="تایید رمز عبور"
+                      label="تکرار رمز عبور"
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="••••••••"
                       customIcon={
@@ -306,37 +325,31 @@ export default function AuthForm() {
                     />
                   )}
                 />
-
                 <FieldError error={errors.confirmPassword} />
               </div>
             )}
 
-            <SubmitButton loading={isSubmitting} className="w-full">
-              {isSignup ? "ثبت‌نام" : "ورود به حساب"}
+            <SubmitButton
+              loading={isSubmitting}
+              className="h-12 w-full rounded-xl font-semibold shadow-sm transition-all duration-300 hover:shadow-md"
+            >
+              {isSignup ? "ایجاد حساب کاربری" : "ورود به حساب"}
             </SubmitButton>
           </div>
         </form>
 
-        <div className="flex items-center gap-3 my-5">
-          <div className="flex-1 h-px bg-secondary-200" />
-
-          <span className="text-xs text-secondary-400">یا ادامه با</span>
-
-          <div className="flex-1 h-px bg-secondary-200" />
+        <div className="my-6 flex items-center gap-3">
+          <div className="h-px flex-1 bg-secondary-200" />
+          <span className="text-xs text-secondary-400">یا</span>
+          <div className="h-px flex-1 bg-secondary-200" />
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
-          <SocialButton icon={<GoogleIcon />} label="گوگل" />
-
-          <SocialButton icon={<GithubIcon />} label="گیت‌هاب" />
-        </div>
-
-        <p className="text-center text-sm text-secondary-500 mt-6">
-          {isSignup ? "قبلاً ثبت‌نام کردی؟" : "حساب نداری؟"}{" "}
+        <p className="text-center text-sm text-secondary-500">
+          {isSignup ? "قبلاً ثبت‌نام کرده‌ای؟" : "حساب کاربری نداری؟"}{" "}
           <button
             type="button"
             onClick={() => switchMode(isSignup ? "login" : "signup")}
-            className="font-semibold text-primary-900 hover:text-primary-700 transition-colors"
+            className="font-semibold text-primary-900 transition-colors hover:text-primary-700"
           >
             {isSignup ? "وارد شو" : "ثبت‌نام کن"}
           </button>
@@ -351,18 +364,6 @@ export default function AuthForm() {
 const PasswordToggle = ({ show, onToggle }) => (
   <button type="button" onClick={onToggle} className="textField__icon--btn">
     {show ? <EyeOffIcon /> : <EyeIcon />}
-  </button>
-);
-
-// ─── Social Button ─────────────────────────────────────────────────────────
-
-const SocialButton = ({ icon, label }) => (
-  <button
-    type="button"
-    className="btn--outline btn flex items-center justify-center gap-2 py-2.5 text-sm font-medium text-secondary-600 bg-secondary-0 hover:bg-secondary-100 hover:border-secondary-400"
-  >
-    {icon}
-    {label}
   </button>
 );
 
