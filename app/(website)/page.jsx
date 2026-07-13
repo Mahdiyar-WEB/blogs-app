@@ -2,6 +2,7 @@ import Button from "components/Button";
 import SpiderwebMeshBackground from "components/ui/SpiderwebMeshBackground";
 import FloatingDecorationDesktop from "components/ui/FloatingDecorationDesktop";
 import Link from "next/link";
+import FloatingDecorationMobile from "components/ui/FloatingDecorationMobile";
 
 export const metadata = {
   title: "خانه",
@@ -12,6 +13,7 @@ export default function Home() {
     <>
       <SpiderwebMeshBackground />
       <FloatingDecorationDesktop />
+      <FloatingDecorationMobile />
       <main className="my-20 w-11/12 mx-auto 2xl:max-w-screen-2xl">
         <h1 className="text-center text-2xl md:text-5xl font-bold text-secondary-800">
           بلاگیتو: خوش اومدی 👋
