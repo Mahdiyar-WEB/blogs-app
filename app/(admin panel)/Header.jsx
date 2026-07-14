@@ -220,6 +220,11 @@ export default function Header({ onMobileToggle }) {
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
 
+  const onLogoutHandler = () => {
+    setOpen(false);
+    logout();
+  };
+
   useEffect(() => {
     const onClickHandler = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -256,7 +261,7 @@ export default function Header({ onMobileToggle }) {
           <ProfileMenu
             user={user}
             onClose={() => setOpen(false)}
-            onLogout={logout}
+            onLogout={onLogoutHandler}
           />
         )}
       </div>

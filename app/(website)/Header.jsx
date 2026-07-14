@@ -37,9 +37,9 @@ const Header = () => {
         ) : (
           <div>
             {user ? (
-              <NavLink path="/profile" text="پروفایل" />
+              <NavLink prefetch={false} path="/profile" text="پروفایل" />
             ) : (
-              <NavLink path="/login" text="ورود" />
+              <NavLink prefetch={false} path="/login" text="ورود" />
             )}
           </div>
         )}
