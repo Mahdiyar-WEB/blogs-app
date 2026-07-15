@@ -1,4 +1,5 @@
 "use client";
+
 import ButtonIcon from "components/ButtonIcon";
 import Table from "components/Table";
 import React, { useState } from "react";
@@ -10,12 +11,19 @@ import { useRouter } from "next/navigation";
 import Button from "components/Button";
 import DeleteCommentModal from "./DeleteCommentModal";
 import useGetComments from "hooks/comments/useGetComments";
+import { AnimatedTableRow } from "components/ui/TableMotion";
+import useDelayedLoading from "hooks/useDelayedLoading";
 
 const CommentsInformation = ({ fetchQueries }) => {
-  const { comments, isLoading } = useGetComments(fetchQueries);
+  const { comments = [], isLoading } = useGetComments(fetchQueries);
   const router = useRouter();
+  const showLoading = useDelayedLoading(isLoading, {
+    delay: 250,
+    minDuration: 300,
+  });
 
   const [openedComments, setOpenedComments] = useState([]);
+  const [selectedComment, setSelectedComment] = useState(null);
 
   const toggleAnswers = (commentId) => {
     setOpenedComments((prev) =>
@@ -24,7 +32,6 @@ const CommentsInformation = ({ fetchQueries }) => {
         : [...prev, commentId],
     );
   };
-  const [selectedComment, setSelectedComment] = useState(null);
 
   const onCloseCommentAction = () => {
     setSelectedComment(null);
@@ -37,7 +44,7 @@ const CommentsInformation = ({ fetchQueries }) => {
           <th>#</th>
           <th>متن</th>
           <th>
-            <p className="flex gap-1 items-center">
+            <p className="flex items-center gap-1">
               <span>پست</span>
               <span className="text-xs">(برای مشاهده کلیک کنید)</span>
             </p>
@@ -48,10 +55,14 @@ const CommentsInformation = ({ fetchQueries }) => {
           <th>قابلیت پاسخ</th>
           <th>عملیات</th>
         </Table.Header>
+
         <Table.Body>
           {comments.map((comment, index) => (
             <React.Fragment key={comment._id}>
-              <Table.Row>
+              <AnimatedTableRow
+                index={index}
+                className="transition-colors duration-200 hover:bg-primary-50/40"
+              >
                 <td>{toPersianDigits(index + 1)}</td>
                 <td>{truncateText(comment.content.text, 25)}</td>
                 <td>
@@ -149,25 +160,23 @@ const CommentsInformation = ({ fetchQueries }) => {
                     </ButtonIcon>
                   </div>
                 </td>
-              </Table.Row>
+              </AnimatedTableRow>
 
               {openedComments.includes(comment._id) &&
-                comment.answers.map((answer) => (
-                  <Table.Row key={answer._id} className="bg-secondary-50">
+                comment.answers.map((answer, answerIndex) => (
+                  <AnimatedTableRow
+                    key={answer._id}
+                    index={index + answerIndex + 1}
+                    className="bg-secondary-50 transition-colors duration-200 hover:bg-secondary-100"
+                  >
                     <td>↲</td>
-
                     <td className="pr-10">
                       {truncateText(answer.content.text, 25)}
                     </td>
-
                     <td>{comment.post?.title}</td>
-
                     <td>{answer.user?.name}</td>
-
                     <td>{toLocalDateShort(answer.createdAt)}</td>
-
                     <td>-</td>
-
                     <td>
                       <span
                         className={`badge ${
@@ -179,7 +188,6 @@ const CommentsInformation = ({ fetchQueries }) => {
                         {answer.openToComment ? "دارد" : "ندارد"}
                       </span>
                     </td>
-
                     <td>
                       <ButtonIcon
                         onClick={() => setSelectedComment(answer)}
@@ -202,22 +210,18 @@ const CommentsInformation = ({ fetchQueries }) => {
                         <span className="m-1">حذف کامنت</span>
                       </ButtonIcon>
                     </td>
-                  </Table.Row>
+                  </AnimatedTableRow>
                 ))}
             </React.Fragment>
           ))}
-          {isLoading &&
+
+          {showLoading &&
             Array.from({ length: 5 }).map((_, index) => (
-              <Table.Row key={index}>
-                {Array.from({ length: 8 }).map((_, i) => (
-                  <td key={i} className="px-5 py-4 whitespace-nowrap">
-                    <div className="h-8 w-24 rounded-md bg-secondary-200 animate-pulse" />
-                  </td>
-                ))}
-              </Table.Row>
+              <Table.SkeletonRow key={index} columns={8} />
             ))}
         </Table.Body>
       </Table>
+
       {comments.length === 0 && !isLoading && (
         <div className="flex justify-center flex-col items-center bg-white py-3">
           <Image
@@ -229,9 +233,10 @@ const CommentsInformation = ({ fetchQueries }) => {
             alt=""
             src="/no-blogs.png"
           />
-          <p className="text-xl font-semibold">پستی پیدا نشد!</p>
+          <p className="text-xl font-semibold">کامنتی پیدا نشد!</p>
         </div>
       )}
+
       <DeleteCommentModal
         comment={selectedComment}
         onClose={onCloseCommentAction}

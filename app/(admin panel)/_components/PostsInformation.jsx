@@ -1,4 +1,5 @@
 "use client";
+
 import ButtonIcon from "components/ButtonIcon";
 import Table from "components/Table";
 import React, { useState } from "react";
@@ -9,6 +10,8 @@ import DeletePostModal from "./DeletePostModal";
 import Image from "next/image";
 import useGetPosts from "hooks/posts/useGetPosts";
 import { useRouter } from "next/navigation";
+import { AnimatedTableRow } from "components/ui/TableMotion";
+import useDelayedLoading from "hooks/useDelayedLoading";
 
 const postTypeValues = {
   free: {
@@ -24,6 +27,11 @@ const postTypeValues = {
 const PostsInformation = ({ fetchQueries = "" }) => {
   const router = useRouter();
   const { posts = [], isLoading } = useGetPosts(fetchQueries);
+  const showLoading = useDelayedLoading(isLoading, {
+    delay: 250,
+    minDuration: 300,
+  });
+
   const [selectedPost, setSelectedPost] = useState(null);
 
   const onClosePostAction = () => {
@@ -43,10 +51,15 @@ const PostsInformation = ({ fetchQueries = "" }) => {
           <th>نوع</th>
           <th>عملیات</th>
         </Table.Header>
+
         <Table.Body>
           {posts.map((post, index) => {
             return (
-              <Table.Row key={post._id}>
+              <AnimatedTableRow
+                key={post._id}
+                index={index}
+                className="transition-colors duration-200 hover:bg-primary-50/40"
+              >
                 <td>{toPersianDigits(index + 1)}</td>
                 <td>{truncateText(post.title, 25)}</td>
                 <td>{post.category?.title}</td>
@@ -78,6 +91,7 @@ const PostsInformation = ({ fetchQueries = "" }) => {
                       </span>
                       <span className="m-1">ویرایش پست</span>
                     </ButtonIcon>
+
                     <ButtonIcon
                       variant="secondary"
                       onClick={() => router.push(`/blogs/${post?.slug}`)}
@@ -99,6 +113,7 @@ const PostsInformation = ({ fetchQueries = "" }) => {
                       </span>
                       <span className="m-1">مشاهده پست</span>
                     </ButtonIcon>
+
                     <ButtonIcon
                       variant="red"
                       onClick={() => setSelectedPost(post)}
@@ -121,21 +136,17 @@ const PostsInformation = ({ fetchQueries = "" }) => {
                     </ButtonIcon>
                   </div>
                 </td>
-              </Table.Row>
+              </AnimatedTableRow>
             );
           })}
-          {isLoading &&
+
+          {showLoading &&
             Array.from({ length: 5 }).map((_, index) => (
-              <Table.Row key={index}>
-                {Array.from({ length: 8 }).map((_, i) => (
-                  <td key={i} className="px-5 py-4 whitespace-nowrap">
-                    <div className="h-8 w-24 rounded-md bg-secondary-200 animate-pulse" />
-                  </td>
-                ))}
-              </Table.Row>
+              <Table.SkeletonRow key={index} columns={8} />
             ))}
         </Table.Body>
       </Table>
+
       {posts.length === 0 && !isLoading && (
         <div className="flex justify-center flex-col items-center bg-white py-3">
           <Image
@@ -150,6 +161,7 @@ const PostsInformation = ({ fetchQueries = "" }) => {
           <p className="text-xl font-semibold">پستی پیدا نشد!</p>
         </div>
       )}
+
       <DeletePostModal post={selectedPost} onClose={onClosePostAction} />
     </section>
   );
