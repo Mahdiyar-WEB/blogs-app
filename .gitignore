@@ -12,6 +12,7 @@
 
 # uploads
 /public/uploads
+/demo-assets
 
 # testing
 /coverage
