@@ -4,6 +4,7 @@ import CategoryListLoading from "../_components/CategoryListLoading";
 import PostsLoading from "../_components/PostsLoading";
 import SearchBox from "components/SearchBox";
 import BlogsSort from "../_components/BlogsSort";
+import DelayedFallback from "components/ui/DelayFallback";
 
 const Layout = ({ children }) => {
   return (
@@ -27,7 +28,13 @@ const Layout = ({ children }) => {
             </svg>
             <span>دسته‌بندی ها:</span>
           </h2>
-          <Suspense fallback={<CategoryListLoading />}>
+          <Suspense
+            fallback={
+              <DelayedFallback delay={250}>
+                <CategoryListLoading />
+              </DelayedFallback>
+            }
+          >
             <CategoryList />
           </Suspense>
         </aside>
@@ -64,7 +71,15 @@ const Layout = ({ children }) => {
               <BlogsSort />
             </Suspense>
           </div>
-          <Suspense fallback={<PostsLoading />}>{children}</Suspense>
+          <Suspense
+            fallback={
+              <DelayedFallback delay={450}>
+                <PostsLoading />
+              </DelayedFallback>
+            }
+          >
+            {children}
+          </Suspense>
         </section>
       </div>
     </main>
