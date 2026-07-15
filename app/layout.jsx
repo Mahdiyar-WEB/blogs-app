@@ -1,6 +1,5 @@
 import "styles/globals.css";
 import vazirFont from "constants/localFont";
-import { Toaster } from "react-hot-toast";
 import UserProvider from "context/UserContext";
 import ReactQueryProvider from "providers/ReactQueryProvider";
 import DemoResetChecker from "components/DemoResetChecker";
@@ -20,7 +19,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${vazirFont.variable} font-sans min-h-screen bg-transparent`}
       >
-        <ToastProvider/>
+        <ToastProvider />
         <ReactQueryProvider>
           <UserProvider>
             <DemoResetChecker />
