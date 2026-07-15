@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { clearAuthCookies } from "@/lib/auth";
-import { ensureDemoReset } from "@/seed/ensureDemoReset";
+import { clearAuthCookies } from "lib/auth";
+import { ensureDemoReset } from "seed/ensureDemoReset";
 
 
 export async function GET() {

@@ -1,10 +1,10 @@
 import fs from "fs/promises";
 import path from "path";
-import connectDB from "@/lib/db";
-import { UserModel } from "@/lib/models/User";
-import { PostModel } from "@/lib/models/Post";
-import { CommentModel } from "@/lib/models/Comment";
-import { CategoryModel } from "@/lib/models/Category";
+import connectDB from "lib/db";
+import { UserModel } from "lib/models/User";
+import { PostModel } from "lib/models/Post";
+import { CommentModel } from "lib/models/Comment";
+import { CategoryModel } from "lib/models/Category";
 
 import usersSeed from "./db.users.json";
 import postsSeed from "./db.posts.json";
