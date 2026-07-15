@@ -12,7 +12,6 @@
 
 # uploads
 /public/uploads
-/demo-assets
 
 .demo-reset-state.json
 
