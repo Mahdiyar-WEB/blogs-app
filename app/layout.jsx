@@ -3,6 +3,7 @@ import vazirFont from "constants/localFont";
 import { Toaster } from "react-hot-toast";
 import UserProvider from "context/UserContext";
 import ReactQueryProvider from "providers/ReactQueryProvider";
+import DemoResetChecker from "components/DemoResetChecker";
 
 export const metadata = {
   title: {
@@ -20,7 +21,10 @@ export default function RootLayout({ children }) {
       >
         <Toaster />
         <ReactQueryProvider>
-          <UserProvider>{children}</UserProvider>
+          <UserProvider>
+            <DemoResetChecker />
+            {children}
+          </UserProvider>
         </ReactQueryProvider>
       </body>
     </html>
