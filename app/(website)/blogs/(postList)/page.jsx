@@ -52,11 +52,14 @@ const Blogs = async ({ searchParams }) => {
             sizes="100%"
             quality={100}
             alt="no blogs in this category"
+            priority
           />
           <h1 className="font-semibold text-2xl">متاسفانه پستی پیدا نشد!</h1>
         </div>
       ) : (
-        posts.map((post) => <Post key={post._id} {...post} />)
+        posts.map((post, index) => (
+          <Post key={post._id} index={index} {...post} />
+        ))
       )}
       <div className="my-5 col-span-12">
         <Pagination totalPages={totalPages} />
