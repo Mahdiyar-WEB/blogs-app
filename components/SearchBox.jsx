@@ -1,53 +1,65 @@
 "use client";
 
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import React, { useCallback, useEffect, useState } from "react";
+
+const DEBOUNCE_DELAY = 1000;
 
 const SearchBox = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
-  const activeSearch = searchParams.get("search");
+  const activeSearch = searchParams.get("search") || "";
 
-  const [search, setSearch] = useState(activeSearch || "");
+  const [search, setSearch] = useState(activeSearch);
+
+  const updateSearchParams = useCallback(
+    (searchValue) => {
+      const newParams = new URLSearchParams(searchParams.toString());
+      const trimmedSearch = searchValue.trim();
+
+      if (trimmedSearch) {
+        newParams.set("search", trimmedSearch);
+        newParams.set("page", "1");
+      } else {
+        newParams.delete("search");
+        newParams.delete("page");
+      }
+
+      const queryString = newParams.toString();
+
+      router.push(queryString ? `${pathname}?${queryString}` : pathname);
+    },
+    [pathname, router, searchParams],
+  );
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    const searchValue = e.target.search.value.trim();
-
-    const newParams = new URLSearchParams(searchParams.toString());
-
-    if (searchValue) {
-      newParams.set("search", searchValue);
-      newParams.set("page", 1);
-    } else {
-      newParams.delete("search");
-      newParams.delete("page");
-    }
-
-    router.push(`${pathname}?${newParams.toString()}`);
+    updateSearchParams(search);
   };
 
   const removeSearchHandler = () => {
-    const newParams = new URLSearchParams(searchParams.toString());
-
-    newParams.delete("search");
-    newParams.delete("page");
-
     setSearch("");
-
-    const queryString = newParams.toString();
-
-    router.push(queryString ? `${pathname}?${queryString}` : pathname);
+    updateSearchParams("");
   };
 
   useEffect(() => {
-    return () => {
-      setSearch("");
-    };
-  }, []);
+    setSearch(activeSearch);
+  }, [activeSearch]);
+
+  useEffect(() => {
+    const trimmedSearch = search.trim();
+
+    if (trimmedSearch === activeSearch) return;
+
+    const timer = setTimeout(() => {
+      updateSearchParams(trimmedSearch);
+    }, DEBOUNCE_DELAY);
+
+    return () => clearTimeout(timer);
+  }, [search, activeSearch, updateSearchParams]);
 
   return (
     <form
