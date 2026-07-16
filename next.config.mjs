@@ -6,6 +6,9 @@ const nextConfig = {
   },
   /* config options here */
   reactCompiler: true,
+  images: {
+    dangerouslyAllowLocalIP: true,
+  },
   logging: {
     fetches: {
       fullUrl: true,
