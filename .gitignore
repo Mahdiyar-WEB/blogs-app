@@ -11,7 +11,7 @@
 !.yarn/versions
 
 # uploads
-/public/uploads
+# /public/uploads
 
 .demo-reset-state.json
 
