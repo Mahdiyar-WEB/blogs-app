@@ -10,7 +10,7 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <>
+    <div className="max-h-dvh overflow-hidden">
       <SpiderwebMeshBackground />
       <FloatingDecorationDesktop />
       <FloatingDecorationMobile />
@@ -36,6 +36,6 @@ export default function Home() {
           </Button>
         </div>
       </main>
-    </>
+    </div>
   );
 }
