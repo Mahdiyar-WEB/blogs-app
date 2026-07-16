@@ -31,7 +31,7 @@ export default function Home() {
           </Button>
           <Button className="!p-0">
             <Link className="p-3" href="/profile">
-              مدیریت بلاگ ها
+              مدیریت اپلیکیشن
             </Link>
           </Button>
         </div>
