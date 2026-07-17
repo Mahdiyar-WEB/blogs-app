@@ -56,7 +56,7 @@ const RelatedPosts = ({ posts }) => {
                         alt={author?.name||'deleted-account'}
                         className={
                           author?.avatarUrl &&
-                          "rounded-full ring-1 ring-secondary-300"
+                          "rounded-full ring-1 ring-secondary-300 w-8 h-8 object-center object-cover"
                         }
                         width={28}
                         height={28}
