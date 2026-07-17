@@ -13,14 +13,29 @@ export const GET = withErrorHandler(async (req, { params }) => {
   const { slug } = await params;
 
   const post = await PostModel.findOne({ slug }).populate([
-    { path: "author", model: "User", select: { name: 1, biography: 1, avatar: 1 } },
+    {
+      path: "author",
+      model: "User",
+      select: { name: 1, biography: 1, avatar: 1 },
+    },
     { path: "category", model: "Category", select: { title: 1, slug: 1 } },
     {
       path: "related",
       model: "Post",
-      select: { title: 1, slug: 1, briefText: 1, coverImage: 1, author: 1 },
+      select: {
+        title: 1,
+        slug: 1,
+        briefText: 1,
+        coverImage: 1,
+        coverImageBlurDataURL: 1,
+        author: 1,
+      },
       populate: [
-        { path: "author", model: "User", select: { name: 1, biography: 1, avatar: 1 } },
+        {
+          path: "author",
+          model: "User",
+          select: { name: 1, biography: 1, avatar: 1 },
+        },
         { path: "category", model: "Category", select: { title: 1, slug: 1 } },
       ],
     },
