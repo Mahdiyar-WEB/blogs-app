@@ -61,6 +61,8 @@ const SinglePostContent = async ({ params }) => {
               quality={100}
               priority
               alt={post.title}
+              placeholder="blur"
+              blurDataURL={post.coverImageBlurDataURL}
               src={post.coverImageUrl}
             />
             {/* readability gradient — only bottom third, not whole image */}
