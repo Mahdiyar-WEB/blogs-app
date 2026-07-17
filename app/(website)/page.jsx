@@ -10,7 +10,7 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <div className="max-h-dvh overflow-hidden">
+    <div className="h-dvh overflow-hidden">
       <SpiderwebMeshBackground />
       <FloatingDecorationDesktop />
       <FloatingDecorationMobile />
