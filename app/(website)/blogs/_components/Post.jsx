@@ -85,6 +85,8 @@ const Post = ({
                   className={`${author?.avatarUrl ? "rounded-full ring-1 ring-secondary-300" : ""} object-cover object-center`}
                   fill
                   src={author?.avatarUrl || "/avatar.svg"}
+                  placeholder={author?.avatarUrl ? "blur" : "empty"}
+                  blurDataURL={author?.avatarBlurDataURL}
                 />
               </div>
               <span>{author?.name}</span>
