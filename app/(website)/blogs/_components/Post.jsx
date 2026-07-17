@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 const Post = ({
   title,
   coverImageUrl,
+  coverImageBlurDataURL = "",
   slug,
   author,
   readingTime,
@@ -63,6 +64,8 @@ const Post = ({
             fill
             quality={75}
             alt={title}
+            placeholder="blur"
+            blurDataURL={coverImageBlurDataURL}
             sizes="100%"
             src={coverImageUrl}
             className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
