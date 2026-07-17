@@ -5,7 +5,11 @@ import { UserModel } from "lib/models/User";
 import { requireUser } from "lib/auth";
 import { withErrorHandler, ok } from "lib/apiHandler";
 import { copyObject, deleteInvalidPropertyInObject } from "lib/utils";
-import { saveUploadedFile, deleteUploadedFile, AVATAR_IMAGE_MAX_SIZE } from "lib/upload";
+import {
+  saveUploadedFile,
+  deleteUploadedFile,
+  AVATAR_IMAGE_MAX_SIZE,
+} from "lib/upload";
 
 export const PATCH = withErrorHandler(async (req, { params }) => {
   await connectDB();
@@ -53,10 +57,12 @@ export const PATCH = withErrorHandler(async (req, { params }) => {
   deleteInvalidPropertyInObject(data, blackListFields);
 
   let avatar = user.avatar;
+  let avatarBlurDataURL = user?.avatarBlurDataURL;
 
   if (removeAvatar) {
     if (user.avatar) await deleteUploadedFile(user.avatar);
     avatar = null;
+    avatarBlurDataURL = null;
   } else if (uploadedFile) {
     const saved = await saveUploadedFile(uploadedFile, "avatar", {
       maxSize: AVATAR_IMAGE_MAX_SIZE,
@@ -64,12 +70,19 @@ export const PATCH = withErrorHandler(async (req, { params }) => {
     if (saved) {
       if (user.avatar) await deleteUploadedFile(user.avatar);
       avatar = saved.fileAddress;
+      avatarBlurDataURL = saved.blurDataURL;
     }
   }
 
   const updateResult = await UserModel.updateOne(
     { _id: userId },
-    { $set: { ...data, avatar } },
+    {
+      $set: {
+        ...data,
+        avatar,
+        avatarBlurDataURL,
+      },
+    },
   );
 
   if (!updateResult.modifiedCount)
