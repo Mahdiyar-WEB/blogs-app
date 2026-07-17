@@ -14,21 +14,25 @@ import {
 export const PATCH = withErrorHandler(async (req, { params }) => {
   await connectDB();
   await requireUser(req);
-  const { userId } = await params;
 
+  const { userId } = await params;
   const user = await UserModel.findById(userId);
-  if (!user) throw createError.NotFound("کاربر پیدا نشد");
+
+  if (!user) {
+    throw createError.NotFound("کاربر پیدا نشد");
+  }
 
   const contentType = req.headers.get("content-type") || "";
   let rest = {};
   let removeAvatar = false;
-  let uploadedFile = null;
+  let avatarFile = null;
 
   if (contentType.includes("multipart/form-data")) {
     const formData = await req.formData();
+
     for (const [key, value] of formData.entries()) {
       if (key === "avatar" && value instanceof File && value.size > 0) {
-        uploadedFile = value;
+        avatarFile = value;
       } else if (key === "removeAvatar") {
         removeAvatar = value === "true" || value === true;
       } else {
@@ -56,37 +60,53 @@ export const PATCH = withErrorHandler(async (req, { params }) => {
 
   deleteInvalidPropertyInObject(data, blackListFields);
 
-  let avatar = user.avatar;
-  let avatarBlurDataURL = user?.avatarBlurDataURL;
+  let nextAvatar = user.avatar;
+  let nextAvatarBlurDataURL = user.avatarBlurDataURL;
+  let uploadedAvatar = null;
+  let shouldDeleteOldAvatar = false;
 
-  if (removeAvatar) {
-    if (user.avatar) await deleteUploadedFile(user.avatar);
-    avatar = null;
-    avatarBlurDataURL = null;
-  } else if (uploadedFile) {
-    const saved = await saveUploadedFile(uploadedFile, "avatar", {
-      maxSize: AVATAR_IMAGE_MAX_SIZE,
-    });
-    if (saved) {
-      if (user.avatar) await deleteUploadedFile(user.avatar);
-      avatar = saved.fileAddress;
-      avatarBlurDataURL = saved.blurDataURL;
+  try {
+    if (avatarFile) {
+      uploadedAvatar = await saveUploadedFile(avatarFile, "avatar", {
+        maxSize: AVATAR_IMAGE_MAX_SIZE,
+      });
+
+      nextAvatar = uploadedAvatar.fileAddress;
+      nextAvatarBlurDataURL = uploadedAvatar.blurDataURL;
+      shouldDeleteOldAvatar = Boolean(user.avatar);
+    } else if (removeAvatar) {
+      nextAvatar = null;
+      nextAvatarBlurDataURL = null;
+      shouldDeleteOldAvatar = Boolean(user.avatar);
     }
-  }
 
-  const updateResult = await UserModel.updateOne(
-    { _id: userId },
-    {
-      $set: {
-        ...data,
-        avatar,
-        avatarBlurDataURL,
+    const updateResult = await UserModel.updateOne(
+      { _id: userId },
+      {
+        $set: {
+          ...data,
+          avatar: nextAvatar,
+          avatarBlurDataURL: nextAvatarBlurDataURL,
+        },
       },
-    },
-  );
+    );
 
-  if (!updateResult.modifiedCount)
-    throw createError.InternalServerError("آپدیت انجام نشد");
+    if (!updateResult.matchedCount) {
+      throw createError.NotFound("کاربر پیدا نشد");
+    }
 
-  return ok({ message: "اطلاعات کاربر با موفقیت آپدیت شد" }, HttpStatus.OK);
+    if (shouldDeleteOldAvatar && user.avatar) {
+      await deleteUploadedFile(user.avatar);
+    }
+
+    return ok(
+      { message: "اطلاعات کاربر با موفقیت آپدیت شد" },
+      HttpStatus.OK,
+    );
+  } catch (error) {
+    if (uploadedAvatar?.fileAddress) {
+      await deleteUploadedFile(uploadedAvatar.fileAddress);
+    }
+    throw error;
+  }
 });
