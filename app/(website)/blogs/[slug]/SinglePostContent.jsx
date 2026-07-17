@@ -110,6 +110,8 @@ const SinglePostContent = async ({ params }) => {
                   height={32}
                   className="rounded-full ring-2 ring-white/70 shrink-0"
                   src={post.author?.avatarUrl || "/avatar.svg"}
+                  placeholder={post?.author?.avatarUrl ? "blur" : "empty"}
+                  blurDataURL={post?.author?.avatarBlurDataURL}
                 />
                 <span className="text-white text-xs sm:text-sm font-medium">
                   {post.author?.name}
