@@ -37,7 +37,9 @@ export const GET = withErrorHandler(async (req) => {
     const categoryIds = [];
 
     for (const item of categories) {
-      const category = await CategoryModel.findOne({ slug: item }).select("_id");
+      const category = await CategoryModel.findOne({ slug: item }).select(
+        "_id",
+      );
       if (category) categoryIds.push(category._id);
     }
 
@@ -70,7 +72,10 @@ export const GET = withErrorHandler(async (req) => {
     PostModel.find(dbQuery, { comments: 0 })
       .populate([
         { path: "category", select: { title: 1, slug: 1 } },
-        { path: "author", select: { name: 1, biography: 1, avatar: 1 } },
+        {
+          path: "author",
+          select: { name: 1, biography: 1, avatar: 1, avatarBlurDataURL: 1 },
+        },
         {
           path: "related",
           model: "Post",
@@ -82,8 +87,21 @@ export const GET = withErrorHandler(async (req) => {
             author: 1,
           },
           populate: [
-            { path: "author", model: "User", select: { name: 1, biography: 1, avatar: 1 } },
-            { path: "category", model: "Category", select: { title: 1, slug: 1 } },
+            {
+              path: "author",
+              model: "User",
+              select: {
+                name: 1,
+                biography: 1,
+                avatar: 1,
+                avatarBlurDataURL: 1,
+              },
+            },
+            {
+              path: "category",
+              model: "Category",
+              select: { title: 1, slug: 1 },
+            },
           ],
         },
       ])
