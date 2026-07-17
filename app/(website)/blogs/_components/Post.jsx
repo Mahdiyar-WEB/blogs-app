@@ -81,7 +81,7 @@ const Post = ({
             <div className="flex justify-center items-center gap-2">
               <div className="relative w-8 h-8 ">
                 <Image
-                  alt={author?.name}
+                  alt={author?.name||'deleted-account'}
                   className={`${author?.avatarUrl ? "rounded-full ring-1 ring-secondary-300" : ""} object-cover object-center`}
                   fill
                   src={author?.avatarUrl || "/avatar.svg"}
@@ -89,7 +89,7 @@ const Post = ({
                   blurDataURL={author?.avatarBlurDataURL}
                 />
               </div>
-              <span>{author?.name}</span>
+              <span>{author?.name || 'حساب حذف شده'}</span>
             </div>
 
             <div className="flex justify-center items-center gap-1 text-sm">
