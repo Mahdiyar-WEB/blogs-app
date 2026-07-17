@@ -4,7 +4,11 @@ import connectDB from "lib/db";
 import { UserModel } from "lib/models/User";
 import { requireUser } from "lib/auth";
 import { withErrorHandler, ok } from "lib/apiHandler";
-import { saveUploadedFile, deleteUploadedFile, AVATAR_IMAGE_MAX_SIZE } from "lib/upload";
+import {
+  saveUploadedFile,
+  deleteUploadedFile,
+  AVATAR_IMAGE_MAX_SIZE,
+} from "lib/upload";
 
 export const POST = withErrorHandler(async (req) => {
   await connectDB();
@@ -22,7 +26,12 @@ export const POST = withErrorHandler(async (req) => {
 
   const updateResult = await UserModel.updateOne(
     { _id: user._id },
-    { $set: { avatar: saved.fileAddress } },
+    {
+      $set: {
+        avatar: saved.fileAddress,
+        avatarBlurDataURL: saved.blurDataURL,
+      },
+    },
   );
 
   if (!updateResult.modifiedCount)
