@@ -53,7 +53,7 @@ const RelatedPosts = ({ posts }) => {
                   <div className="flex justify-between items-center pt-3 border-t border-secondary-100">
                     <div className="flex justify-center items-center gap-2">
                       <Image
-                        alt={author?.name}
+                        alt={author?.name||'deleted-account'}
                         className={
                           author?.avatarUrl &&
                           "rounded-full ring-1 ring-secondary-300"
@@ -65,7 +65,7 @@ const RelatedPosts = ({ posts }) => {
                         blurDataURL={author?.avatarBlurDataURL}
                       />
                       <span className="font-medium text-sm text-secondary-600">
-                        {author?.name}
+                        {author?.name||'حساب حذف شده'}
                       </span>
                     </div>
                     <Link
