@@ -61,6 +61,8 @@ const RelatedPosts = ({ posts }) => {
                         width={28}
                         height={28}
                         src={author?.avatarUrl || "/avatar.svg"}
+                        placeholder={author?.avatarUrl ? "blur" : "empty"}
+                        blurDataURL={author?.avatarBlurDataURL}
                       />
                       <span className="font-medium text-sm text-secondary-600">
                         {author?.name}
