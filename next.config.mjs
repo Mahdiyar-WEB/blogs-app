@@ -1,13 +1,29 @@
 /** @type {import('next').NextConfig} */
+
+let storageHostname;
+
+try {
+  const storageUrl = process.env.NEXT_PUBLIC_STORAGE_BASE_URL;
+  storageHostname = storageUrl ? new URL(storageUrl).hostname : undefined;
+} catch {
+  storageHostname = undefined;
+}
+
 const nextConfig = {
   cacheComponents: true,
   experimental: {
     hideLogsAfterAbort: true,
   },
-  /* config options here */
   reactCompiler: true,
   images: {
-    dangerouslyAllowLocalIP: true,
+    remotePatterns: storageHostname
+      ? [
+          {
+            protocol: "https",
+            hostname: storageHostname,
+          },
+        ]
+      : [],
   },
   logging: {
     fetches: {
