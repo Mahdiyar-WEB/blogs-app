@@ -105,16 +105,16 @@ const SinglePostContent = async ({ params }) => {
 
               <div className="flex items-center gap-3 pt-2 lg:pt-3">
                 <Image
-                  alt={post.author?.name}
+                  alt={post.author?.name || "deleted-account"}
                   width={32}
                   height={32}
-                  className="rounded-full ring-2 ring-white/70 shrink-0"
+                  className={`rounded-full  shrink-0 ${!post.author?.name ? "bg-white" : "ring-2 ring-white/70"}`}
                   src={post.author?.avatarUrl || "/avatar.svg"}
                   placeholder={post?.author?.avatarUrl ? "blur" : "empty"}
                   blurDataURL={post?.author?.avatarBlurDataURL}
                 />
                 <span className="text-white text-xs sm:text-sm font-medium">
-                  {post.author?.name}
+                  {post.author?.name || "حساب حذف شده"}
                 </span>
 
                 <span className="w-1 h-1 rounded-full bg-white/50" />
