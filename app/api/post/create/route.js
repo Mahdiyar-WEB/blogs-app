@@ -71,12 +71,10 @@ export const POST = withErrorHandler(async (req) => {
     related,
     author: user._id,
     coverImage: saved.fileAddress,
+    coverImageBlurDataURL: saved.blurDataURL,
   });
 
   if (!post?._id) throw createHttpError.InternalServerError("پست ثبت نشد");
 
-  return ok(
-    { message: "پست با موفقیت ایجاد شد", post },
-    HttpStatus.CREATED,
-  );
+  return ok({ message: "پست با موفقیت ایجاد شد", post }, HttpStatus.CREATED);
 });
