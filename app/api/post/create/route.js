@@ -6,7 +6,7 @@ import { requireUser } from "lib/auth";
 import { withErrorHandler, ok } from "lib/apiHandler";
 import { sanitizePostText } from "lib/sanitizeHtml";
 import { validateAddNewPost } from "lib/validators/post.schema";
-import { saveUploadedFile } from "lib/upload";
+import { COVER_IMAGE_MAX_SIZE, saveUploadedFile } from "lib/upload";
 
 function parseFormArrayField(formData, key) {
   // فرانت ممکنه tags[] / related[] رو به صورت چندین فیلد هم‌نام یا JSON string بفرسته
@@ -57,7 +57,9 @@ export const POST = withErrorHandler(async (req) => {
   if (!(coverImageFile instanceof File) || coverImageFile.size === 0)
     throw createHttpError.InternalServerError("کاور پست را اپلود کنید");
 
-  const saved = await saveUploadedFile(coverImageFile, "coverImage");
+  const saved = await saveUploadedFile(coverImageFile, "coverImage", {
+    maxSize: COVER_IMAGE_MAX_SIZE,
+  });
 
   const post = await PostModel.create({
     title,
