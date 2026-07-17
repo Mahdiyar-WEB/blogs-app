@@ -4,7 +4,6 @@ import connectDB from "lib/db";
 import { PostModel } from "lib/models/Post";
 import { getUserFromRequest } from "lib/auth";
 import { withErrorHandler, ok } from "lib/apiHandler";
-import { copyObject } from "lib/utils";
 import { transformPost } from "lib/transformPost";
 
 export const GET = withErrorHandler(async (req, { params }) => {
@@ -16,7 +15,12 @@ export const GET = withErrorHandler(async (req, { params }) => {
     {
       path: "author",
       model: "User",
-      select: { name: 1, biography: 1, avatar: 1, avatarBlurDataURL: 1 },
+      select: {
+        name: 1,
+        biography: 1,
+        avatar: 1,
+        avatarBlurDataURL: 1,
+      },
     },
     { path: "category", model: "Category", select: { title: 1, slug: 1 } },
     {
@@ -29,21 +33,33 @@ export const GET = withErrorHandler(async (req, { params }) => {
         coverImage: 1,
         coverImageBlurDataURL: 1,
         author: 1,
+        category: 1,
       },
       populate: [
         {
           path: "author",
           model: "User",
-          select: { name: 1, biography: 1, avatar: 1, avatarBlurDataURL: 1 },
+          select: {
+            name: 1,
+            biography: 1,
+            avatar: 1,
+            avatarBlurDataURL: 1,
+          },
         },
-        { path: "category", model: "Category", select: { title: 1, slug: 1 } },
+        {
+          path: "category",
+          model: "Category",
+          select: { title: 1, slug: 1 },
+        },
       ],
     },
   ]);
 
-  if (!post) throw createHttpError.NotFound("پستی با این مشخصات یافت نشد");
+  if (!post) {
+    throw createHttpError.NotFound("پستی با این مشخصات یافت نشد");
+  }
 
-  const transformedPost = copyObject(post);
+  const transformedPost = post.toJSON();
   await transformPost(transformedPost, user);
 
   return ok({ post: transformedPost }, HttpStatus.OK);
