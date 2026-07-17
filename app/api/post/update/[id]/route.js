@@ -66,16 +66,22 @@ export const PATCH = withErrorHandler(async (req, { params }) => {
   deleteInvalidPropertyInObject(data, blackListFields);
 
   let coverImage = post.coverImage;
+  let coverImageBlurDataURL = post?.coverImageBlurDataURL;
 
   if (coverImageFile instanceof File && coverImageFile.size > 0) {
     const saved = await saveUploadedFile(coverImageFile, "coverImage");
-    if (post.coverImage) await deleteUploadedFile(post.coverImage);
+
+    if (post.coverImage) {
+      await deleteUploadedFile(post.coverImage);
+    }
+
     coverImage = saved.fileAddress;
+    coverImageBlurDataURL = saved.blurDataURL;
   }
 
   const updatePostResult = await PostModel.updateOne(
     { _id: id },
-    { $set: { ...data, coverImage } },
+    { $set: { ...data, coverImage, coverImageBlurDataURL } },
   );
 
   if (!updatePostResult.modifiedCount)
