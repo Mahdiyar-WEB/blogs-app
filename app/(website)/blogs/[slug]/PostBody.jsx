@@ -22,9 +22,7 @@ function PostBody({ html }) {
       }
       try {
         hljs.highlightElement(block);
-      } catch (error) {
-        console.error("Syntax highlighting error:", error);
-      }
+      } catch (error) {}
     });
   }, [html]);
 
