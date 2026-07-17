@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { clearAuthCookies } from "lib/auth";
 import { resetDemoData } from "seed/resetDemoData";
 
-
 export async function POST(request) {
   const expectedSecret = process.env.DEMO_RESET_SECRET;
   const receivedSecret = request.headers.get("x-demo-reset-secret");
