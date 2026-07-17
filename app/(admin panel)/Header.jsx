@@ -98,6 +98,8 @@ function ProfileButton({ user, open, onToggle }) {
         width={44}
         height={44}
         src={user?.avatarUrl || "/avatar.svg"}
+        placeholder={user?.avatarUrl ? "blur" : "empty"}
+        blurDataURL={user?.avatarBlurDataURL}
         className="h-11 w-11 rounded-2xl border border-secondary-200 object-cover object-center"
       />
 
