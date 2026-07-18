@@ -98,10 +98,10 @@ const SinglePostContent = async ({ params }) => {
             {/* content pinned to bottom of image */}
             <div className="absolute inset-x-0 bottom-0 p-4 sm:p-6 lg:p-10 pt-10 sm:pt-14 lg:pt-20 space-y-2 lg:space-y-3 bg-gradient-to-t from-black/70 via-black/40 to-transparent backdrop-blur-[2px]">
               <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold text-white leading-snug lg:leading-tight max-w-3xl drop-shadow-sm">
-                {truncateText(post.title, 30)}
+                {truncateText(post.title, 50)}
               </h1>
               <p className="text-xs sm:text-sm lg:text-base text-white/75 max-w-xl line-clamp-2">
-                {truncateText(post.briefText, 25)}
+                {truncateText(post.briefText, 50)}
               </p>
 
               <div className="flex items-center gap-3 pt-2 lg:pt-3">

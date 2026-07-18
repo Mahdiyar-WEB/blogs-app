@@ -87,7 +87,7 @@ const Post = ({
 
         <div className="mt-5 pb-4 px-3">
           <Link href={slugURL} className="text-secondary-700 font-semibold">
-            {truncateText(title,20)}
+            {truncateText(title,25)}
           </Link>
 
           <div className="flex justify-between items-center mt-3">
@@ -102,7 +102,7 @@ const Post = ({
                   blurDataURL={author?.avatarBlurDataURL}
                 />
               </div>
-              <span>{author?.name || "حساب حذف شده"}</span>
+              <span>{truncateText(author?.name,20) || "حساب حذف شده"}</span>
             </div>
 
             <div className="flex justify-center items-center gap-1 text-sm">
