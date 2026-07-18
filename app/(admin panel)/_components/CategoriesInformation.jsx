@@ -11,6 +11,7 @@ import useGetCategories from "hooks/categories/useGetCategories";
 import DeleteCategoryModal from "./DeleteCategoryModal";
 import { AnimatedTableRow } from "components/ui/TableMotion";
 import useDelayedLoading from "hooks/useDelayedLoading";
+import truncateText from "utils/truncateText";
 
 const CategoriesInformation = ({ fetchQueries }) => {
   const { categories = [], isLoading } = useGetCategories(fetchQueries);
@@ -49,7 +50,7 @@ const CategoriesInformation = ({ fetchQueries }) => {
               <td>{toPersianDigits(index + 1)}</td>
               <td>{category.title}</td>
               <td>{category.englishTitle}</td>
-              <td>{category.description}</td>
+              <td>{truncateText(category.description,25)}</td>
               <td>{toLocalDateShort(category.createdAt)}</td>
               <td>{toLocalDateShort(category.updatedAt)}</td>
               <td>

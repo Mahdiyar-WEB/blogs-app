@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useUser } from "context/UserContext";
+import truncateText from "utils/truncateText";
 
 const Post = ({
   title,
@@ -86,7 +87,7 @@ const Post = ({
 
         <div className="mt-5 pb-4 px-3">
           <Link href={slugURL} className="text-secondary-700 font-semibold">
-            {title}
+            {truncateText(title,20)}
           </Link>
 
           <div className="flex justify-between items-center mt-3">
