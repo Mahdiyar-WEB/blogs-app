@@ -1,4 +1,5 @@
 "use client";
+
 import toPersianDigits from "utils/toPersianDigits";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,10 +7,13 @@ import React from "react";
 import postServices from "api/postServices";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import { useUser } from "context/UserContext";
 
 const Post = ({
   title,
   coverImageUrl,
+  coverImageBlurDataURL = "",
   slug,
   author,
   readingTime,
@@ -18,10 +22,17 @@ const Post = ({
   isBookmarked,
   _id,
   isLiked,
+  index = 0,
 }) => {
   const router = useRouter();
+  const { user } = useUser();
 
   const likePostHandler = async (id) => {
+    if (!user) {
+      router.push("/login");
+      toast.error("لطفا وارد حساب کاربری خود شوید");
+      return;
+    }
     try {
       const { data } = await postServices.likePost(id);
       router.refresh();
@@ -32,6 +43,11 @@ const Post = ({
   };
 
   const bookmarkPostHandler = async (id) => {
+    if (!user) {
+      router.push("/login");
+      toast.error("لطفا وارد حساب کاربری خود شوید");
+      return;
+    }
     try {
       const { data } = await postServices.bookmarkPost(id);
       router.refresh();
@@ -44,8 +60,13 @@ const Post = ({
   const slugURL = `/blogs/${slug}`;
 
   return (
-    <div className="group relative col-span-12 lg:col-span-4">
-      {/* Card */}
+    <motion.div
+      className="group relative col-span-12 lg:col-span-4"
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: Math.min(index * 0.05, 0.2) }}
+      viewport={{ once: true, amount: 0.15 }}
+    >
       <div className="relative overflow-hidden rounded-xl border border-secondary-200 bg-white shadow-sm transition-all duration-300 ease-out group-hover:-translate-y-1 group-hover:border-primary-300 group-hover:shadow-[0_16px_40px_rgba(74,109,255,0.12)]">
         <Link
           href={slugURL}
@@ -55,32 +76,34 @@ const Post = ({
             fill
             quality={75}
             alt={title}
+            placeholder="blur"
+            blurDataURL={coverImageBlurDataURL}
             sizes="100%"
             src={coverImageUrl}
             className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
           />
         </Link>
-        {/* body */}
+
         <div className="mt-5 pb-4 px-3">
-          {/* title */}
           <Link href={slugURL} className="text-secondary-700 font-semibold">
             {title}
           </Link>
-          {/* content */}
+
           <div className="flex justify-between items-center mt-3">
-            {/* author */}
             <div className="flex justify-center items-center gap-2">
               <div className="relative w-8 h-8 ">
                 <Image
-                  alt={author?.name}
-                  className={`${author?.avatarUrl && "rounded-full ring-1 ring-secondary-300"} object-cover object-center`}
+                  alt={author?.name || "deleted-account"}
+                  className={`${author?.avatarUrl ? "rounded-full ring-1 ring-secondary-300" : ""} object-cover object-center`}
                   fill
                   src={author?.avatarUrl || "/avatar.svg"}
+                  placeholder={author?.avatarUrl ? "blur" : "empty"}
+                  blurDataURL={author?.avatarBlurDataURL}
                 />
               </div>
-              <span>{author?.name}</span>
+              <span>{author?.name || "حساب حذف شده"}</span>
             </div>
-            {/* reading time */}
+
             <div className="flex justify-center items-center gap-1 text-sm">
               <div className="flex gap-1 items-center">
                 <svg
@@ -105,7 +128,7 @@ const Post = ({
               </p>
             </div>
           </div>
-          {/* interactions */}
+
           <div className="flex justify-between items-center mt-6">
             <Link
               href={slugURL}
@@ -125,8 +148,8 @@ const Post = ({
               </svg>
               <span>مشاهده</span>
             </Link>
+
             <div className="flex items-center bg-white border border-secondary-200 rounded-lg overflow-hidden">
-              {/* comments */}
               <button
                 type="button"
                 className="flex items-center justify-center gap-x-1 px-2.5 py-1.5 h-full text-sm bg-white text-secondary-500 hover:bg-secondary-500 hover:text-white transition-all duration-300 ease-out [&>svg]:w-5 [&>svg]:h-5 [&>svg]:text-inherit"
@@ -148,10 +171,8 @@ const Post = ({
                 <span>{toPersianDigits(commentsCount)}</span>
               </button>
 
-              {/* divider */}
               <span className="w-px h-4 bg-secondary-200 shrink-0" />
 
-              {/* like */}
               <button
                 type="button"
                 onClick={() => likePostHandler(_id)}
@@ -185,10 +206,8 @@ const Post = ({
                 <span>{toPersianDigits(likesCount)}</span>
               </button>
 
-              {/* divider */}
               <span className="w-px h-4 bg-secondary-200 shrink-0" />
 
-              {/* bookmark */}
               <button
                 type="button"
                 onClick={() => bookmarkPostHandler(_id)}
@@ -228,7 +247,7 @@ const Post = ({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

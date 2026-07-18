@@ -1,11 +1,11 @@
 import commentServices from "api/commentServices";
 import postServices from "api/postServices";
 import userServices from "api/userServices";
-import Card from "components/Card";
 import { cookies } from "next/headers";
 import React from "react";
 import generateSSRCookies from "utils/generateSSRCookies";
 import toPersianDigits from "utils/toPersianDigits";
+import AnimatedCardsGrid from "./AnimatedCardsGrid";
 
 const fetchAppInformation = async () => {
   const cookieStore = await cookies();
@@ -16,10 +16,9 @@ const fetchAppInformation = async () => {
       postServices.getAllPosts(generateSSRCookies(cookieStore)),
       commentServices.getAllComments(),
     ]);
+
     const usersCount = Number(data[0].data.totalUsers ?? "0");
-
     const postsCount = Number(data[1].totalPosts ?? "0");
-
     const commentsCount = Number(data[2].data.totalComments ?? "0");
 
     return { usersCount, postsCount, commentsCount };
@@ -100,13 +99,7 @@ const CardWrapper = async () => {
     },
   ];
 
-  return (
-    <section className="mb-8 grid grid-cols-12 gap-5 lg:gap-6">
-      {cards.map((card) => (
-        <Card key={card.title} {...card} />
-      ))}
-    </section>
-  );
+  return <AnimatedCardsGrid cards={cards} />;
 };
 
 export default CardWrapper;

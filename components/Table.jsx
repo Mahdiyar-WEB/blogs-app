@@ -42,7 +42,6 @@ function TableRow({ children, className = "" }) {
         transition-colors
         duration-200
         hover:bg-primary-50/40
-
         ${className}
       `}
     >
@@ -85,12 +84,12 @@ function TableCell({ children, className = "" }) {
   );
 }
 
-function TableSkeletonRow() {
+function TableSkeletonRow({ columns = 6, cellClassName = "" }) {
   return (
     <Table.Row>
-      {Array.from({ length: 8 }).map((_, index) => (
-        <Table.Cell key={index}>
-          <div className="h-5 w-20 rounded-md bg-secondary-200 animate-pulse" />
+      {Array.from({ length: columns }).map((_, index) => (
+        <Table.Cell key={index} className={cellClassName}>
+          <div className="h-8 w-24 rounded-md bg-secondary-200 animate-pulse" />
         </Table.Cell>
       ))}
     </Table.Row>

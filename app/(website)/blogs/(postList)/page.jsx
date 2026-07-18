@@ -48,7 +48,9 @@ const Blogs = async ({ searchParams }) => {
           <Image
             width={500}
             height={500}
-            src="/no-blogs.png"
+            src="/no-blogs.webp"
+            placeholder="blur"
+            blurDataURL="data:image/webp;base64,UklGRgoBAABXRUJQVlA4WAoAAAAQAAAADQAACQAAQUxQSGoAAAABcFpt27LcuEZ3iLoAdLpHZtBMZwBtHBbgkMjeIJKI7pDdvh0iYgL4NXvtBin/g8XufDZpRmU/rt7r7zUrBTIv4coHNET3NKhbe8EtDebKWHCJQKjUFnQiEIyVN4vFYrGchm0g15v8fz0AVlA4IHoAAABQAgCdASoOAAoAAgA0JbACdAYul2w2vCjc4AAA/Nj6mtzioQ79IW299pVH2o8B6fNMxo2CD+Tc2jKz6rxV8jGp0LsqJSITd3ty2jJ0PirkcKnX7TQYQKR5OEwPyKcK+O+XHpK8i/dZvSi/L7QGqBf+DKf6mg8dg/jgAA=="
             sizes="100%"
             quality={100}
             alt="no blogs in this category"
@@ -56,7 +58,9 @@ const Blogs = async ({ searchParams }) => {
           <h1 className="font-semibold text-2xl">متاسفانه پستی پیدا نشد!</h1>
         </div>
       ) : (
-        posts.map((post) => <Post key={post._id} {...post} />)
+        posts.map((post, index) => (
+          <Post key={post._id} index={index} {...post} />
+        ))
       )}
       <div className="my-5 col-span-12">
         <Pagination totalPages={totalPages} />
