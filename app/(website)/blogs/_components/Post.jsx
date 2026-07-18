@@ -8,6 +8,7 @@ import postServices from "api/postServices";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { useUser } from "context/UserContext";
 
 const Post = ({
   title,
@@ -24,8 +25,14 @@ const Post = ({
   index = 0,
 }) => {
   const router = useRouter();
+  const { user } = useUser();
 
   const likePostHandler = async (id) => {
+    if (!user) {
+      router.push("/login");
+      toast.error("لطفا وارد حساب کاربری خود شوید");
+      return;
+    }
     try {
       const { data } = await postServices.likePost(id);
       router.refresh();
@@ -36,6 +43,11 @@ const Post = ({
   };
 
   const bookmarkPostHandler = async (id) => {
+    if (!user) {
+      router.push("/login");
+      toast.error("لطفا وارد حساب کاربری خود شوید");
+      return;
+    }
     try {
       const { data } = await postServices.bookmarkPost(id);
       router.refresh();
@@ -81,7 +93,7 @@ const Post = ({
             <div className="flex justify-center items-center gap-2">
               <div className="relative w-8 h-8 ">
                 <Image
-                  alt={author?.name||'deleted-account'}
+                  alt={author?.name || "deleted-account"}
                   className={`${author?.avatarUrl ? "rounded-full ring-1 ring-secondary-300" : ""} object-cover object-center`}
                   fill
                   src={author?.avatarUrl || "/avatar.svg"}
@@ -89,7 +101,7 @@ const Post = ({
                   blurDataURL={author?.avatarBlurDataURL}
                 />
               </div>
-              <span>{author?.name || 'حساب حذف شده'}</span>
+              <span>{author?.name || "حساب حذف شده"}</span>
             </div>
 
             <div className="flex justify-center items-center gap-1 text-sm">
