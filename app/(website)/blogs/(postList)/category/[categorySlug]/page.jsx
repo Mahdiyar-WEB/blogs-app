@@ -8,6 +8,11 @@ import queryString from "query-string";
 import toPersianDigits from "utils/toPersianDigits";
 import Pagination from "components/Pagination";
 
+export async function generateMetadata({ params }) {
+  const { categorySlug } = await params;
+  return { title: categorySlug };
+}
+
 const CategorySlug = async ({ params, searchParams }) => {
   const cookieStore = await cookies();
   const { categorySlug } = await params;
