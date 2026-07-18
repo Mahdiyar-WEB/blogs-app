@@ -48,7 +48,7 @@ const Blogs = async ({ searchParams }) => {
           <Image
             width={500}
             height={500}
-            src="/no-blogs.png"
+            src="/no-blogs.webp"
             sizes="100%"
             quality={100}
             alt="no blogs in this category"

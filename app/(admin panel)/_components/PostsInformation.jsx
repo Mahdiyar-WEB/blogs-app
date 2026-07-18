@@ -155,8 +155,8 @@ const PostsInformation = ({ fetchQueries = "" }) => {
             width={500}
             height={500}
             quality={100}
-            alt=""
-            src="/no-blogs.png"
+            alt="no-blogs"
+            src="/no-blogs.webp"
           />
           <p className="text-xl font-semibold">پستی پیدا نشد!</p>
         </div>
