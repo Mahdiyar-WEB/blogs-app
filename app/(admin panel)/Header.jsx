@@ -289,6 +289,7 @@ export default function Header({ onMobileToggle }) {
   const menuRef = useRef(null);
 
   const onLogoutHandler = () => {
+    setOpen(false);
     logout();
   };
 
