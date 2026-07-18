@@ -108,7 +108,7 @@ const SinglePostContent = async ({ params }) => {
                   alt={post.author?.name || "deleted-account"}
                   width={32}
                   height={32}
-                  className={`rounded-full  shrink-0 ${!post.author?.name ? "bg-white" : "ring-2 ring-white/70 h-10 w-10 object-cover object-center"}`}
+                  className={`rounded-full shrink-0 ${!post.author?.avatarUrl ? "bg-white" : "ring-2 ring-white/70 h-10 w-10 object-cover object-center"}`}
                   src={post.author?.avatarUrl || "/avatar.svg"}
                   placeholder={post?.author?.avatarUrl ? "blur" : "empty"}
                   blurDataURL={post?.author?.avatarBlurDataURL}
