@@ -5,11 +5,13 @@ import PostsLoading from "../_components/PostsLoading";
 import SearchBox from "components/SearchBox";
 import BlogsSort from "../_components/BlogsSort";
 import DelayedFallback from "components/ui/DelayFallback";
+import BlogsDecoration from "components/ui/BlogsDecoration";
 
 const Layout = ({ children }) => {
   return (
     <main className="w-11/12 mx-auto 2xl:max-w-screen-2xl">
       <div className="grid grid-cols-12 md:gap-x-8">
+        <BlogsDecoration/>
         <aside className="hidden md:grid col-span-12 md:col-span-4 mb-5 xl:col-span-3 border p-5 rounded-xl shadow-md h-fit bg-white">
           <h2 className="text-secondary-600 text-md xl:text-xl mb-5 font-semibold flex items-center gap-x-1">
             <svg
@@ -28,13 +30,7 @@ const Layout = ({ children }) => {
             </svg>
             <span>دسته‌بندی ها:</span>
           </h2>
-          <Suspense
-            fallback={
-              <DelayedFallback delay={250}>
-                <CategoryListLoading />
-              </DelayedFallback>
-            }
-          >
+          <Suspense fallback={<CategoryListLoading />}>
             <CategoryList />
           </Suspense>
         </aside>
@@ -65,7 +61,7 @@ const Layout = ({ children }) => {
         <section className="col-span-12 md:col-span-8 xl:col-span-9">
           <div className="flex flex-col-reverse md:flex-row gap-3">
             <Suspense fallback={null}>
-              <SearchBox />
+              <SearchBox className='mb-5'  placeholder='جستجو در مقالات'/>
             </Suspense>
             <Suspense fallback={null}>
               <BlogsSort />
