@@ -64,7 +64,7 @@ const Header = () => {
             ) : (
               <Link
                 href="/login"
-                className="h-10 px-8 flex items-center justify-center rounded-xl bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 text-white font-bold shadow-lg shadow-blue-200 active:scale-[0.98] transition-all duration-200 shrink-0"
+                className="h-10 px-5 md:px-8 flex items-center justify-center rounded-xl bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 text-white font-bold shadow-lg shadow-blue-100 active:scale-[0.98] transition-all duration-200 shrink-0"
               >
                 ورود
               </Link>
