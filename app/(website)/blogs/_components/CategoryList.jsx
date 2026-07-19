@@ -1,7 +1,7 @@
-import NavLink from "components/NavLink";
 import React from "react";
 import categoryServices from "api/categoryServices";
 import AnimatedFadeIn from "components/ui/AnimatedFadeIn";
+import CategoryItem from "./CategoryItem";
 
 const CategoryList = async ({ mobile = false }) => {
   const { data } = await categoryServices.getAllCategories();
@@ -11,12 +11,12 @@ const CategoryList = async ({ mobile = false }) => {
     return (
       <>
         <AnimatedFadeIn index={0}>
-          <NavLink mobile path="/blogs" text="همه" />
+          <CategoryItem mobile path="/blogs" text="همه" />
         </AnimatedFadeIn>
 
         {categories.map(({ title, slug, _id }, index) => (
           <AnimatedFadeIn key={_id} index={index + 1}>
-            <NavLink
+            <CategoryItem
               mobile
               prefetch={false}
               path={`/blogs/category/${slug}`}
@@ -29,16 +29,15 @@ const CategoryList = async ({ mobile = false }) => {
   }
 
   return (
-    <ul className="text-md md:text-lg space-y-3 ms-3">
+    <ul className="space-y-3">
       <AnimatedFadeIn as="li" index={0}>
-        <NavLink listOption path="/blogs" text="همه" />
+        <CategoryItem path="/blogs" text="همه" />
       </AnimatedFadeIn>
 
       {categories.map(({ title, slug, _id }, index) => (
         <AnimatedFadeIn key={_id} as="li" index={index + 1}>
-          <NavLink
+          <CategoryItem
             prefetch={false}
-            listOption
             path={`/blogs/category/${slug}`}
             text={title}
           />
