@@ -9,7 +9,7 @@ const Header = () => {
   const { user, isLoading } = useUser();
 
   return (
-    <header className="sticky top-4 z-50 w-[95%] 2xl:max-w-screen-2xl mx-auto mb-12">
+    <header className="sticky top-4 z-50 w-[95%] 2xl:max-w-screen-2xl mx-auto mb-10">
       <div className="bg-white backdrop-blur-md border border-secondary-200/80 shadow-md shadow-secondary-200/50 rounded-2xl px-4 md:px-8 min-h-[68px]">
         <nav className="flex items-center justify-between min-h-[68px]">
           <div className="flex items-center gap-6 md:gap-8 min-w-0">
