@@ -11,6 +11,7 @@ function CardIcon({ children, tone = "primary" }) {
     <div
       className={`
         flex h-12 w-12 items-center justify-center rounded-2xl ring-1
+        transition-transform duration-300 group-hover:scale-105
         ${cardTone[tone] ?? cardTone.primary}
       `}
     >
@@ -22,7 +23,7 @@ function CardIcon({ children, tone = "primary" }) {
 const Card = ({ title, icon, content, description, tone = "primary" }) => {
   return (
     <div
-      className=" col-span-12 md:col-span-6 xl:col-span-4 rounded-2xl border border-secondary-200 bg-white p-5 shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:border-primary-100 hover:shadow-lg hover:shadow-secondary-200/70"
+      className="group rounded-2xl border border-secondary-200 bg-white p-5 shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:border-primary-100 hover:shadow-lg hover:shadow-secondary-200/70"
     >
       <div className="flex items-center justify-between">
         <div className="flex min-w-0 items-center gap-3">
@@ -43,11 +44,7 @@ const Card = ({ title, icon, content, description, tone = "primary" }) => {
         <button
           type="button"
           aria-label="گزینه های کارت"
-          className="
-            text-secondary-400
-            hover:text-secondary-700
-            transition-colors
-          "
+          className="text-secondary-400 transition-colors hover:text-secondary-700"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -67,20 +64,12 @@ const Card = ({ title, icon, content, description, tone = "primary" }) => {
       </div>
 
       <div className="mt-6">
-        <h3
-          className="
-            text-3xl
-            font-bold
-            tracking-tight
-            text-secondary-900
-          "
-        >
+        <h3 className="text-3xl font-bold tracking-tight text-secondary-900">
           {content}
         </h3>
       </div>
     </div>
   );
 };
-
 
 export default Card;

@@ -8,6 +8,8 @@ import ShareRail from "../_components/ShareRail";
 import Image from "next/image";
 import BreadCrumbs from "components/BreadCrumbs";
 import toPersianDigits from "utils/toPersianDigits";
+import PostBody from "./PostBody";
+import truncateText from "utils/truncateText";
 
 async function getCachedPost(slug) {
   "use cache";
@@ -60,6 +62,8 @@ const SinglePostContent = async ({ params }) => {
               quality={100}
               priority
               alt={post.title}
+              placeholder="blur"
+              blurDataURL={post.coverImageBlurDataURL}
               src={post.coverImageUrl}
             />
             {/* readability gradient — only bottom third, not whole image */}
@@ -94,22 +98,24 @@ const SinglePostContent = async ({ params }) => {
             {/* content pinned to bottom of image */}
             <div className="absolute inset-x-0 bottom-0 p-4 sm:p-6 lg:p-10 pt-10 sm:pt-14 lg:pt-20 space-y-2 lg:space-y-3 bg-gradient-to-t from-black/70 via-black/40 to-transparent backdrop-blur-[2px]">
               <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold text-white leading-snug lg:leading-tight max-w-3xl drop-shadow-sm">
-                {post.title}
+                {truncateText(post.title, 50)}
               </h1>
               <p className="text-xs sm:text-sm lg:text-base text-white/75 max-w-xl line-clamp-2">
-                {post.briefText}
+                {truncateText(post.briefText, 50)}
               </p>
 
               <div className="flex items-center gap-3 pt-2 lg:pt-3">
                 <Image
-                  alt={post.author?.name}
+                  alt={post.author?.name || "deleted-account"}
                   width={32}
                   height={32}
-                  className="rounded-full ring-2 ring-white/70 shrink-0"
+                  className={`rounded-full shrink-0 h-10 w-10 ${!post.author?.avatarUrl ? "bg-white" : "ring-2 ring-white/70 object-cover object-center"}`}
                   src={post.author?.avatarUrl || "/avatar.svg"}
+                  placeholder={post?.author?.avatarUrl ? "blur" : "empty"}
+                  blurDataURL={post?.author?.avatarBlurDataURL}
                 />
                 <span className="text-white text-xs sm:text-sm font-medium">
-                  {post.author?.name}
+                  {post.author?.name || "حساب حذف شده"}
                 </span>
 
                 <span className="w-1 h-1 rounded-full bg-white/50" />
@@ -142,15 +148,7 @@ const SinglePostContent = async ({ params }) => {
         id="post-article"
         className="bg-white shadow-md border border-secondary-100 rounded-2xl mb-12 overflow-hidden"
       >
-        <article className="p-5 sm:p-8 lg:p-12">
-          <div
-            dir="rtl"
-            className="article-content prose prose-lg max-w-none prose-headings:text-secondary-900 prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:text-secondary-700 prose-p:leading-10 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline prose-blockquote:border-primary-500 prose-blockquote:text-secondary-600 prose-code:text-primary-700 prose-pre:bg-secondary-900 prose-pre:text-white prose-li:text-secondary-700"
-            dangerouslySetInnerHTML={{
-              __html: post.text,
-            }}
-          />
-        </article>
+        <PostBody html={post.text} />
 
         <div className="flex items-center justify-between gap-4 border-t border-secondary-100 px-5 sm:px-8 lg:px-12 py-4 bg-secondary-50/60">
           <span className="text-xs sm:text-sm text-secondary-500">
@@ -161,7 +159,7 @@ const SinglePostContent = async ({ params }) => {
       </section>
 
       {post.related.length > 0 && <RelatedPosts posts={post.related} />}
-        <PostComments post={post} />
+      <PostComments post={post} />
     </main>
   );
 };

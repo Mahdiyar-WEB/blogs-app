@@ -2,7 +2,7 @@
 
 import Header from "./Header";
 import Drawer from "./Drawer";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 export default function Layout({ children }) {
   const [desktopOpen, setDesktopOpen] = useState(true);
@@ -11,6 +11,18 @@ export default function Layout({ children }) {
   const closeMobileDrawer = () => {
     setMobileOpen(false);
   };
+
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
 
   return (
     <div className="flex min-h-dvh bg-secondary-50 text-secondary-900">

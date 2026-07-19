@@ -1,77 +1,96 @@
 "use client";
+
 import React from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import toPersianDigits from "utils/toPersianDigits";
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 const Pagination = ({ totalPages }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
-  const page = Number(searchParams.get("page") || 1);
+  const safeTotalPages = Math.max(1, totalPages || 0);
+  const currentPage = Math.min(
+    safeTotalPages,
+    Math.max(1, Number(searchParams.get("page") || 1) || 1)
+  );
 
-  const paginationHandler = (action) => {
-    const pageValue = action === "increase" ? page + 1 : page - 1;
-
+  const goToPage = (nextPage) => {
+    const safePage = Math.min(safeTotalPages, Math.max(1, nextPage));
     const newParams = new URLSearchParams(searchParams.toString());
 
-    if (pageValue > 1) {
-      newParams.set("page", String(pageValue));
+    if (safePage > 1) {
+      newParams.set("page", String(safePage));
     } else {
       newParams.delete("page");
     }
 
-    router.push(`${pathname}?${newParams}`);
+    const queryString = newParams.toString();
+    router.push(queryString ? `${pathname}?${queryString}` : pathname);
   };
 
   return (
-    <div className="flex justify-center items-center gap-3 w-fit mx-auto px-5 py-2 rounded-xl shadow-md bg-white border border-secondary-100">
-      <p className="flex gap-1">
-        <span>صفحه:</span>
-        <span>{toPersianDigits(page)}</span>
-      </p>
-      <button
-        disabled={page <= 1}
-        onClick={() => paginationHandler("decrease")}
-        className="flex items-center gap-px border border-secondary-200 text-sm py-1 pe-2 ps-1 rounded-md text-secondary-500"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-4"
+    <div className="mx-auto flex w-full max-w-[520px] items-center justify-between gap-3 rounded-3xl border border-secondary-100 bg-white/90 px-3 py-3 shadow-sm backdrop-blur-md sm:px-4">
+      <div className="flex items-center gap-2 whitespace-nowrap text-sm text-secondary-600">
+        <span className="rounded-full bg-secondary-50 px-2.5 py-1 text-secondary-500">
+          صفحه
+        </span>
+        <span className="font-medium text-secondary-900">
+          {toPersianDigits(currentPage)}
+        </span>
+        <span className="text-secondary-400">از</span>
+        <span className="font-medium text-secondary-900">
+          {toPersianDigits(safeTotalPages)}
+        </span>
+      </div>
+
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          disabled={currentPage <= 1}
+          onClick={() => goToPage(currentPage - 1)}
+          className="inline-flex h-11 items-center gap-1.5 rounded-2xl border border-secondary-200 bg-white px-3.5 text-sm text-secondary-700 transition-colors hover:border-primary-200 hover:bg-primary-50 hover:text-primary-700 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white disabled:hover:text-secondary-700"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="m8.25 4.5 7.5 7.5-7.5 7.5"
-          />
-        </svg>
-        <span>قبلی</span>
-      </button>
-      <button
-        disabled={page >= totalPages}
-        onClick={() => paginationHandler("increase")}
-        className="flex items-center gap-px border border-secondary-200 text-sm py-1 ps-2 pe-1 rounded-md text-secondary-500"
-      >
-        <span>بعدی</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-4"
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-4"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m8.25 4.5 7.5 7.5-7.5 7.5"
+            />
+          </svg>
+          <span>قبلی</span>
+        </button>
+
+        <button
+          type="button"
+          disabled={currentPage >= safeTotalPages}
+          onClick={() => goToPage(currentPage + 1)}
+          className="inline-flex h-11 items-center gap-1.5 rounded-2xl border border-secondary-200 bg-white px-3.5 text-sm text-secondary-700 transition-colors hover:border-primary-200 hover:bg-primary-50 hover:text-primary-700 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white disabled:hover:text-secondary-700"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 19.5 8.25 12l7.5-7.5"
-          />
-        </svg>
-      </button>
+          <span>بعدی</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-4"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.75 19.5 8.25 12l7.5-7.5"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
   );
 };

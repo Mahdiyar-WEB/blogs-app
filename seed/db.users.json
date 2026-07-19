@@ -1,0 +1,41 @@
+[
+  {
+    "_id": "66a0e4b88dfc01025fc0550d",
+    "name": "مهدیار مروی",
+    "email": "user@test.com",
+    "password": "$2a$10$nJQy0s3O2crY3H6U7gVA.eD/E3e.LuylyXjXDeW8.26USnCiTb5ue",
+    "bookmarkedPosts": [],
+    "likedPosts": [],
+    "avatar": "uploads/avatar/2026/6/17/1784267973819-765444717.jpeg",
+    "createdAt": "2026-06-16T11:25:44.446Z",
+    "updatedAt": "2026-07-17T06:29:21.409Z",
+    "__v": 0,
+    "avatarBlurDataURL": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAPUlEQVR4nGNgYDDiEjYykDNmYDdl4NJNKPAL2tvVqu9ey+CQOrk9M+7dv//tfYsZfNPb7eWVz86e7OcZCwBntRF5youlPwAAAABJRU5ErkJggg=="
+  },
+  {
+    "_id": "66a4252efccb30870d1e251f",
+    "name": "کاربر تستی 2",
+    "email": "user@test1.com",
+    "password": "$2a$10$vL1wVJJ0cPtpgn9Rlfa83eqEBgvr6V72EzON5eW0PyQmWjSg83MtC",
+    "bookmarkedPosts": [],
+    "likedPosts": [],
+    "avatar": null,
+    "createdAt": "2026-06-16T11:28:44.446Z",
+    "updatedAt": "2026-07-17T06:37:25.559Z",
+    "__v": 0,
+    "avatarBlurDataURL": null
+  },
+  {
+    "_id": "66b675228517385605104e3d",
+    "name": "کاربر تستی",
+    "email": "user@test2.com",
+    "password": "$2a$10$xxUNgxo3O6rdxYNIlN10t.f3R1.CCZO7GvqlnN7MM2lhN6/.T5xqS",
+    "bookmarkedPosts": [],
+    "likedPosts": [],
+    "avatar": "uploads/avatar/2026/6/17/1784267970132-728051213.jpeg",
+    "createdAt": "2026-06-17T11:25:44.446Z",
+    "updatedAt": "2026-07-17T05:59:30.151Z",
+    "__v": 0,
+    "avatarBlurDataURL": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAP0lEQVR4nAE0AMv/ANHFxGBXV2RgYN7Y1wDSzsdBHhgdAADm5OQA4+Dfs4R4bk9L/v7+APz7/9C+wXNjbK+qs9mLHal/g6y/AAAAAElFTkSuQmCC"
+  }
+]
