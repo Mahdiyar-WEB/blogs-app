@@ -90,12 +90,12 @@ const HeaderLink = ({
       prefetch={prefetch}
       href={path}
       className={`relative inline-flex items-center h-10 font-medium transition-colors duration-200 ${
-        active ? "text-primary-600" : "text-secondary-900 hover:text-primary-500"
+        active ? "text-primary-700" : "text-secondary-900 hover:text-primary-500"
       } ${className}`}
     >
       {text}
       {active && (
-        <span className="absolute bottom-0 right-0 w-full h-[2px] bg-primary-600 rounded-full" />
+        <span className="absolute bottom-0 right-0 w-full h-[2px] bg-primary-700 rounded-full" />
       )}
     </Link>
   );
