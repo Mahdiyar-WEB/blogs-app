@@ -83,7 +83,11 @@ const HeaderLink = ({
   prefetch = "auto",
 }) => {
   const pathName = usePathname();
-  const active = pathName === path;
+
+  const active =
+    path === "/"
+      ? pathName === "/"
+      : pathName === path || pathName.startsWith(`${path}/`);
 
   return (
     <Link
@@ -100,5 +104,6 @@ const HeaderLink = ({
     </Link>
   );
 };
+
 
 export default Header;
