@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useState } from "react";
 
 const DEBOUNCE_DELAY = 1000;
 
-const SearchBox = () => {
+const SearchBox = ({ placeholder, className }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -64,14 +64,14 @@ const SearchBox = () => {
   return (
     <form
       onSubmit={onSubmitHandler}
-      className="mb-5 w-full md:w-1/2 xl:w-1/3 h-11 flex items-center gap-2 justify-between bg-white px-3 py-2 border border-secondary-200 rounded-lg shadow-md"
+      className={`mb-5 w-full md:w-1/2 xl:w-1/3 h-11 flex items-center gap-2 justify-between bg-white px-3 py-2 border border-secondary-200 rounded-lg shadow-md ${className}`}
     >
       <input
         type="text"
         name="search"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder="جستجو ..."
+        placeholder={placeholder || "جستجو ..."}
         className="w-full bg-white/0 outline-none border-none"
       />
 
