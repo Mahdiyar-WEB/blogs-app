@@ -33,15 +33,13 @@ export default function Home() {
             <span className="h-px w-40 border"></span>
           </div>
           <p className="px-4 mt-3 text-justify text-lg leading-7">
-            Motivated and experienced Front-End Engineer with over 5 years of
-            hands-on experience in crafting responsive, performant, and engaging
-            user interfaces. Adept at leveraging modern JavaScript frameworks
-            and libraries to build web applications that enhance user experience
-            and achieve business objectives. Possesses a strong understanding of
-            front-end best practices, accessibility standards, and cross-browser
-            compatibility. Committed to continuous learning and contributing
-            effectively within a collaborative team environment to deliver
-            high-quality software solutions
+            Front-End Engineer with 5+ years of hands-on experience building
+            scalable, high-performance web applications using React, Next.js,
+            and TypeScript. Specialized in component-driven architecture, UI/UX
+            optimization, and cross-functional collaboration within agile
+            telecom and enterprise environments. Proven track record of leading
+            front-end teams, refactoring legacy codebases, and delivering
+            measurable improvements in performance and user experience
           </p>
         </div>
         {/* Programing languages */}
@@ -57,10 +55,13 @@ export default function Home() {
               JavaScript (ES6+)
             </div>
             <div className="px-3 py-2 text-center font-semibold bg-zinc-50 rounded-lg text-black">
-              Typescript
+              TypeScript
             </div>
             <div className="px-3 py-2 text-center font-semibold bg-zinc-50 rounded-lg text-black">
-              HTML & CSS
+              HTML5
+            </div>
+            <div className="px-3 py-2 text-center font-semibold bg-zinc-50 rounded-lg text-black">
+              HTML3
             </div>
             <div className="px-3 py-2 text-center font-semibold bg-zinc-50 rounded-lg text-black">
               SQL
@@ -77,13 +78,13 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-2 content-center gap-5 px-5 mt-5">
             <div className="px-3 py-2 text-center font-semibold bg-zinc-50 rounded-lg text-black">
-              Next JS
+              Next.js
             </div>
             <div className="px-3 py-2 text-center font-semibold bg-zinc-50 rounded-lg text-black">
               Next Auth
             </div>
             <div className="px-3 py-2 text-center font-semibold bg-zinc-50 rounded-lg text-black">
-              React JS
+              React.js
             </div>
             <div className="px-3 py-2 text-center font-semibold bg-zinc-50 rounded-lg text-black">
               Redux
@@ -95,10 +96,13 @@ export default function Home() {
               Redux Thunk
             </div>
             <div className="px-3 py-2 text-center font-semibold bg-zinc-50 rounded-lg text-black">
-              Formik & Yup
+              Formik
             </div>
             <div className="px-3 py-2 text-center font-semibold bg-zinc-50 rounded-lg text-black">
-              React query
+              Yup
+            </div>
+            <div className="px-3 py-2 text-center font-semibold bg-zinc-50 rounded-lg text-black">
+              React Query
             </div>
             <div className="px-3 py-2 text-center font-semibold bg-zinc-50 rounded-lg text-black">
               Axios
@@ -107,7 +111,7 @@ export default function Home() {
               Tailwind CSS
             </div>
             <div className="px-3 py-2 text-center font-semibold bg-zinc-50 rounded-lg text-black">
-              Ant design
+              Ant Design
             </div>
             <div className="px-3 py-2 text-center font-semibold bg-zinc-50 rounded-lg text-black">
               Bootstrap
@@ -148,10 +152,30 @@ export default function Home() {
               Oracle Database
             </div>
             <div className="px-3 py-2 text-center font-semibold bg-zinc-50 rounded-lg text-black">
-              Mongo DB
+              MongoDB
             </div>
             <div className="px-3 py-2 text-center font-semibold bg-zinc-50 rounded-lg text-black">
               Postman
+            </div>
+          </div>
+        </div>
+        {/* AI skills */}
+        <div>
+          <div className="flex justify-between items-center ps-4 mt-10">
+            <p className="uppercase font-bold tracking-widest text-lg text-nowrap">
+              AI skills
+            </p>
+            <span className="h-px w-40 border"></span>
+          </div>
+          <div className="grid grid-cols-2 gap-5 px-5 mt-5">
+            <div className="px-3 py-2 text-center font-semibold bg-zinc-50 rounded-lg text-black">
+              Claude
+            </div>
+            <div className="px-3 py-2 text-center font-semibold bg-zinc-50 rounded-lg text-black">
+              Codex
+            </div>
+            <div className="px-3 py-2 text-center font-semibold bg-zinc-50 rounded-lg text-black">
+              ChatGPT
             </div>
           </div>
         </div>
@@ -383,84 +407,12 @@ export default function Home() {
             {/* Persian */}
             <div className="flex justify-between items-center">
               <span className="font-semibold">Persian</span>
-              <div className="flex gap-1">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="text-yellow-600 w-5 h-auto fill-current"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="text-yellow-600 w-5 h-auto fill-current"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="text-yellow-600 w-5 h-auto fill-current"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="text-yellow-600 w-5 h-auto fill-current"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="text-yellow-600 w-5 h-auto fill-current"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                </svg>
-              </div>
+              <span>Native</span>
             </div>
             {/* English */}
             <div className="flex justify-between items-center">
               <span className="font-semibold">English</span>
-              <div className="flex gap-1">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="text-yellow-600 w-5 h-auto fill-current"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="text-yellow-600 w-5 h-auto fill-current"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="text-yellow-600 w-5 h-auto fill-current"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="text-yellow-600 w-5 h-auto fill-current"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M5.354 5.119 7.538.792A.516.516 0 0 1 8 .5c.183 0 .366.097.465.292l2.184 4.327 4.898.696A.537.537 0 0 1 16 6.32a.548.548 0 0 1-.17.445l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256a.52.52 0 0 1-.146.05c-.342.06-.668-.254-.6-.642l.83-4.73L.173 6.765a.55.55 0 0 1-.172-.403.58.58 0 0 1 .085-.302.513.513 0 0 1 .37-.245l4.898-.696zM8 12.027a.5.5 0 0 1 .232.056l3.686 1.894-.694-3.957a.565.565 0 0 1 .162-.505l2.907-2.77-4.052-.576a.525.525 0 0 1-.393-.288L8.001 2.223 8 2.226v9.8z" />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="text-yellow-600 w-5 h-auto fill-current"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                </svg>
-              </div>
+              <span>Intermediate (Reading/Writing: Advanced)</span>
             </div>
           </div>
         </div>
@@ -479,7 +431,7 @@ export default function Home() {
                 <span className="bg-white w-8 h-8 flex items-center justify-center rounded-md">
                   <FaPersonMilitaryRifle className="text-zinc-900" size={22} />
                 </span>
-                <span>Military Service Status:</span>
+                <span>Military Service:</span>
               </div>
               <span>Permanently Exempt</span>
             </div>
@@ -588,18 +540,30 @@ export default function Home() {
               </div>
               <p className="mt-2 text-lg">MTN Irancell</p>
               <p className="mt-2">
-                Driving frontend enhancements within the CRM ecosystem to
-                streamline customer interaction workflows and system
-                responsiveness. <br />
-                <br /> Responsibilities:
+                Developing and maintaining front-end features within the CRM
+                ecosystem serving millions of subscribers, focusing on
+                performance, reliability, and streamlined customer interaction
+                workflows. <br />
                 <br />
                 <ul className="mt-1 flex flex-col gap-2 list-inside list-disc text-justify">
-                  <li>Fix CRM issues and develop front-end elements</li>
                   <li>
-                    Investigation and fix customers concern regarding system and
-                    subscribers issues
+                    Developed and optimized React-based CRM components, reducing
+                    customer support resolution time through improved UI
+                    workflows
                   </li>
-                  <li>Investigation and development for new system changes</li>
+                  <li>
+                    Diagnosed and resolved critical front-end bugs affecting
+                    subscriber management, improving system responsiveness
+                  </li>
+                  <li>
+                    Collaborated with backend teams to integrate new CRM
+                    modules, ensuring seamless data flow between API and UI
+                    layers
+                  </li>
+                  <li>
+                    Participated in requirement analysis and technical planning
+                    for new CRM feature rollouts
+                  </li>
                 </ul>
               </p>
             </div>
@@ -608,27 +572,38 @@ export default function Home() {
               <div className="w-5  h-5  rounded-full border-4 bg-white absolute top-1 -left-7.5"></div>
               <div className="flex justify-between ">
                 <span className="font-semibold text-xl tracking-wide">
-                  Billing and service activation operations engineer
+                  Billing & Service Activation Operations Engineer
                 </span>
                 <span className="italic">Dec 2024 - Aug 2025</span>
               </div>
               <p className="mt-2 text-lg">MTN Irancell</p>
               <p className="mt-2 text-justify">
-                Ensuring system reliability and accurate service provisioning by
-                managing complex SQL database operations and Linux-based
-                infrastructure.
+                Ensured system reliability and accurate service provisioning
+                across MTN Irancell's billing infrastructure, bridging front-end
+                and backend operations for core activation services.
               </p>
               <br />
               <ul className="mt-1 flex flex-col gap-2 list-inside list-disc text-justify">
                 <li>
-                  Automated data reconciliation processes, minimizing manual
-                  intervention and increasing billing accuracy.
+                  Automated data reconciliation workflows, reducing manual
+                  intervention by ~60% and significantly improving billing
+                  accuracy
                 </li>
                 <li>
-                  Proactively resolved system-level performance incidents,
-                  maintaining 99.9% uptime for core activation services.
+                  Maintained 99.9% uptime for core activation services by
+                  proactively identifying and resolving system-level performance
+                  incidents
                 </li>
-                <li>Develop and investigate for new system changes</li>
+                <li>
+                  Optimized SQL queries and Oracle Database operations,
+                  improving data retrieval speed for service activation
+                  pipelines
+                </li>
+                <li>
+                  Investigated and implemented changes for new system
+                  requirements in coordination with cross-functional engineering
+                  teams
+                </li>
               </ul>
             </div>
             {/* Technical support */}
@@ -636,25 +611,29 @@ export default function Home() {
               <div className="w-5  h-5  rounded-full border-4 bg-white absolute top-1  -left-7.5"></div>
               <div className="flex justify-between ">
                 <span className="font-semibold text-xl tracking-wide">
-                  Technical support
+                  Technical Support Engineer
                 </span>
                 <span className="italic">Aug 2024 - Dec 2024</span>
               </div>
               <p className="mt-2 text-lg">Tecnotree Corporation</p>
               <p className="mt-2 text-justify">
-                Providing specialized technical expertise to troubleshoot and
-                resolve intricate system issues within large-scale
-                telecommunications environments.
+                Delivered specialized technical support for large-scale BSS/OSS
+                telecommunications systems across multiple countries, diagnosing
+                complex software and database issues.
               </p>
               <ul className="mt-1 flex flex-col gap-2 list-inside list-disc text-justify">
                 <li>
                   Performed root cause analysis on legacy system defects,
-                  delivering swift fixes that improved overall service
-                  stability.
+                  delivering targeted fixes that improved overall platform
+                  stability
                 </li>
                 <li>
-                  Managed database performance tuning and query optimization to
-                  ensure seamless backend-to-frontend communication.
+                  Optimized database queries and tuned backend performance to
+                  ensure reliable backend-to-frontend communication
+                </li>
+                <li>
+                  Documented recurring issues and proposed systematic solutions,
+                  reducing repeat incident rates for the support team
                 </li>
               </ul>
             </div>
@@ -669,19 +648,28 @@ export default function Home() {
               </div>
               <p className="mt-2 text-lg">Tecnotree Corporation</p>
               <p className="mt-2 text-justify">
-                Architecting scalable web solutions and mentoring the
-                development team to deliver high-performance digital products
-                for telecommunications.
+                Led front-end development and architecture for the DCLM telecom
+                platform, mentoring junior developers and driving technical
+                quality across the team.
               </p>
               <ul className="mt-1 flex flex-col gap-2 list-inside list-disc text-justify">
                 <li>
-                  Led the refactoring of legacy codebases, resulting in a
-                  measurable improvement in page render times and user
-                  experience.
+                  Led a full refactoring of the legacy React codebase, improving
+                  page load performance by approximately 40% and significantly
+                  enhancing user experience
                 </li>
                 <li>
-                  Standardized UI/UX workflows and implemented component-driven
-                  development, reducing technical debt across project modules.
+                  Established component-driven development standards using React
+                  and Redux Toolkit, reducing code duplication and technical
+                  debt across all modules
+                </li>
+                <li>
+                  Standardized UI/UX workflows using Figma-to-code pipelines,
+                  cutting design-to-implementation time for new features
+                </li>
+                <li>
+                  Mentored 2–3 junior developers through code reviews, pair
+                  programming, and technical knowledge sharing
                 </li>
               </ul>
             </div>
@@ -696,18 +684,31 @@ export default function Home() {
               </div>
               <p className="mt-2 text-lg">Tecnotree Corporation</p>
               <p className="mt-2 text-justify]">
-                Project Overview: The DCLM (Digital Customer Lifetime
-                Management) is a telecommunications project based on the GSM
-                system, designed for countries including Iran, India, Nigeria,
-                and Ghana. <br />
-                <br /> Responsibilities:
+                Built and maintained front-end features for DCLM (Digital
+                Customer Lifetime Management), a GSM-based telecom platform
+                deployed across Iran, India, Nigeria, and Ghana.
+                <br />
                 <ul className="mt-1 flex flex-col gap-2 list-inside list-disc">
-                  <li>Delivering new features</li>
-                  <li>Troubleshooting issues</li>
-                  <li>Refactoring legacy code</li>
-                  <li>Improving performance</li>
-                  <li>Redesigning pages</li>
-                  <li>Managing the MongoDB database</li>
+                  <li>
+                    Developed new features and UI modules using React.js and
+                    Redux, serving active users across 4 countries
+                  </li>
+                  <li>
+                    Refactored legacy JavaScript code to modern ES6+ standards,
+                    improving maintainability and reducing bug surface
+                  </li>
+                  <li>
+                    Improved page rendering performance through lazy loading,
+                    code splitting, and bundle optimization techniques
+                  </li>
+                  <li>
+                    Redesigned key user-facing pages, enhancing responsiveness
+                    and cross-browser compatibility
+                  </li>
+                  <li>
+                    Managed MongoDB collections to support front-end data
+                    requirements and feature development
+                  </li>
                 </ul>
               </p>
             </div>
@@ -716,34 +717,31 @@ export default function Home() {
               <div className="w-5  h-5  rounded-full border-4 bg-white absolute top-1  -left-7.5"></div>
               <div className="flex justify-between ">
                 <span className="font-semibold text-xl tracking-wide">
-                  Freelance & Self-Directed Projects
+                  Freelance Front-End Developer
                 </span>
                 <span className="italic">December 2019 - Nov 2022</span>
               </div>
+              <p className="mt-2 text-lg">Self-Employed</p>
               <p className="mt-2 text-justify]">
-                During my three years as a freelance front-end developer, I
-                dedicated significant time to both client projects and
-                self-directed learning. This period was instrumental in
-                deepening my practical understanding of modern web development
-                and honing my skills through hands-on experience
+                Built client websites and web applications while developing a
+                strong foundation in modern front-end technologies through
+                real-world project experience.
                 <br />
                 <br />
                 <ul className="mt-1 flex flex-col gap-2 list-inside list-disc">
                   <li>
-                    Focused on freelance work, self-study, and hands-on practice
-                    to strengthen front-end development skills
+                    Delivered responsive, user-centered websites for small and
+                    medium-sized businesses using HTML, CSS, JavaScript, and
+                    React
                   </li>
                   <li>
-                    Completed training projects and small-scale implementations
-                    to build practical experience
+                    Self-studied and applied modern front-end frameworks, state
+                    management patterns, and web performance best practices
                   </li>
                   <li>
-                    Improved proficiency in building responsive, maintainable,
-                    and user-centered interfaces
-                  </li>
-                  <li>
-                    Explored best practices in web development through
-                    continuous learning and project-based practice
+                    Completed multiple end-to-end projects from requirement
+                    gathering through deployment, building strong
+                    problem-solving and client communication skills
                   </li>
                 </ul>
               </p>
