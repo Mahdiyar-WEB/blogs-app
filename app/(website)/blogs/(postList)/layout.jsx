@@ -36,7 +36,7 @@ const Layout = ({ children }) => {
         </aside>
         <div className="md:hidden relative mb-2 col-span-12">
           <div className="flex gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide pb-2 pe-14">
-            <Suspense>
+            <Suspense fallback={<CategoryListLoading mobile />}>
               <CategoryList mobile />
             </Suspense>
           </div>
