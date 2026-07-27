@@ -64,9 +64,8 @@ const Post = ({
     <motion.div
       className="group relative col-span-12 lg:col-span-4"
       initial={{ opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: Math.min(index * 0.05, 0.2) }}
-      viewport={{ once: true, amount: 0.15 }}
     >
       <div className="relative overflow-hidden rounded-xl border border-secondary-200 bg-white shadow-sm transition-all duration-300 ease-out group-hover:-translate-y-1 group-hover:border-primary-300 group-hover:shadow-[0_16px_40px_rgba(74,109,255,0.12)]">
         <Link
