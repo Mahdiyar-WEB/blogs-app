@@ -10,19 +10,15 @@ const CategoryList = async ({ mobile = false }) => {
   if (mobile) {
     return (
       <>
-        <AnimatedFadeIn index={0}>
-          <CategoryItem mobile path="/blogs" text="همه" />
-        </AnimatedFadeIn>
-
+        <CategoryItem mobile path="/blogs" text="همه" />
         {categories.map(({ title, slug, _id }, index) => (
-          <AnimatedFadeIn key={_id} index={index + 1}>
-            <CategoryItem
-              mobile
-              prefetch={false}
-              path={`/blogs/category/${slug}`}
-              text={title}
-            />
-          </AnimatedFadeIn>
+          <CategoryItem
+            key={_id}
+            mobile
+            prefetch={false}
+            path={`/blogs/category/${slug}`}
+            text={title}
+          />
         ))}
       </>
     );
