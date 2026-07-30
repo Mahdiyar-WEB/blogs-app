@@ -54,7 +54,7 @@ const Select = ({ value, onChange, options }) => {
               key={item.value}
               onClick={() => handleSelect(item.value)}
               className={`
-                px-3 py-2 text-sm cursor-pointer
+                px-3 py-2 text-xs md:text-sm cursor-pointer
                 hover:bg-secondary-100/50 hover:text-primary-800
                 ${item.value === value ? "bg-secondary-100/50 text-primary-700 font-medium" : ""}
               `}
