@@ -13,7 +13,7 @@ const CategoryItem = ({ path, text, mobile = false, prefetch = true }) => {
         href={path}
         prefetch={prefetch}
         className={[
-          "flex items-center rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-200",
+          "flex items-center rounded-2xl px-3 py-2 text-xs font-medium transition-all duration-200",
           isActive
             ? "bg-primary-50 text-primary-700 border border-primary-200 shadow-sm"
             : "bg-white text-secondary-700 border border-secondary-100 hover:bg-secondary-50 hover:border-secondary-200",
