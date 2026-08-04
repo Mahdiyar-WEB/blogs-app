@@ -62,7 +62,7 @@ const Post = ({
 
   return (
     <motion.div
-      className="group relative col-span-12 xl:col-span-4"
+      className="group relative col-span-12 lg:col-span-6 xl:col-span-4"
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: Math.min(index * 0.05, 0.2) }}
