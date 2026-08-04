@@ -4,6 +4,7 @@ import UserProvider from "context/UserContext";
 import ReactQueryProvider from "providers/ReactQueryProvider";
 import DemoResetChecker from "components/DemoResetChecker";
 import ToastProvider from "./ToastProvider";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata = {
   title: {
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${vazirFont.variable} font-sans min-h-screen bg-transparent`}
       >
+        <SpeedInsights />
         <ToastProvider />
         <ReactQueryProvider>
           <UserProvider>
