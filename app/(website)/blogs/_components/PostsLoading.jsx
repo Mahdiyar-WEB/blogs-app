@@ -6,7 +6,7 @@ const PostsLoading = () => {
       {Array.from({ length: 6 }).map((_, index) => (
         <div
           key={index}
-          className="col-span-12 md:col-span-6 lg:col-span-4 border rounded-lg shadow-md"
+          className="col-span-12 lg:col-span-6 xl:col-span-4 border rounded-lg shadow-md"
         >
           <div className="w-full h-56 bg-secondary-300 rounded-t-lg overflow-hidden" />
           <div className="w-28 h-6 rounded-lg mt-5 bg-secondary-300 ms-2 me-auto" />
