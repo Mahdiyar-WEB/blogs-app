@@ -34,6 +34,7 @@
       --color-red-500: 239, 68, 68;
       --color-red-300: 252, 165, 165;
     }
+
     &.dark-mode {
       --background-app-rgb: 20, 20, 20;
       --color-secondary-900: 249, 250, 251;
@@ -60,6 +61,7 @@
   --rti-tag-remove: #e53e3e;
   border: none;
 }
+
 .rti--container .rti--input {
   background-color: rgb(var(--color-secondary-200));
   color: rgb(var(--color-secondary-800));
@@ -74,57 +76,68 @@
 
 @layer components {
   .form {
-    @apply flex flex-col gap-y-8 bg-secondary-0 p-4 rounded-xl w-full max-w-lg;
+    @apply flex w-full max-w-lg flex-col gap-y-8 rounded-xl bg-secondary-0 p-4;
   }
- .textField__input {
-  @apply w-full rounded-xl border border-secondary-200 bg-secondary-0 px-4 py-3 text-secondary-900 outline-none transition-all duration-300 ease-out;
-  @apply hover:border-primary-300;
-  @apply focus:border-primary-500 focus:ring-4 focus:ring-primary-100/70;
-}
 
-.textField__input_error {
-  @apply w-full rounded-xl border border-red-400 bg-secondary-0 px-4 py-3 text-secondary-900 outline-none transition-all duration-300 ease-out;
-  @apply focus:border-red-500 focus:ring-4 focus:ring-red-100;
-}
+  .textField__input {
+    @apply w-full rounded-xl border border-secondary-200 bg-secondary-0 px-4 py-3 text-secondary-900 outline-none transition-all duration-300 ease-out;
+    @apply hover:border-primary-300;
+    @apply focus:border-primary-500 focus:ring-4 focus:ring-primary-100/70;
+  }
 
-.textField__label {
-  @apply mb-2 block text-sm font-medium text-secondary-700;
-}
+  .textField__input_error {
+    @apply w-full rounded-xl border border-red-400 bg-secondary-0 px-4 py-3 text-secondary-900 outline-none transition-all duration-300 ease-out;
+    @apply focus:border-red-500 focus:ring-4 focus:ring-red-100;
+  }
 
-.textField__icon {
-  @apply pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-secondary-400 transition-colors duration-300;
-}
+  .textField__label {
+    @apply mb-2 block text-sm font-medium text-secondary-700;
+  }
 
-.textField__icon--btn {
-  @apply absolute left-3 top-1/2 -translate-y-1/2 text-secondary-400 transition-colors duration-300 hover:text-primary-800;
-}
+  .textField__icon {
+    @apply pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-secondary-400 transition-colors duration-300;
+  }
+
+  .textField__icon--btn {
+    @apply absolute left-3 top-1/2 -translate-y-1/2 text-secondary-400 transition-colors duration-300 hover:text-primary-800;
+  }
+
   .btn {
-    @apply px-3 py-3 rounded-xl transition-all duration-300;
+    @apply rounded-xl px-3 py-3 transition-all duration-300;
   }
+
   .btn--primary {
-    @apply bg-primary-900 hover:bg-primary-700 text-primary-100;
+    @apply bg-primary-900 text-primary-100 hover:bg-primary-700;
   }
+
   .btn--secondary {
     @apply bg-secondary-600 text-secondary-100;
   }
+
   .btn--outline {
     @apply border border-secondary-300 text-secondary-400;
   }
+
   .btn--danger {
     @apply border bg-red-600 text-white;
   }
+
   .badge {
     @apply inline-block whitespace-nowrap rounded-xl px-2 py-0.5;
   }
+
   .badge--primary {
     @apply bg-primary-900 text-white;
   }
+
   .badge--secondary {
     @apply bg-secondary-200 text-secondary-600;
   }
+
   .badge--success {
     @apply bg-green-500 text-white;
   }
+
   .badge--danger {
     @apply bg-red-500 text-white;
   }
@@ -155,8 +168,6 @@
     }
   }
 
-
-  /* slide-down animation for conditional fields */
   .slide-down-enter {
     animation: slideDown 0.28s ease forwards;
   }
@@ -166,6 +177,7 @@
       opacity: 0;
       transform: translateY(-8px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -182,6 +194,7 @@
   scrollbar-width: thin;
   scrollbar-color: rgb(var(--color-secondary-300)) transparent;
 }
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
@@ -205,6 +218,7 @@ button {
   cursor: pointer;
   outline: none;
 }
+
 button:disabled {
   cursor: not-allowed;
   background-color: rgb(var(--color-secondary-300), 0.5);
@@ -248,9 +262,11 @@ table th {
   color: rgb(var(--color-secondary-600));
   font-size: 0.9rem;
 }
+
 a {
   display: block;
 }
+
 table td {
   font-size: 0.85rem;
   padding: 1rem 1rem;
@@ -262,6 +278,7 @@ table td {
 .post-comments .post-comments__answer {
   position: relative;
 }
+
 .post-comments .post-comments__answer::before {
   content: "";
   display: block;
@@ -300,6 +317,7 @@ table td {
   .post-comments .post-comments__answer::before {
     display: none;
   }
+
   .post-comments .post-comments__answer .answer-item::before {
     width: 3px;
     height: 14px;
@@ -314,12 +332,13 @@ table td {
   100% {
     transform: translateX(0);
   }
+
   50% {
     transform: translateX(-4px);
   }
 }
 
-/* ───────── Custom Scrollbar ───────── */
+/* Custom Scrollbar */
 
 ::-webkit-scrollbar {
   width: 8px;
@@ -340,19 +359,187 @@ table td {
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgb(var(--color-secondary-400));
 }
-.tiptap pre {
-  direction: ltr;
-  text-align: left;
-  unicode-bidi: plaintext;
+
+/* Rich text editor and article content */
+
+.tiptap {
+  min-height: 400px;
+  line-height: 2;
 }
 
-.tiptap pre code {
-  direction: ltr;
-  text-align: left;
-  display: block;
+.tiptap:focus {
+  outline: none;
 }
+
+.tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: rgb(var(--color-secondary-400));
+  float: right;
+  height: 0;
+  pointer-events: none;
+}
+
+.tiptap pre,
+.ProseMirror pre,
 .article-content pre {
   direction: ltr;
   text-align: left;
+  unicode-bidi: plaintext;
   overflow-x: auto;
+  background: #0f172a;
+  color: #e2e8f0;
+  border-radius: 0.75rem;
+  margin: 1rem 0;
+}
+
+.tiptap pre,
+.ProseMirror pre {
+  padding: 1rem;
+}
+
+.article-content pre {
+  padding: 1rem;
+}
+
+.tiptap pre code,
+.ProseMirror pre code,
+.article-content pre code {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  font-size: 0.875rem;
+  line-height: 1.9;
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    "Liberation Mono",
+    "Courier New",
+    monospace;
+}
+
+.tiptap :not(pre) > code,
+.ProseMirror :not(pre) > code,
+.article-content :not(pre) > code {
+  direction: ltr;
+  unicode-bidi: plaintext;
+  background: rgb(var(--color-secondary-100));
+  color: rgb(var(--color-primary-700));
+  padding: 0.15rem 0.45rem;
+  border-radius: 0.4rem;
+  font-size: 0.875em;
+}
+
+.tiptap pre code .hljs-comment,
+.tiptap pre code .hljs-quote,
+.ProseMirror pre code .hljs-comment,
+.ProseMirror pre code .hljs-quote,
+.article-content pre code .hljs-comment,
+.article-content pre code .hljs-quote {
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.tiptap pre code .hljs-keyword,
+.tiptap pre code .hljs-selector-tag,
+.tiptap pre code .hljs-literal,
+.tiptap pre code .hljs-section,
+.tiptap pre code .hljs-link,
+.ProseMirror pre code .hljs-keyword,
+.ProseMirror pre code .hljs-selector-tag,
+.ProseMirror pre code .hljs-literal,
+.ProseMirror pre code .hljs-section,
+.ProseMirror pre code .hljs-link,
+.article-content pre code .hljs-keyword,
+.article-content pre code .hljs-selector-tag,
+.article-content pre code .hljs-literal,
+.article-content pre code .hljs-section,
+.article-content pre code .hljs-link {
+  color: #c084fc;
+}
+
+.tiptap pre code .hljs-string,
+.tiptap pre code .hljs-title,
+.tiptap pre code .hljs-name,
+.tiptap pre code .hljs-attribute,
+.tiptap pre code .hljs-symbol,
+.tiptap pre code .hljs-bullet,
+.tiptap pre code .hljs-addition,
+.ProseMirror pre code .hljs-string,
+.ProseMirror pre code .hljs-title,
+.ProseMirror pre code .hljs-name,
+.ProseMirror pre code .hljs-attribute,
+.ProseMirror pre code .hljs-symbol,
+.ProseMirror pre code .hljs-bullet,
+.ProseMirror pre code .hljs-addition,
+.article-content pre code .hljs-string,
+.article-content pre code .hljs-title,
+.article-content pre code .hljs-name,
+.article-content pre code .hljs-attribute,
+.article-content pre code .hljs-symbol,
+.article-content pre code .hljs-bullet,
+.article-content pre code .hljs-addition {
+  color: #86efac;
+}
+
+.tiptap pre code .hljs-number,
+.tiptap pre code .hljs-variable,
+.tiptap pre code .hljs-template-variable,
+.tiptap pre code .hljs-type,
+.tiptap pre code .hljs-built_in,
+.tiptap pre code .hljs-builtin-name,
+.ProseMirror pre code .hljs-number,
+.ProseMirror pre code .hljs-variable,
+.ProseMirror pre code .hljs-template-variable,
+.ProseMirror pre code .hljs-type,
+.ProseMirror pre code .hljs-built_in,
+.ProseMirror pre code .hljs-builtin-name,
+.article-content pre code .hljs-number,
+.article-content pre code .hljs-variable,
+.article-content pre code .hljs-template-variable,
+.article-content pre code .hljs-type,
+.article-content pre code .hljs-built_in,
+.article-content pre code .hljs-builtin-name {
+  color: #fbbf24;
+}
+
+.tiptap pre code .hljs-function,
+.tiptap pre code .hljs-title.function_,
+.ProseMirror pre code .hljs-function,
+.ProseMirror pre code .hljs-title.function_,
+.article-content pre code .hljs-function,
+.article-content pre code .hljs-title.function_ {
+  color: #60a5fa;
+}
+
+.tiptap pre code .hljs-params,
+.ProseMirror pre code .hljs-params,
+.article-content pre code .hljs-params {
+  color: #e2e8f0;
+}
+
+.tiptap pre code .hljs-tag,
+.tiptap pre code .hljs-doctag,
+.ProseMirror pre code .hljs-tag,
+.ProseMirror pre code .hljs-doctag,
+.article-content pre code .hljs-tag,
+.article-content pre code .hljs-doctag {
+  color: #f472b6;
+}
+
+.tiptap pre code .hljs-meta,
+.tiptap pre code .hljs-regexp,
+.tiptap pre code .hljs-deletion,
+.ProseMirror pre code .hljs-meta,
+.ProseMirror pre code .hljs-regexp,
+.ProseMirror pre code .hljs-deletion,
+.article-content pre code .hljs-meta,
+.article-content pre code .hljs-regexp,
+.article-content pre code .hljs-deletion {
+  color: #f87171;
 }

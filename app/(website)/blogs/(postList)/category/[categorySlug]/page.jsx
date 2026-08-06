@@ -8,6 +8,11 @@ import queryString from "query-string";
 import toPersianDigits from "utils/toPersianDigits";
 import Pagination from "components/Pagination";
 
+export async function generateMetadata({ params }) {
+  const { categorySlug } = await params;
+  return { title: categorySlug };
+}
+
 const CategorySlug = async ({ params, searchParams }) => {
   const cookieStore = await cookies();
   const { categorySlug } = await params;
@@ -47,7 +52,9 @@ const CategorySlug = async ({ params, searchParams }) => {
           <Image
             width={500}
             height={500}
-            src="/no-blogs.png"
+            src="/no-blogs.webp"
+            placeholder="blur"
+            blurDataURL="data:image/webp;base64,UklGRgoBAABXRUJQVlA4WAoAAAAQAAAADQAACQAAQUxQSGoAAAABcFpt27LcuEZ3iLoAdLpHZtBMZwBtHBbgkMjeIJKI7pDdvh0iYgL4NXvtBin/g8XufDZpRmU/rt7r7zUrBTIv4coHNET3NKhbe8EtDebKWHCJQKjUFnQiEIyVN4vFYrGchm0g15v8fz0AVlA4IHoAAABQAgCdASoOAAoAAgA0JbACdAYul2w2vCjc4AAA/Nj6mtzioQ79IW299pVH2o8B6fNMxo2CD+Tc2jKz6rxV8jGp0LsqJSITd3ty2jJ0PirkcKnX7TQYQKR5OEwPyKcK+O+XHpK8i/dZvSi/L7QGqBf+DKf6mg8dg/jgAA=="
             sizes="100%"
             quality={100}
             alt="no blogs in this category"

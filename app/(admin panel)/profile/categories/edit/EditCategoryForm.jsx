@@ -1,10 +1,11 @@
 "use client";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import SubmitButton from "components/SubmitButton";
 import TextField from "components/TextField";
 import useUpdateCategory from "hooks/categories/useUpdateCategory";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 
 const schemas = yup.object({
@@ -12,10 +13,12 @@ const schemas = yup.object({
     .string()
     .min(5, "حداقل ۵ حرف وارد کنید")
     .required("عنوان دسته بندی را وارد کنید"),
+
   englishTitle: yup
     .string()
     .min(5, "حداقل ۵ حرف وارد کنید")
     .required("متن انگلیسی دسته بندی را وارد کنید"),
+
   description: yup
     .string()
     .min(5, "حداقل ۵ حرف وارد کنید")
@@ -23,23 +26,30 @@ const schemas = yup.object({
 });
 
 const EditCategoryForm = ({ initialValues, categoryId }) => {
+  const router = useRouter();
+  const { isUpdating, updateCategory } = useUpdateCategory();
+
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schemas),
-    defaultValues: initialValues,
     mode: "all",
+    defaultValues: {
+      title: "",
+      englishTitle: "",
+      description: "",
+      ...initialValues,
+    },
   });
 
-  const router = useRouter();
-
-  const { isUpdating, updateCategory } = useUpdateCategory();
-
-  const onSubmit = async (inputs) => {
+  const onSubmit = (inputs) => {
     updateCategory(
-      { id: categoryId, data: inputs },
+      {
+        id: categoryId,
+        data: inputs,
+      },
       {
         onSuccess: () => {
           router.push("/profile/categories");
@@ -51,44 +61,68 @@ const EditCategoryForm = ({ initialValues, categoryId }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full md:w-2/3 xl:w-1/3 flex flex-col gap-5"
+      className="w-full md:w-2/3 flex flex-col gap-5 bg-white mx-auto p-5 rounded-lg shadow-md"
     >
       <div>
-        <TextField
-          label="عنوان دسته بندی"
+        <Controller
           name="title"
-          type="text"
-          dir="rtl"
-          placeholder="ورزشی"
-          register={register}
-          hasError={!!errors.title}
+          control={control}
+          render={({ field: { ref, ...field } }) => (
+            <TextField
+              label="عنوان دسته بندی"
+              type="text"
+              dir="rtl"
+              placeholder="ورزشی"
+              inputRef={ref}
+              hasError={!!errors.title}
+              {...field}
+            />
+          )}
         />
+
         <FieldError error={errors.title} />
       </div>
+
       <div>
-        <TextField
-          label="عنوان انگلیسی دسته بندی"
+        <Controller
           name="englishTitle"
-          type="text"
-          dir="rtl"
-          placeholder="sports"
-          register={register}
-          hasError={!!errors.englishTitle}
+          control={control}
+          render={({ field: { ref, ...field } }) => (
+            <TextField
+              label="عنوان انگلیسی دسته بندی"
+              type="text"
+              dir="ltr"
+              placeholder="sports"
+              inputRef={ref}
+              hasError={!!errors.englishTitle}
+              {...field}
+            />
+          )}
         />
+
         <FieldError error={errors.englishTitle} />
       </div>
+
       <div>
-        <TextField
-          label="توضیحات دسته بندی"
+        <Controller
           name="description"
-          type="text"
-          dir="rtl"
-          placeholder="توضیحات ورزشی"
-          register={register}
-          hasError={!!errors.description}
+          control={control}
+          render={({ field: { ref, ...field } }) => (
+            <TextField
+              label="توضیحات دسته بندی"
+              type="text"
+              dir="rtl"
+              placeholder="توضیحات ورزشی"
+              inputRef={ref}
+              hasError={!!errors.description}
+              {...field}
+            />
+          )}
         />
+
         <FieldError error={errors.description} />
       </div>
+
       <SubmitButton loading={isUpdating} className="w-full">
         ذخیره تغییرات
       </SubmitButton>
@@ -97,6 +131,8 @@ const EditCategoryForm = ({ initialValues, categoryId }) => {
 };
 
 const FieldError = ({ error }) =>
-  error ? <span className="text-xs text-red-500">{error.message}</span> : null;
+  error ? (
+    <span className="text-xs text-red-500">{error.message}</span>
+  ) : null;
 
 export default EditCategoryForm;

@@ -4,7 +4,6 @@ import { PostModel } from "lib/models/Post";
 import { CategoryModel } from "lib/models/Category";
 import { getUserFromRequest } from "lib/auth";
 import { withErrorHandler, ok } from "lib/apiHandler";
-import { copyObject } from "lib/utils";
 import { transformPost } from "lib/transformPost";
 
 export const GET = withErrorHandler(async (req) => {
@@ -20,7 +19,7 @@ export const GET = withErrorHandler(async (req) => {
 
   const skip = (page - 1) * limit;
 
-  let dbQuery = {};
+  const dbQuery = {};
 
   if (search) {
     const searchTerm = new RegExp(search, "ig");
@@ -70,7 +69,15 @@ export const GET = withErrorHandler(async (req) => {
     PostModel.find(dbQuery, { comments: 0 })
       .populate([
         { path: "category", select: { title: 1, slug: 1 } },
-        { path: "author", select: { name: 1, biography: 1, avatar: 1 } },
+        {
+          path: "author",
+          select: {
+            name: 1,
+            biography: 1,
+            avatar: 1,
+            avatarBlurDataURL: 1,
+          },
+        },
         {
           path: "related",
           model: "Post",
@@ -79,11 +86,26 @@ export const GET = withErrorHandler(async (req) => {
             slug: 1,
             briefText: 1,
             coverImage: 1,
+            coverImageBlurDataURL: 1,
             author: 1,
+            category: 1,
           },
           populate: [
-            { path: "author", model: "User", select: { name: 1, biography: 1, avatar: 1 } },
-            { path: "category", model: "Category", select: { title: 1, slug: 1 } },
+            {
+              path: "author",
+              model: "User",
+              select: {
+                name: 1,
+                biography: 1,
+                avatar: 1,
+                avatarBlurDataURL: 1,
+              },
+            },
+            {
+              path: "category",
+              model: "Category",
+              select: { title: 1, slug: 1 },
+            },
           ],
         },
       ])
@@ -96,7 +118,7 @@ export const GET = withErrorHandler(async (req) => {
 
   const totalPages = Math.ceil(totalPosts / limit);
 
-  const transformedPosts = copyObject(posts);
+  const transformedPosts = posts.map((post) => post.toJSON());
 
   for (const post of transformedPosts) {
     await transformPost(post, user);

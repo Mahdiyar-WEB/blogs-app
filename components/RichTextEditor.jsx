@@ -6,6 +6,10 @@ import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
 import TextAlign from "@tiptap/extension-text-align";
 import Placeholder from "@tiptap/extension-placeholder";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import { common, createLowlight } from "lowlight";
+
+const lowlight = createLowlight(common);
 
 const decodeHtml = (html) => {
   const textarea = document.createElement("textarea");
@@ -18,8 +22,7 @@ const ToolbarButton = ({ active = false, onClick, children }) => {
     <button
       type="button"
       onClick={onClick}
-      className={`px-3 py-2 text-sm rounded-lg border transition-colors
-      ${
+      className={`px-3 py-2 text-sm rounded-lg border transition-colors ${
         active
           ? "bg-primary-500 text-white border-primary-500"
           : "bg-white hover:bg-secondary-50 border-secondary-200"
@@ -37,12 +40,7 @@ const RichTextEditor = ({ initialValue = "", onChange }) => {
 
       extensions: [
         StarterKit.configure({
-          codeBlock: {
-            HTMLAttributes: {
-              class: "rounded-lg bg-gray-900 text-white p-4 font-mono text-sm",
-              dir: "ltr",
-            },
-          },
+          codeBlock: false,
           blockquote: {
             HTMLAttributes: {
               class: "border-r-4 pr-4 italic text-secondary-600",
@@ -64,6 +62,15 @@ const RichTextEditor = ({ initialValue = "", onChange }) => {
         Placeholder.configure({
           placeholder: "شروع به نوشتن مقاله کنید...",
         }),
+
+        CodeBlockLowlight.configure({
+          lowlight,
+          defaultLanguage: "javascript",
+          HTMLAttributes: {
+            class: "editor-code-block",
+            dir: "ltr",
+          },
+        }),
       ],
 
       content: initialValue,
@@ -71,7 +78,7 @@ const RichTextEditor = ({ initialValue = "", onChange }) => {
       editorProps: {
         attributes: {
           class:
-            "prose prose-lg max-w-none focus:outline-none min-h-[400px] p-5 rtl",
+            "tiptap prose prose-lg max-w-none focus:outline-none min-h-[400px] p-5 rtl",
         },
 
         transformPastedHTML(html) {
@@ -92,22 +99,20 @@ const RichTextEditor = ({ initialValue = "", onChange }) => {
 
           if (text && /<\/?[a-z][\s\S]*>/i.test(text)) {
             const decoded = decodeHtml(text);
-
             const parser = new DOMParser();
-
             const doc = parser.parseFromString(decoded, "text/html");
 
             const fragment = view.state.schema.nodeFromJSON({
               type: "doc",
               content: Array.from(doc.body.childNodes).map((node) => {
-                const html = node.outerHTML || node.textContent;
+                const nodeHtml = node.outerHTML || node.textContent || "";
 
                 return {
                   type: "paragraph",
                   content: [
                     {
                       type: "text",
-                      text: html,
+                      text: nodeHtml,
                     },
                   ],
                 };
@@ -134,7 +139,6 @@ const RichTextEditor = ({ initialValue = "", onChange }) => {
 
   const addLink = () => {
     const previousUrl = editor.getAttributes("link").href;
-
     const url = window.prompt("آدرس لینک را وارد کنید", previousUrl || "");
 
     if (url === null) return;
@@ -144,7 +148,7 @@ const RichTextEditor = ({ initialValue = "", onChange }) => {
       return;
     }
 
-    editor.chain().focus().setLink({ href: url }).run();
+    editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
   };
 
   return (
@@ -232,13 +236,6 @@ const RichTextEditor = ({ initialValue = "", onChange }) => {
           onClick={() => editor.chain().focus().toggleBlockquote().run()}
         >
           Quote
-        </ToolbarButton>
-
-        <ToolbarButton
-          active={editor.isActive("code")}
-          onClick={() => editor.chain().focus().toggleCode().run()}
-        >
-          Code
         </ToolbarButton>
 
         <ToolbarButton

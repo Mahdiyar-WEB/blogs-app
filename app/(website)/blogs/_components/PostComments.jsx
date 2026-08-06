@@ -7,6 +7,7 @@ import Modal from "components/Modal";
 import CommentForm from "./CommentForm";
 import { useUser } from "context/UserContext";
 import toPersianDigits from "utils/toPersianDigits";
+import toast from "react-hot-toast";
 
 function PostComments({ post }) {
   const { user } = useUser();
@@ -19,6 +20,7 @@ function PostComments({ post }) {
   const addNewCommentHandler = (parent) => {
     if (!user) {
       router.push('/login');
+      toast.error('لطفا وارد حساب کاربری خود شوید')
       return;
     }
     setParent(parent);

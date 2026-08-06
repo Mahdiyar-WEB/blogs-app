@@ -6,12 +6,12 @@ import {
 
 const FloatingDecorationMobile = () => {
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none lg:hidden -z-10">
+    <div className="absolute h-lvh inset-0 overflow-hidden pointer-events-none lg:hidden -z-10">
       {/* Glow */}
       <div className="absolute -top-20 -right-20 w-48 h-48 rounded-full bg-primary-100/60 blur-3xl" />
 
       {/* Latest Posts */}
-      <div className="absolute left-[-45px] bottom-[18%] rotate-[-8deg] bg-white rounded-2xl shadow-lg shadow-primary-200/60 px-3 py-2 w-36 scale-90 sm:scale-100">
+      <div className="absolute left-[-5px] bottom-[25%] rotate-[5deg] bg-white rounded-2xl shadow-lg shadow-primary-200/60 px-3 py-2 w-36 scale-90 sm:scale-100">
         <div className="flex items-center gap-2">
           <div className="bg-primary-100 text-primary-700 rounded-lg p-1.5">
             <DocumentTextIcon className="w-5 h-5" />
@@ -27,7 +27,7 @@ const FloatingDecorationMobile = () => {
       </div>
 
       {/* Comments */}
-      <div className="absolute right-[-45px] bottom-[30%] rotate-[8deg] bg-white rounded-2xl shadow-lg shadow-primary-200/60 px-3 py-2 w-32 scale-90 sm:scale-100">
+      <div className="absolute right-[5px] bottom-[25%] rotate-[8deg] bg-white rounded-2xl shadow-lg shadow-primary-200/60 px-3 py-2 w-32 scale-90 sm:scale-100">
         <div className="flex items-center gap-2">
           <div className="bg-green-100 text-green-600 rounded-lg p-1.5">
             <ChatBubbleLeftRightIcon className="w-5 h-5" />
@@ -43,7 +43,7 @@ const FloatingDecorationMobile = () => {
       </div>
 
       {/* Views */}
-      <div className="absolute right-1/2 translate-x-1/2 bottom-[6%] rotate-[-5deg] bg-white rounded-2xl shadow-lg shadow-primary-200/60 px-3 py-2.5 w-40 scale-90 sm:scale-100">
+      <div className="absolute right-1/2 translate-x-1/2 bottom-[15%] rotate-[-5deg] bg-white rounded-2xl shadow-lg shadow-primary-200/60 px-3 py-2.5 w-40 scale-90 sm:scale-100">
         <div className="flex items-center justify-between">
           <div className="bg-primary-100 text-primary-700 rounded-xl p-2">
             <EyeIcon className="w-5 h-5" />

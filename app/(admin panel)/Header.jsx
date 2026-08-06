@@ -1,4 +1,8 @@
+"use client";
+
+import { AnimatePresence, motion } from "framer-motion";
 import { useUser } from "context/UserContext";
+import useDelayedLoading from "hooks/useDelayedLoading";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -94,15 +98,17 @@ function ProfileButton({ user, open, onToggle }) {
         width={44}
         height={44}
         src={user?.avatarUrl || "/avatar.svg"}
+        placeholder={user?.avatarUrl ? "blur" : "empty"}
+        blurDataURL={user?.avatarBlurDataURL}
         className="h-11 w-11 rounded-2xl border border-secondary-200 object-cover object-center"
       />
 
       <div className="hidden min-w-0 flex-col items-start leading-tight md:flex">
         <span className="max-w-32 truncate text-sm font-semibold text-secondary-900">
-          {user?.name}
+          {user?.name || "کاربر"}
         </span>
         <span className="max-w-36 truncate text-xs text-secondary-500">
-          {user?.email}
+          {user?.email || ""}
         </span>
       </div>
 
@@ -126,6 +132,21 @@ function ProfileButton({ user, open, onToggle }) {
   );
 }
 
+function ProfileSkeleton() {
+  return (
+    <div className="flex items-center gap-2 rounded-2xl p-1">
+      <div className="flex items-center gap-2 animate-pulse">
+        <span className="block h-11 w-11 rounded-2xl bg-secondary-200" />
+        <div className="hidden md:flex md:flex-col md:gap-2">
+          <span className="block h-4 w-24 rounded-lg bg-secondary-200" />
+          <span className="block h-3 w-32 rounded-lg bg-secondary-100" />
+        </div>
+        <span className="hidden h-4 w-4 rounded bg-secondary-100 md:block" />
+      </div>
+    </div>
+  );
+}
+
 function ProfileMenuItem({
   children,
   icon,
@@ -136,7 +157,7 @@ function ProfileMenuItem({
   const className =
     variant === "danger"
       ? "flex w-full items-center gap-3 px-4 py-3 text-red-600 transition-colors hover:bg-red-50"
-      : "flex items-center gap-3 px-4 py-3 transition-colors hover:bg-secondary-50";
+      : "flex w-full items-center gap-3 px-4 py-3 text-secondary-700 transition-colors hover:bg-secondary-50";
 
   if (href) {
     return (
@@ -157,14 +178,20 @@ function ProfileMenuItem({
 
 function ProfileMenu({ user, onClose, onLogout }) {
   return (
-    <div className="absolute left-0 top-14 z-50 w-56 overflow-hidden rounded-2xl border border-secondary-200 bg-white shadow-xl">
+    <motion.div
+      initial={{ opacity: 0, y: 8, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: 6, scale: 0.98 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
+      className="absolute left-0 top-14 z-50 w-56 overflow-hidden rounded-2xl border border-secondary-200 bg-white shadow-xl"
+    >
       <div className="border-b border-secondary-100 px-4 py-3">
         <p className="font-semibold text-secondary-900">{user?.name}</p>
         <p className="text-xs text-secondary-500">{user?.email}</p>
       </div>
 
       <ProfileMenuItem
-        href={`/profile/users/edit?${user?._id}`}
+        href={`/profile/users/edit?id=${user?._id}`}
         onClick={onClose}
         icon={
           <svg
@@ -208,12 +235,53 @@ function ProfileMenu({ user, onClose, onLogout }) {
       >
         خروج از حساب
       </ProfileMenuItem>
+    </motion.div>
+  );
+}
+
+function HeaderProfile({ user, isLoading, open, onToggle, onClose, onLogout }) {
+  const showLoading = useDelayedLoading(isLoading, {
+    delay: 180,
+    minDuration: 250,
+  });
+
+  return (
+    <div className="relative min-h-13">
+      <AnimatePresence mode="wait" initial={false}>
+        {showLoading ? (
+          <motion.div
+            key="profile-skeleton"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <ProfileSkeleton />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="profile-content"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+          >
+            <ProfileButton user={user} open={open} onToggle={onToggle} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {!showLoading && open && user && (
+          <ProfileMenu user={user} onClose={onClose} onLogout={onLogout} />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
 
 export default function Header({ onMobileToggle }) {
-  const { user, logout } = useUser();
+  const { user, logout, isLoading } = useUser();
   const pathname = usePathname();
   const pageTitle = getPageTitle(pathname);
 
@@ -226,18 +294,22 @@ export default function Header({ onMobileToggle }) {
   };
 
   useEffect(() => {
-    const onClickHandler = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
         setOpen(false);
       }
     };
 
-    document.addEventListener("click", onClickHandler);
+    document.addEventListener("click", handleClickOutside);
 
     return () => {
-      document.removeEventListener("click", onClickHandler);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   return (
     <div className="flex h-20 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
@@ -250,20 +322,15 @@ export default function Header({ onMobileToggle }) {
         />
       </div>
 
-      <div ref={menuRef} className="relative">
-        <ProfileButton
+      <div ref={menuRef}>
+        <HeaderProfile
           user={user}
+          isLoading={isLoading}
           open={open}
           onToggle={() => setOpen((prev) => !prev)}
+          onClose={() => setOpen(false)}
+          onLogout={onLogoutHandler}
         />
-
-        {open && (
-          <ProfileMenu
-            user={user}
-            onClose={() => setOpen(false)}
-            onLogout={onLogoutHandler}
-          />
-        )}
       </div>
     </div>
   );

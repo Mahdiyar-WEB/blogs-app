@@ -9,13 +9,13 @@ const userReducer = (state, action) => {
   switch (action.type) {
     case "loading":
       return {
+        ...state,
         error: null,
-        user: null,
-        isAuthenticated: false,
         isLoading: true,
       };
     case "rejected":
       return {
+        ...state,
         user: null,
         isLoading: false,
         isAuthenticated: false,
@@ -23,6 +23,7 @@ const userReducer = (state, action) => {
       };
     case "signin":
       return {
+        ...state,
         isLoading: false,
         error: null,
         user: action.payload,
@@ -30,6 +31,7 @@ const userReducer = (state, action) => {
       };
     case "signup":
       return {
+        ...state,
         isLoading: false,
         error: null,
         user: action.payload,
@@ -37,6 +39,7 @@ const userReducer = (state, action) => {
       };
     case "user/loaded":
       return {
+        ...state,
         isLoading: false,
         error: null,
         user: action.payload,
@@ -44,6 +47,7 @@ const userReducer = (state, action) => {
       };
     case "logout":
       return {
+        ...state,
         isLoading: false,
         error: null,
         user: null,

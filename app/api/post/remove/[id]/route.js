@@ -10,18 +10,21 @@ import { deleteUploadedFile } from "lib/upload";
 export const DELETE = withErrorHandler(async (req, { params }) => {
   await connectDB();
   await requireUser(req);
+
   const { id } = await params;
 
-  if (!mongoose.isValidObjectId(id))
+  if (!mongoose.isValidObjectId(id)) {
     throw createHttpError.BadRequest("شناسه پست نامعتبر است");
-
-  const existing = await PostModel.findById(id);
-  if (!existing) throw createHttpError.BadRequest("پست با این مشخصات یافت نشد");
+  }
 
   const post = await PostModel.findByIdAndDelete(id);
-  if (!post?._id) throw createHttpError.InternalServerError(" پست حذف نشد");
+  if (!post?._id) {
+    throw createHttpError.BadRequest("پست با این مشخصات یافت نشد");
+  }
 
-  if (post.coverImage) await deleteUploadedFile(post.coverImage);
+  if (post.coverImage) {
+    await deleteUploadedFile(post.coverImage);
+  }
 
   return ok({ message: "پست با موفقیت حذف شد" }, HttpStatus.OK);
 });

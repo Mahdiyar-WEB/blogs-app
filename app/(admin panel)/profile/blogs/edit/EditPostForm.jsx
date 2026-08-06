@@ -96,7 +96,7 @@ const EditPostForm = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full md:w-2/3 xl:w-1/3 flex flex-col gap-5"
+      className="w-full md:w-2/3  flex flex-col gap-5 bg-white mx-auto p-5 rounded-lg shadow-md"
     >
       <div>
         <Controller

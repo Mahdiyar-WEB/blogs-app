@@ -205,7 +205,7 @@ function DrawerLogo({ isOpen }) {
 
 function DrawerItem({ item, isOpen, active, onClose }) {
   return (
-    <li>
+    <li className="list-none">
       <Link
         prefetch={false}
         href={item.href}
