@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 
 const CHECK_INTERVAL = 5 * 60 * 1000; // 5 minutes
 
@@ -28,7 +27,6 @@ export default function DemoResetChecker() {
         if (data.reset) {
           await queryClient.invalidateQueries();
           window.location.reload();
-          toast.success('دیتای اپلیکیشن ریست شد!')
         }
       } catch (error) {
         console.error("Demo reset check failed:", error);
