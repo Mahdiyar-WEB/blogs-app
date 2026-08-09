@@ -1,4 +1,4 @@
-const toLocalDate = (date) => {
+const toLocalDate = (date: string) => {
   const d = new Date(date);
 
   const datePart = d.toLocaleDateString("fa-IR");

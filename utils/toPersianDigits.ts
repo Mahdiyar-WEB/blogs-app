@@ -1,10 +1,10 @@
-const toPersianDigits = (n) => {
+const toPersianDigits = (n: number) => {
   const farsiDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
 
   return n
     .toString()
     .split("")
-    .map((x) => farsiDigits[x])
+    .map((x: string) => farsiDigits[Number(x)])
     .join("");
 };
 export default toPersianDigits;

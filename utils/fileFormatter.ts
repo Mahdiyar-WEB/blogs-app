@@ -1,4 +1,4 @@
-const getFilename = (value) => {
+const getFilename = (value: string) => {
   try {
     const url = new URL(value);
     return url.pathname.split("/").pop() || "file";
@@ -7,7 +7,7 @@ const getFilename = (value) => {
   }
 };
 
-const getStorageFileUrl = (value) => {
+const getStorageFileUrl = (value: string) => {
   if (!value) return "";
 
   if (/^https?:\/\//i.test(value)) {
@@ -25,7 +25,7 @@ const getStorageFileUrl = (value) => {
   ).toString();
 };
 
-export const imageUrlToFile = async (imgUrl) => {
+export const imageUrlToFile = async (imgUrl: string) => {
   if (!imgUrl) return null;
 
   try {
