@@ -14,7 +14,18 @@ if (!bucketName) {
   throw new Error("LIARA_BUCKET_NAME is missing");
 }
 
-export function getStorageFileUrl(fileKey) {
+type UploadOptions = {
+  maxSize?: number;
+};
+
+export type UploadedFile = {
+  filename: string;
+  fileUploadPath: string;
+  fileAddress: string;
+  blurDataURL: string;
+};
+
+export function getStorageFileUrl(fileKey?: string | null): string | null {
   if (!fileKey) return null;
   const baseUrl = process.env.NEXT_PUBLIC_STORAGE_BASE_URL;
   if (!baseUrl) return null;
@@ -22,10 +33,10 @@ export function getStorageFileUrl(fileKey) {
 }
 
 export async function saveUploadedFile(
-  file,
-  fieldName,
-  { maxSize } = {},
-) {
+  file: File | string | null | undefined,
+  fieldName: string,
+  { maxSize }: UploadOptions = {},
+): Promise<UploadedFile | null> {
   if (!file || typeof file === "string") return null;
 
   const originalName = file.name || "";
@@ -69,7 +80,9 @@ export async function saveUploadedFile(
   };
 }
 
-export async function deleteUploadedFile(relativePath) {
+export async function deleteUploadedFile(
+  relativePath?: string | null,
+): Promise<void> {
   if (!relativePath) return;
 
   try {

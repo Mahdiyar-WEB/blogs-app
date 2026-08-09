@@ -1,7 +1,7 @@
 import Joi from "joi";
 import createHttpError from "http-errors";
 
-export async function validateSignupSchema(data) {
+export async function validateSignupSchema(data: unknown) {
   const signupSchema = Joi.object({
     name: Joi.string()
       .required()
@@ -20,7 +20,7 @@ export async function validateSignupSchema(data) {
   return await signupSchema.validateAsync(data);
 }
 
-export async function validateSigninSchema(data) {
+export async function validateSigninSchema(data: unknown) {
   const signinSchema = Joi.object({
     email: Joi.string()
       .required()

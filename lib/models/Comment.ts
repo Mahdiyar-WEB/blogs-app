@@ -2,7 +2,30 @@ import mongoose from "mongoose";
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-const AnswerSchema = new mongoose.Schema(
+export interface CommentContent {
+  text: string;
+}
+
+export interface CommentAnswer {
+  user: mongoose.Types.ObjectId;
+  post: mongoose.Types.ObjectId;
+  content: CommentContent;
+  status: number;
+  openToComment: boolean;
+  createdAt?: Date;
+}
+
+export interface Comment {
+  user: mongoose.Types.ObjectId;
+  post?: mongoose.Types.ObjectId;
+  content: CommentContent;
+  status: number;
+  openToComment: boolean;
+  answers: CommentAnswer[];
+  createdAt?: Date;
+}
+
+const AnswerSchema = new mongoose.Schema<CommentAnswer>(
   {
     user: { type: ObjectId, ref: "User", required: true },
     post: { type: ObjectId, ref: "Post", required: true },
@@ -17,7 +40,7 @@ const AnswerSchema = new mongoose.Schema(
   },
 );
 
-const CommentSchema = new mongoose.Schema(
+const CommentSchema = new mongoose.Schema<Comment>(
   {
     user: { type: ObjectId, ref: "User", required: true },
     post: { type: ObjectId, ref: "Post" },
@@ -34,4 +57,5 @@ const CommentSchema = new mongoose.Schema(
 );
 
 export const CommentModel =
-  mongoose.models.Comment || mongoose.model("Comment", CommentSchema);
+  (mongoose.models.Comment as mongoose.Model<Comment> | undefined) ||
+  mongoose.model<Comment>("Comment", CommentSchema);

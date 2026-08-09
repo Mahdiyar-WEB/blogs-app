@@ -3,7 +3,20 @@ import mongoose from "mongoose";
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-const UserSchema = new mongoose.Schema(
+export interface User {
+  name: string;
+  email: string;
+  password?: string;
+  resetLink?: { data?: string };
+  biography?: string;
+  bookmarkedPosts: mongoose.Types.ObjectId[];
+  likedPosts: mongoose.Types.ObjectId[];
+  avatar?: string | null;
+  avatarBlurDataURL?: string | null;
+  avatarUrl?: string | null;
+}
+
+const UserSchema = new mongoose.Schema<User>(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
@@ -33,7 +46,9 @@ UserSchema.virtual("avatarUrl").get(function () {
   return null;
 });
 
-UserSchema.methods.toJSON = function () {
+UserSchema.methods.toJSON = function (
+  this: mongoose.HydratedDocument<User> & { avatarUrl?: string | null },
+) {
   const obj = this.toObject();
   obj.avatarUrl = this.avatarUrl;
   delete obj.password;
@@ -41,4 +56,5 @@ UserSchema.methods.toJSON = function () {
 };
 
 export const UserModel =
-  mongoose.models.User || mongoose.model("User", UserSchema);
+  (mongoose.models.User as mongoose.Model<User> | undefined) ||
+  mongoose.model<User>("User", UserSchema);

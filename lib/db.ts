@@ -2,15 +2,26 @@ import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
+type MongooseCache = {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+};
+
+declare global {
+  var _mongooseCache: MongooseCache | undefined;
+}
+
 if (!MONGODB_URI) {
   throw new Error("لطفا مقدار MONGODB_URI را در env تنظیم کنید");
 }
 
 // جلوگیری از باز شدن چندین کانکشن روی هات‌ریلود / هر ریکوئست در Next.js
-let cached = global._mongooseCache;
-if (!cached) {
-  cached = global._mongooseCache = { conn: null, promise: null };
-}
+const mongoUri: string = MONGODB_URI;
+const cached: MongooseCache = global._mongooseCache ?? {
+  conn: null,
+  promise: null,
+};
+global._mongooseCache = cached;
 
 async function connectDB() {
   if (cached.conn) return cached.conn;
@@ -18,7 +29,7 @@ async function connectDB() {
   if (!cached.promise) {
     mongoose.set("strictQuery", true);
     cached.promise = mongoose
-      .connect(MONGODB_URI, { authSource: "admin" })
+      .connect(mongoUri, { authSource: "admin" })
       .then((m) => m);
   }
 

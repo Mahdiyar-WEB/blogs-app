@@ -47,7 +47,7 @@ const postFields = {
     .error(createHttpError.BadRequest("تگ های پست صحیح نمی باشد")),
 };
 
-export async function validateAddNewPost(data) {
+export async function validateAddNewPost(data: unknown) {
   const schema = Joi.object({
     title: postFields.title.required(),
     slug: postFields.slug.required(),
@@ -63,7 +63,7 @@ export async function validateAddNewPost(data) {
   return schema.validateAsync(data);
 }
 
-export async function validateUpdatePost(data) {
+export async function validateUpdatePost(data: unknown) {
   const schema = Joi.object({
     title: postFields.title,
     slug: postFields.slug,

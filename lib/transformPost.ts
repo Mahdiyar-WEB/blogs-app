@@ -1,6 +1,45 @@
 import { findAcceptedComments } from "./comments";
 
-export async function transformPost(post, user) {
+type Identifier = {
+  toString(): string;
+};
+
+type PostUser = {
+  _id?: Identifier;
+  avatar?: string;
+  avatarUrl?: string | null;
+  [key: string]: unknown;
+};
+
+type AuthenticatedUser = PostUser & {
+  _id: Identifier;
+};
+
+type RelatedPost = {
+  coverImage?: string;
+  coverImageUrl?: string | null;
+  author?: PostUser;
+  [key: string]: unknown;
+};
+
+type TransformablePost = {
+  _id: string;
+  likes?: Identifier[];
+  bookmarks?: Identifier[];
+  likesCount?: number;
+  isLiked?: boolean;
+  isBookmarked?: boolean;
+  author?: PostUser;
+  related?: RelatedPost[];
+  comments?: Awaited<ReturnType<typeof findAcceptedComments>>;
+  commentsCount?: number;
+  [key: string]: unknown;
+};
+
+export async function transformPost(
+  post: TransformablePost,
+  user: AuthenticatedUser | null,
+) {
   post.likesCount = post.likes?.length || 0;
 
   post.isLiked = false;

@@ -3,7 +3,25 @@ import mongoose from "mongoose";
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-const PostSchema = new mongoose.Schema(
+export interface Post {
+  title: string;
+  slug: string;
+  category: mongoose.Types.ObjectId;
+  type: "free" | "premium";
+  briefText: string;
+  text: string;
+  coverImage: string;
+  coverImageBlurDataURL: string;
+  likes: mongoose.Types.ObjectId[];
+  bookmarks: mongoose.Types.ObjectId[];
+  readingTime: number;
+  tags: string[];
+  author?: mongoose.Types.ObjectId;
+  related: mongoose.Types.ObjectId[];
+  coverImageUrl?: string | null;
+}
+
+const PostSchema = new mongoose.Schema<Post>(
   {
     title: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
@@ -46,4 +64,5 @@ PostSchema.virtual("coverImageUrl").get(function () {
 });
 
 export const PostModel =
-  mongoose.models.Post || mongoose.model("Post", PostSchema);
+  (mongoose.models.Post as mongoose.Model<Post> | undefined) ||
+  mongoose.model<Post>("Post", PostSchema);

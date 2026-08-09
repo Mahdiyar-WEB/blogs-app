@@ -6,7 +6,16 @@ import { getStorageFileUrl } from "./upload";
 
 const ObjectId = mongoose.Types.ObjectId;
 
-export async function findCommentById(id) {
+type AcceptedAnswer = {
+  user?: {
+    avatar?: string;
+    [key: string]: unknown;
+  };
+  createdAt: Date | string | number;
+  [key: string]: unknown;
+};
+
+export async function findCommentById(id: string) {
   const commentFindResult = await CommentModel.aggregate([
     {
       $project: {
@@ -51,7 +60,7 @@ export async function findCommentById(id) {
   return comment[0];
 }
 
-export async function findAcceptedComments(id, status = 2) {
+export async function findAcceptedComments(id: string, status = 2) {
   const acceptedComments = await CommentModel.aggregate([
     {
       $match: {
@@ -176,7 +185,7 @@ export async function findAcceptedComments(id, status = 2) {
 
     createdAt: calculateDateDuration(comment.createdAt),
 
-    answers: (comment.answers ?? []).map((answer) => ({
+    answers: (comment.answers ?? []).map((answer: AcceptedAnswer) => ({
       ...answer,
 
       user: answer.user

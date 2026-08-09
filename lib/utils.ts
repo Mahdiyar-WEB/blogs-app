@@ -2,25 +2,40 @@ import createError from "http-errors";
 import mongoose from "mongoose";
 import { intervalToDuration } from "date-fns";
 
-export function deleteInvalidPropertyInObject(data = {}, blackListFields = []) {
-  let nullishData = ["", " ", null, undefined];
+type MutableRecord = Record<string, unknown>;
+
+export function deleteInvalidPropertyInObject(
+  data: MutableRecord = {},
+  blackListFields: string[] = [],
+): void {
   Object.keys(data).forEach((key) => {
     if (blackListFields.includes(key)) delete data[key];
-    if (typeof data[key] == "string" && key !== "text") {
-      data[key] = data[key].trim();
+
+    let value = data[key];
+    if (typeof value === "string" && key !== "text") {
+      value = value.trim();
+      data[key] = value;
     }
-    if (Array.isArray(data[key]) && data[key].length > 0)
-      data[key] = data[key].map((item) => (typeof item === "string" ? item.trim() : item));
-    if (Array.isArray(data[key]) && data[key].length == 0) delete data[key];
-    if (nullishData.includes(data[key])) delete data[key];
+
+    if (Array.isArray(value) && value.length > 0) {
+      value = value.map((item) =>
+        typeof item === "string" ? item.trim() : item,
+      );
+      data[key] = value;
+    }
+
+    if (Array.isArray(value) && value.length === 0) delete data[key];
+    if (value === "" || value === " " || value === null || value === undefined) {
+      delete data[key];
+    }
   });
 }
 
-export function copyObject(object) {
+export function copyObject<T>(object: T): T {
   return JSON.parse(JSON.stringify(object));
 }
 
-export async function checkPostExist(id) {
+export async function checkPostExist(id: string) {
   const { PostModel } = await import("./models/Post");
   if (!mongoose.isValidObjectId(id))
     throw createError.BadRequest("شناسه پست ارسال شده صحیح نمیباشد");
@@ -31,11 +46,13 @@ export async function checkPostExist(id) {
 
 const farsiDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
 
-export function toPersianNumbers(n) {
+export function toPersianNumbers(n: string | number): string {
   return n.toString().replace(/\d/g, (x) => farsiDigits[parseInt(x)]);
 }
 
-export function calculateDateDuration(endTime) {
+export function calculateDateDuration(
+  endTime: Date | string | number,
+): string {
   const { years, months, days, hours, minutes, seconds } = intervalToDuration({
     start: new Date(),
     end: new Date(endTime),

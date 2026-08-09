@@ -1,6 +1,6 @@
 import sanitizeHtml from "sanitize-html";
 
-export function sanitizePostText(html = "") {
+export function sanitizePostText(html = ""): string {
   return sanitizeHtml(html, {
     allowedTags: [
       "h1",
