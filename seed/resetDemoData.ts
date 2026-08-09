@@ -3,6 +3,7 @@ import path from "path";
 import {
   DeleteObjectsCommand,
   ListObjectsV2Command,
+  ObjectIdentifier,
   PutObjectCommand,
 } from "@aws-sdk/client-s3";
 
@@ -33,7 +34,7 @@ function getBucketName() {
   return bucket;
 }
 
-function getContentType(filePath) {
+function getContentType(filePath: string) {
   const ext = path.extname(filePath).toLowerCase();
 
   switch (ext) {
@@ -55,9 +56,9 @@ function getContentType(filePath) {
   }
 }
 
-async function listLocalFiles(dirPath) {
+async function listLocalFiles(dirPath: string) {
   const entries = await fs.readdir(dirPath, { withFileTypes: true });
-  const files = [];
+  const files: string[] = [];
 
   for (const entry of entries) {
     const fullPath = path.join(dirPath, entry.name);
@@ -73,9 +74,9 @@ async function listLocalFiles(dirPath) {
   return files;
 }
 
-async function deleteStoragePrefix(prefix) {
-  const bucket = getBucketName();
-  let continuationToken;
+async function deleteStoragePrefix(prefix: string): Promise<void> {
+  const bucket: string = getBucketName();
+  let continuationToken: string | undefined;
 
   do {
     const listResult = await s3.send(
@@ -83,12 +84,13 @@ async function deleteStoragePrefix(prefix) {
         Bucket: bucket,
         Prefix: prefix,
         ContinuationToken: continuationToken,
-      }),
+      })
     );
 
-    const objects =
+    // تایپ اشیاء برای حذف باید با ObjectIdentifier مطابقت داشته باشد
+    const objects: ObjectIdentifier[] =
       listResult.Contents?.flatMap((item) =>
-        item.Key ? [{ Key: item.Key }] : [],
+        item.Key ? [{ Key: item.Key }] : []
       ) ?? [];
 
     if (objects.length > 0) {
@@ -99,7 +101,7 @@ async function deleteStoragePrefix(prefix) {
             Objects: objects,
             Quiet: true,
           },
-        }),
+        })
       );
     }
 
@@ -108,13 +110,12 @@ async function deleteStoragePrefix(prefix) {
       : undefined;
   } while (continuationToken);
 }
-
 async function uploadDemoAssetsToStorage() {
   const bucket = getBucketName();
   const files = await listLocalFiles(DEMO_UPLOADS_DIR);
 
   await Promise.all(
-    files.map(async (filePath) => {
+    files.map(async (filePath: string) => {
       const body = await fs.readFile(filePath);
       const relativePath = path
         .relative(DEMO_UPLOADS_DIR, filePath)
@@ -141,14 +142,18 @@ async function resetDemoStorageAssets() {
   try {
     await uploadDemoAssetsToStorage();
   } catch (error) {
-    if (error.code !== "ENOENT") {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "code" in error &&
+      (error as { code?: string }).code !== "ENOENT"
+    ) {
       throw error;
     }
-    // اگر demo-assets/uploads موجود نبود، reset دیتابیس همچنان موفق می‌شود
   }
 }
 
-export async function writeResetState(lastResetAt) {
+export async function writeResetState(lastResetAt: string) {
   await connectDB();
 
   await AppStateModel.updateOne(
@@ -194,7 +199,7 @@ export async function resetDemoData() {
   await resetDemoStorageAssets();
 
   const now = Date.now();
-  await writeResetState(now);
+  await writeResetState(now.toString());
 
   return {
     success: true,

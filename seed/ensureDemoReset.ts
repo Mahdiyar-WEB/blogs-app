@@ -2,9 +2,16 @@ import { readResetState, resetDemoData } from "./resetDemoData";
 
 const THREE_HOURS = 3 * 60 * 60 * 1000;
 
-let inFlightResetPromise = null;
+type ResetDemoDataResult = Awaited<ReturnType<typeof resetDemoData>>;
 
-export async function ensureDemoReset() {
+let inFlightResetPromise: Promise<ResetDemoDataResult> | null = null;
+
+type EnsureDemoResetResult =
+  | { reset: false; disabled: true }
+  | { reset: false; lastResetAt: number }
+  | ({ reset: true } & ResetDemoDataResult);
+
+export async function ensureDemoReset(): Promise<EnsureDemoResetResult> {
   if (process.env.DEMO_MODE !== "true") {
     return { reset: false, disabled: true };
   }
