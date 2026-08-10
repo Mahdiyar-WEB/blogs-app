@@ -4,7 +4,7 @@ import React from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import toPersianDigits from "utils/toPersianDigits";
 
-const Pagination = ({ totalPages }) => {
+const Pagination = ({ totalPages }: { totalPages: number }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -12,10 +12,10 @@ const Pagination = ({ totalPages }) => {
   const safeTotalPages = Math.max(1, totalPages || 0);
   const currentPage = Math.min(
     safeTotalPages,
-    Math.max(1, Number(searchParams.get("page") || 1) || 1)
+    Math.max(1, Number(searchParams.get("page") || 1) || 1),
   );
 
-  const goToPage = (nextPage) => {
+  const goToPage = (nextPage: number) => {
     const safePage = Math.min(safeTotalPages, Math.max(1, nextPage));
     const newParams = new URLSearchParams(searchParams.toString());
 
