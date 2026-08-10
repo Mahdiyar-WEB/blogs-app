@@ -1,4 +1,8 @@
-import React from "react";
+import React, { ComponentProps } from "react";
+
+type Props = ComponentProps<"button"> & {
+  variant: "primary" | "secondary" | "outline" | "danger";
+};
 
 const buttonVariants = {
   primary: "btn--primary",
@@ -14,7 +18,7 @@ const Button = ({
   className,
   variant = "primary",
   ...rest
-}) => {
+}: Props) => {
   return (
     <button
       type={type}
