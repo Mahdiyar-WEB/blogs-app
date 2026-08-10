@@ -1,11 +1,17 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { SubmitEvent, useCallback, useEffect, useState } from "react";
 
 const DEBOUNCE_DELAY = 1000;
 
-const SearchBox = ({ placeholder, className }) => {
+const SearchBox = ({
+  placeholder,
+  className,
+}: {
+  placeholder: string;
+  className: string;
+}) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -15,7 +21,7 @@ const SearchBox = ({ placeholder, className }) => {
   const [search, setSearch] = useState(activeSearch);
 
   const updateSearchParams = useCallback(
-    (searchValue) => {
+    (searchValue: string) => {
       const newParams = new URLSearchParams(searchParams.toString());
       const trimmedSearch = searchValue.trim();
 
@@ -34,7 +40,7 @@ const SearchBox = ({ placeholder, className }) => {
     [pathname, router, searchParams],
   );
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     updateSearchParams(search);
@@ -44,10 +50,6 @@ const SearchBox = ({ placeholder, className }) => {
     setSearch("");
     updateSearchParams("");
   };
-
-  useEffect(() => {
-    setSearch(activeSearch);
-  }, [activeSearch]);
 
   useEffect(() => {
     const trimmedSearch = search.trim();
