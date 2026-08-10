@@ -1,3 +1,9 @@
+import { ComponentProps } from "react";
+
+type Props = ComponentProps<"button"> & {
+  variant: "primary" | "secondary" | "outline" | "red" | "danger";
+};
+
 const btnType = {
   primary:
     "bg-primary-100 text-primary-700 hover:bg-primary-900 hover:text-white",
@@ -8,11 +14,9 @@ const btnType = {
   outline:
     "border border-secondary-200 text-secondary-500 hover:bg-secondary-200",
 
-  red:
-    "bg-red-100 text-red-500 hover:bg-red-500 hover:text-white",
+  red: "bg-red-100 text-red-500 hover:bg-red-500 hover:text-white",
 
-  danger:
-    "border border-red-100 text-red-500 hover:bg-red-50",
+  danger: "border border-red-100 text-red-500 hover:bg-red-50",
 };
 
 function ButtonIcon({
@@ -22,7 +26,7 @@ function ButtonIcon({
   variant = "primary",
   type = "button",
   ...rest
-}) {
+}: Props) {
   return (
     <button
       type={type}
