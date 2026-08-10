@@ -1,14 +1,24 @@
+import { ComponentProps, ForwardedRef, ReactNode } from "react";
+
+type Props = {
+  label: string;
+  hasError: boolean;
+  icon: ReactNode;
+  options: { value: string; label: string }[];
+  inputRef: ForwardedRef<HTMLSelectElement>;
+} & ComponentProps<"select">;
+
 function SelectForm({
   label,
   name,
   hasError = false,
   icon,
-  options = [],
+  options,
   value,
   onChange,
   onBlur,
   inputRef,
-}) {
+}: Props) {
   return (
     <div>
       <label className="textField__label">{label}</label>
