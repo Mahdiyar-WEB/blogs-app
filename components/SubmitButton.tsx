@@ -1,7 +1,15 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import Button from "./Button";
 
-const SubmitButton = ({ children, loading = false, className = "" }) => {
+const SubmitButton = ({
+  children,
+  loading = false,
+  className = "",
+}: {
+  children: ReactNode;
+  loading: boolean;
+  className: string;
+}) => {
   return (
     <Button className={`${className} font-bold`} type="submit">
       {loading ? <Spinner /> : children}
