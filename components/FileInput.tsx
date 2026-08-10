@@ -1,14 +1,13 @@
-import React from "react";
+import React, { ComponentProps } from "react";
 import { ArrowUpTrayIcon } from "@heroicons/react/24/outline";
 
 const FileInput = ({
   label,
   name,
   dir = "rtl",
-  value,
   onChange,
   className,
-}) => {
+}: ComponentProps<"input"> & { label: string }) => {
   return (
     <label
       htmlFor="file-upload"
