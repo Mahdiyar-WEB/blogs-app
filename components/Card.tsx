@@ -1,4 +1,14 @@
-import React from "react";
+import React, { ReactNode } from "react";
+
+type Tone = "primary" | "success" | "warning";
+
+type CardProps = {
+  title: string;
+  icon: ReactNode;
+  content: string;
+  description: string;
+  tone: Tone;
+};
 
 const cardTone = {
   primary: "bg-primary-50 text-primary-700 ring-primary-100",
@@ -6,7 +16,13 @@ const cardTone = {
   warning: "bg-amber-50 text-amber-700 ring-amber-100",
 };
 
-function CardIcon({ children, tone = "primary" }) {
+function CardIcon({
+  children,
+  tone = "primary",
+}: {
+  children: ReactNode;
+  tone: Tone;
+}) {
   return (
     <div
       className={`
@@ -20,11 +36,15 @@ function CardIcon({ children, tone = "primary" }) {
   );
 }
 
-const Card = ({ title, icon, content, description, tone = "primary" }) => {
+const Card = ({
+  title,
+  icon,
+  content,
+  description,
+  tone = "primary",
+}: CardProps) => {
   return (
-    <div
-      className="group rounded-2xl border border-secondary-200 bg-white p-5 shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:border-primary-100 hover:shadow-lg hover:shadow-secondary-200/70"
-    >
+    <div className="group rounded-2xl border border-secondary-200 bg-white p-5 shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:border-primary-100 hover:shadow-lg hover:shadow-secondary-200/70">
       <div className="flex items-center justify-between">
         <div className="flex min-w-0 items-center gap-3">
           <CardIcon tone={tone}>{icon}</CardIcon>
