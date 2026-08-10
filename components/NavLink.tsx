@@ -1,7 +1,16 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { ComponentProps } from "react";
 import { usePathname } from "next/navigation";
+
+type Props = {
+  path?: string;
+  text: React.ReactNode;
+  listOption?: boolean;
+  mobile?: boolean;
+  className?: string;
+  prefetch?: ComponentProps<typeof Link>["prefetch"];
+};
 
 const NavLink = ({
   path = "/",
@@ -10,7 +19,7 @@ const NavLink = ({
   listOption = false,
   mobile = false,
   prefetch = "auto",
-}) => {
+}: Props) => {
   const pathName = usePathname();
   const active = pathName === path;
   return (
