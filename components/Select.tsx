@@ -1,20 +1,28 @@
 import { useState, useRef, useEffect } from "react";
 
-const Select = ({ value, onChange, options }) => {
+type Props = {
+  options: { value: string; label: string }[];
+  onChange: (e: { target: { value: string } }) => void;
+  value: string;
+};
+
+const Select = ({ value, onChange, options }: Props) => {
   const [open, setOpen] = useState(false);
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const selected = options.find((o) => o.value === value);
 
   useEffect(() => {
-    const handler = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    const handler = (e: PointerEvent) => {
+      const target = e.target as Node;
+      if (ref.current && target && !ref.current.contains(target))
+        setOpen(false);
     };
     document.addEventListener("click", handler);
     return () => document.removeEventListener("click", handler);
   }, []);
 
-  const handleSelect = (val) => {
+  const handleSelect = (val: string) => {
     onChange({ target: { value: val } });
     setOpen(false);
   };
@@ -26,7 +34,9 @@ const Select = ({ value, onChange, options }) => {
         onClick={() => setOpen((prev) => !prev)}
         className="w-full h-full px-3 text-left text-sm rounded-md text-secondary-500 bg-secondary-50/20 flex justify-between items-center"
       >
-        <span className="font-medium text-xs md:text-sm">{selected?.label}</span>
+        <span className="font-medium text-xs md:text-sm">
+          {selected?.label}
+        </span>
         <span
           className={`${open && "rotate-180"} transition-all duration-200 ease-out`}
         >
