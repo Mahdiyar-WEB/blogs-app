@@ -1,5 +1,15 @@
 "use client";
 
+import { ComponentProps, ForwardedRef, ReactNode } from "react";
+
+type Props = {
+  label: string;
+  icon: ReactNode;
+  customIcon?: ReactNode;
+  hasError?: boolean;
+  inputRef: ForwardedRef<HTMLInputElement>;
+} & ComponentProps<"input">;
+
 function TextField({
   type = "text",
   label,
@@ -16,7 +26,7 @@ function TextField({
   onBlur,
   inputRef,
   ...rest
-}) {
+}: Props) {
   const hasLeftIcon = !!icon || !!customIcon;
 
   return (
