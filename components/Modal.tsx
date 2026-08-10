@@ -1,14 +1,22 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 
-const backdropVariants = {
+type ModalProps = {
+  children: ReactNode;
+  title?: string;
+  description?: string;
+  open?: boolean;
+  onClose: () => void;
+};
+
+const backdropVariants: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
 };
 
-const modalVariants = {
+const modalVariants: Variants = {
   hidden: {
     opacity: 0,
     scale: 0.98,
@@ -31,11 +39,10 @@ const modalVariants = {
   },
 };
 
-const isFormField = (element) => {
-  if (!(element instanceof HTMLElement)) return false;
-
-  return element.matches(
-    'input, textarea, select, [contenteditable="true"]',
+const isFormField = (element: EventTarget | null): element is HTMLElement => {
+  return (
+    element instanceof HTMLElement &&
+    element.matches('input, textarea, select, [contenteditable="true"]')
   );
 };
 
@@ -45,14 +52,15 @@ const Modal = ({
   description = "",
   open = false,
   onClose,
-}) => {
-  const modalRef = useRef(null);
-  const scrollContainerRef = useRef(null);
+}: ModalProps) => {
+  const modalRef = useRef<HTMLDivElement | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const blurTimeoutRef = useRef<number | null>(null);
 
   const [isMobile, setIsMobile] = useState(false);
   const [isFieldFocused, setIsFieldFocused] = useState(false);
   const [viewport, setViewport] = useState({
-    height: null,
+    height: null as number | null,
     offsetTop: 0,
   });
 
@@ -64,7 +72,6 @@ const Modal = ({
     };
 
     updateDeviceSize();
-
     mobileMediaQuery.addEventListener("change", updateDeviceSize);
 
     return () => {
@@ -75,14 +82,13 @@ const Modal = ({
   useEffect(() => {
     if (!open) return;
 
-    const handleKeyDown = (event) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        onClose?.();
+        onClose();
       }
     };
 
     const previousOverflow = document.body.style.overflow;
-
     document.body.style.overflow = "hidden";
     document.addEventListener("keydown", handleKeyDown);
 
@@ -116,24 +122,28 @@ const Modal = ({
   }, [open]);
 
   useEffect(() => {
-    if (!open) {
-      setIsFieldFocused(false);
-    }
-  }, [open]);
+    return () => {
+      if (blurTimeoutRef.current) {
+        window.clearTimeout(blurTimeoutRef.current);
+      }
+    };
+  }, []);
 
-  const handleBackdropClick = (event) => {
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
-      onClose?.();
+  const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      onClose();
     }
   };
 
-  const handleFocusCapture = (event) => {
-    if (!isFormField(event.target)) return;
+  const handleFocusCapture = (event: React.FocusEvent<HTMLDivElement>) => {
+    const target = event.target;
+
+    if (!isFormField(target)) return;
 
     setIsFieldFocused(true);
 
     window.setTimeout(() => {
-      event.target.scrollIntoView({
+      target.scrollIntoView({
         behavior: "smooth",
         block: "center",
         inline: "nearest",
@@ -141,7 +151,7 @@ const Modal = ({
     }, 300);
   };
 
-  const handleBlurCapture = (event) => {
+  const handleBlurCapture = (event: React.FocusEvent<HTMLDivElement>) => {
     const nextFocusedElement = event.relatedTarget;
 
     if (
@@ -152,7 +162,11 @@ const Modal = ({
       return;
     }
 
-    window.setTimeout(() => {
+    if (blurTimeoutRef.current) {
+      window.clearTimeout(blurTimeoutRef.current);
+    }
+
+    blurTimeoutRef.current = window.setTimeout(() => {
       const activeElement = document.activeElement;
 
       if (
@@ -191,10 +205,7 @@ const Modal = ({
           initial="hidden"
           animate="visible"
           exit="hidden"
-          transition={{
-            duration: 0.2,
-            ease: "easeInOut",
-          }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
           onMouseDown={handleBackdropClick}
         >
           <motion.div
@@ -217,10 +228,7 @@ const Modal = ({
               y: isMobile && isFieldFocused ? -24 : 0,
             }}
             exit="exit"
-            transition={{
-              duration: 0.22,
-              ease: "easeOut",
-            }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
             onMouseDown={(event) => event.stopPropagation()}
             onFocusCapture={handleFocusCapture}
             onBlurCapture={handleBlurCapture}
