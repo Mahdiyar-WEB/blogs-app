@@ -1,9 +1,11 @@
 "use client";
-import { useRef } from "react";
+import { ComponentProps, useRef } from "react";
 
-const TextArea = ({ label, name, value, dir = "rtl", onChange }) => {
+type Props = ComponentProps<"textarea"> & { label: string };
+
+const TextArea = ({ label, name, value, dir = "rtl", onChange }: Props) => {
   const hasValue = Boolean(value);
-  const textareaRef = useRef(null);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   return (
     <div className="relative group">
@@ -19,7 +21,7 @@ const TextArea = ({ label, name, value, dir = "rtl", onChange }) => {
         onChange={onChange}
       />
       <label
-        onClick={() => textareaRef.current.focus()}
+        onClick={() => textareaRef?.current?.focus()}
         htmlFor={name}
         className={`
           text-sm absolute font-semibold z-10 bg-white px-2
