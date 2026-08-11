@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
@@ -8,16 +9,27 @@ import TextAlign from "@tiptap/extension-text-align";
 import Placeholder from "@tiptap/extension-placeholder";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import { common, createLowlight } from "lowlight";
+import type { EditorView } from "@tiptap/pm/view";
 
 const lowlight = createLowlight(common);
 
-const decodeHtml = (html) => {
+const decodeHtml = (html: string): string => {
   const textarea = document.createElement("textarea");
   textarea.innerHTML = html;
   return textarea.value;
 };
 
-const ToolbarButton = ({ active = false, onClick, children }) => {
+type ToolbarButtonProps = {
+  active?: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+};
+
+const ToolbarButton = ({
+  active = false,
+  onClick,
+  children,
+}: ToolbarButtonProps) => {
   return (
     <button
       type="button"
@@ -33,7 +45,15 @@ const ToolbarButton = ({ active = false, onClick, children }) => {
   );
 };
 
-const RichTextEditor = ({ initialValue = "", onChange }) => {
+type RichTextEditorProps = {
+  initialValue?: string;
+  onChange: (value: string) => void;
+};
+
+const RichTextEditor = ({
+  initialValue = "",
+  onChange,
+}: RichTextEditorProps) => {
   const editor = useEditor(
     {
       immediatelyRender: false,
@@ -81,11 +101,11 @@ const RichTextEditor = ({ initialValue = "", onChange }) => {
             "tiptap prose prose-lg max-w-none focus:outline-none min-h-[400px] p-5 rtl",
         },
 
-        transformPastedHTML(html) {
+        transformPastedHTML(html: string): string {
           return html;
         },
 
-        handlePaste(view, event) {
+        handlePaste(view: EditorView, event: ClipboardEvent): boolean {
           const clipboardData = event.clipboardData;
 
           if (!clipboardData) return false;
@@ -93,34 +113,12 @@ const RichTextEditor = ({ initialValue = "", onChange }) => {
           const html = clipboardData.getData("text/html");
           const text = clipboardData.getData("text/plain");
 
-          if (html) {
-            return false;
-          }
+          if (html) return false;
 
           if (text && /<\/?[a-z][\s\S]*>/i.test(text)) {
             const decoded = decodeHtml(text);
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(decoded, "text/html");
 
-            const fragment = view.state.schema.nodeFromJSON({
-              type: "doc",
-              content: Array.from(doc.body.childNodes).map((node) => {
-                const nodeHtml = node.outerHTML || node.textContent || "";
-
-                return {
-                  type: "paragraph",
-                  content: [
-                    {
-                      type: "text",
-                      text: nodeHtml,
-                    },
-                  ],
-                };
-              }),
-            });
-
-            view.dispatch(view.state.tr.replaceSelection(fragment));
-
+            view.dispatch(view.state.tr.insertText(decoded));
             return true;
           }
 
@@ -137,8 +135,8 @@ const RichTextEditor = ({ initialValue = "", onChange }) => {
 
   if (!editor) return null;
 
-  const addLink = () => {
-    const previousUrl = editor.getAttributes("link").href;
+  const addLink = (): void => {
+    const previousUrl = editor.getAttributes("link").href as string;
     const url = window.prompt("آدرس لینک را وارد کنید", previousUrl || "");
 
     if (url === null) return;
