@@ -1,6 +1,11 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
-function Table({ children, className = "" }) {
+type Props = {
+  children: ReactNode;
+  className?: string;
+};
+
+function Table({ children, className = "" }: Props) {
   return (
     <div
       dir="rtl"
@@ -23,7 +28,7 @@ function Table({ children, className = "" }) {
   );
 }
 
-function TableHeader({ children }) {
+function TableHeader({ children }: Props) {
   return (
     <thead>
       <tr>{children}</tr>
@@ -31,11 +36,11 @@ function TableHeader({ children }) {
   );
 }
 
-function TableBody({ children }) {
+function TableBody({ children }: Props) {
   return <tbody className="divide-y divide-secondary-100">{children}</tbody>;
 }
 
-function TableRow({ children, className = "" }) {
+function TableRow({ children, className = "" }: Props) {
   return (
     <tr
       className={`
@@ -50,7 +55,7 @@ function TableRow({ children, className = "" }) {
   );
 }
 
-function TableHead({ children, className = "" }) {
+function TableHead({ children, className = "" }: Props) {
   return (
     <th
       className={`
@@ -68,7 +73,7 @@ function TableHead({ children, className = "" }) {
   );
 }
 
-function TableCell({ children, className = "" }) {
+function TableCell({ children, className = "" }: Props) {
   return (
     <td
       className={`
