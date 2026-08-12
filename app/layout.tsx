@@ -5,6 +5,7 @@ import ReactQueryProvider from "providers/ReactQueryProvider";
 import DemoResetChecker from "components/DemoResetChecker";
 import ToastProvider from "./ToastProvider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { ReactNode } from "react";
 
 export const metadata = {
   title: {
@@ -14,7 +15,7 @@ export const metadata = {
   description: "وب اپلیکیشن بلاگیتو",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="fa" dir="rtl" data-scroll-behavior="smooth">
       <body
