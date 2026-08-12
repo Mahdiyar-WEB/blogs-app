@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import middlewareAuth from "utils/middlewareAuth";
 
-export async function proxy(request) {
+export async function proxy(request: NextRequest) {
   const pathName = request.nextUrl.pathname;
   const user = await middlewareAuth(request);
 
