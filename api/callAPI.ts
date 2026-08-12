@@ -1,5 +1,5 @@
 const callAPI = {
-  get: async (endPoint, cookies) => {
+  get: async (endPoint: string, cookies?: string) => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/${endPoint}`,
       {
@@ -45,7 +45,7 @@ const callAPI = {
 
     return data;
   },
-  post: async (endPoint, inputs, cookies) => {
+  post: async (endPoint: string, inputs: {}, cookies?: string) => {
     const isFormData = inputs instanceof FormData;
 
     const response = await fetch(
@@ -73,7 +73,7 @@ const callAPI = {
 
     return data;
   },
-  patch: async (endPoint, inputs, cookies) => {
+  patch: async (endPoint: string, inputs: {}, cookies?: string) => {
     const isFormData = inputs instanceof FormData;
 
     const response = await fetch(
@@ -99,7 +99,7 @@ const callAPI = {
 
     return data;
   },
-  delete: async (endPoint, inputs = {}, cookies) => {
+  delete: async (endPoint: string, inputs = {}, cookies?: string) => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/${endPoint}`,
       {
