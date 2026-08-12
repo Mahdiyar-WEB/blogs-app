@@ -1,21 +1,38 @@
 "use client";
 
-import { createContext, useContext, useEffect, useReducer } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import authentication from "api/authentication";
 import userReducer, { initialState } from "./userReducer";
+import { User } from "lib/models/User";
 
-const UserContext = createContext();
+type UserContextValues = {
+  user: User | null;
+  signIn: (inputs: { email: string; password: string }) => void;
+  signUp: (inputs: { email: string; name: string; password: string }) => void;
+  logout: () => void;
+  getUser: () => void;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+};
 
-export default function UserProvider({ children }) {
+const UserContext = createContext<UserContextValues | null>(null);
+
+export default function UserProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
   const [{ user, isAuthenticated, isLoading }, dispatch] = useReducer(
     userReducer,
     initialState,
   );
 
-  const signIn = async (inputs) => {
+  const signIn = async (inputs: { email: string; password: string }) => {
     dispatch({ type: "loading" });
     try {
       const { data } = await authentication.signIn(inputs);
@@ -23,12 +40,20 @@ export default function UserProvider({ children }) {
       toast.success(data.message);
       router.refresh();
     } catch (error) {
-      dispatch({ type: "rejected", payload: error });
-      toast.error(error.message);
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "متاسفانه خطایی رخ داد بعدا تلاش کنید";
+      dispatch({ type: "rejected", payload: errorMessage });
+      toast.error(errorMessage);
     }
   };
 
-  const signUp = async (inputs) => {
+  const signUp = async (inputs: {
+    email: string;
+    name: string;
+    password: string;
+  }) => {
     dispatch({ type: "loading" });
     try {
       const { data } = await authentication.signUp(inputs);
@@ -36,8 +61,12 @@ export default function UserProvider({ children }) {
       toast.success(data.message);
       router.refresh();
     } catch (error) {
-      dispatch({ type: "rejected", payload: error });
-      toast.error(error.message);
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "متاسفانه خطایی رخ داد بعدا تلاش کنید";
+      dispatch({ type: "rejected", payload: errorMessage });
+      toast.error(errorMessage);
     }
   };
 
@@ -49,8 +78,13 @@ export default function UserProvider({ children }) {
       router.refresh();
       router.push("/");
     } catch (error) {
-      dispatch({ type: "rejected", payload: error });
-      toast.error(error.message);
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "متاسفانه خطایی رخ داد بعدا تلاش کنید";
+
+      dispatch({ type: "rejected", payload: errorMessage });
+      toast.error(errorMessage);
     }
   };
 
@@ -59,9 +93,13 @@ export default function UserProvider({ children }) {
     try {
       const { data } = await authentication.getUser();
       dispatch({ type: "user/loaded", payload: data.user });
-    } catch (err) {
-      const error = err?.response?.data?.message;
-      dispatch({ type: "rejected", payload: error });
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "متاسفانه خطایی رخ داد بعدا تلاش کنید";
+
+      dispatch({ type: "rejected", payload: errorMessage });
     }
   };
 
