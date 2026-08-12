@@ -12,11 +12,12 @@ import toast from "react-hot-toast";
 import authentication from "api/authentication";
 import userReducer, { initialState } from "./userReducer";
 import { User } from "lib/models/User";
+import { SigninInputs, SignupInputs } from "types/authentication/auth";
 
 type UserContextValues = {
   user: User | null;
-  signIn: (inputs: { email: string; password: string }) => void;
-  signUp: (inputs: { email: string; name: string; password: string }) => void;
+  signIn: (inputs: SigninInputs) => void;
+  signUp: (inputs: SignupInputs) => void;
   logout: () => void;
   getUser: () => void;
   isAuthenticated: boolean;
@@ -32,7 +33,7 @@ export default function UserProvider({ children }: { children: ReactNode }) {
     initialState,
   );
 
-  const signIn = async (inputs: { email: string; password: string }) => {
+  const signIn = async (inputs: SigninInputs) => {
     dispatch({ type: "loading" });
     try {
       const { data } = await authentication.signIn(inputs);
@@ -49,11 +50,7 @@ export default function UserProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const signUp = async (inputs: {
-    email: string;
-    name: string;
-    password: string;
-  }) => {
+  const signUp = async (inputs: SignupInputs) => {
     dispatch({ type: "loading" });
     try {
       const { data } = await authentication.signUp(inputs);
