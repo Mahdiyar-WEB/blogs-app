@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import commentServices from "api/commentServices";
 
-const useGetComments = (params) => {
+const useGetComments = (params: string) => {
   const { data, isLoading } = useQuery({
     queryFn: () => {
       return commentServices.getAllComments("", params);
