@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import userServices from "api/userServices";
 
-const useGetUsers = (params) => {
+const useGetUsers = (params: string) => {
   const { data, isLoading } = useQuery({
     queryFn: () => {
       return userServices.getAllUsers("", params);
