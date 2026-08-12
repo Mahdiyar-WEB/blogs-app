@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import postServices from "api/postServices";
 
-const useGetPosts = (params) => {
+const useGetPosts = (params: string) => {
   const { data = {}, isLoading } = useQuery({
     queryFn: () => {
       return postServices.getAllPosts("", params);
