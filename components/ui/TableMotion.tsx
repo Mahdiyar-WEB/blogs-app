@@ -1,13 +1,19 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
+
+type AnimatedTableRowProps = {
+  children: ReactNode;
+  className?: string;
+  index?: number;
+};
 
 export function AnimatedTableRow({
   children,
   className = "",
   index = 0,
-}) {
+}: AnimatedTableRowProps) {
   const shouldReduceMotion = useReducedMotion();
   const [isMobile, setIsMobile] = useState(false);
 

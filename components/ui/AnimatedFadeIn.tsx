@@ -1,14 +1,23 @@
 "use client";
 
 import { motion } from "framer-motion";
+import type { ReactNode, ComponentType } from "react";
+
+type AnimatedFadeInProps = {
+  children: ReactNode;
+  index?: number;
+  as?: string;
+  className?: string;
+};
 
 const AnimatedFadeIn = ({
   children,
   index = 0,
   as = "div",
   className = "",
-}) => {
-  const MotionTag = motion[as] || motion.div;
+}: AnimatedFadeInProps) => {
+  const MotionTag: ComponentType<any> =
+    (motion as unknown as Record<string, ComponentType<any>>)[as] ?? motion.div;
 
   return (
     <MotionTag

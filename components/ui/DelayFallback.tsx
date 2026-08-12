@@ -1,8 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
 
-function DelayedFallback({ children, delay = 250 }) {
+type DelayedFallbackProps = {
+  children: ReactNode;
+  delay?: number;
+};
+
+function DelayedFallback({ children, delay = 250 }: DelayedFallbackProps) {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
