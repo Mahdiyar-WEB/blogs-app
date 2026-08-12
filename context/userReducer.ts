@@ -1,11 +1,28 @@
-export const initialState = {
+import { User } from "lib/models/User";
+
+type UserContextState = {
+  isLoading: boolean;
+  isAuthenticated: boolean;
+  error: null | string;
+  user: User | null;
+};
+
+type UserContextAction =
+  | { type: "loading" }
+  | { type: "rejected"; payload: string }
+  | { type: "signin"; payload: User }
+  | { type: "signup"; payload: User }
+  | { type: "user/loaded"; payload: User }
+  | { type: "logout" };
+
+export const initialState: UserContextState = {
   error: null,
   user: null,
   isLoading: true,
   isAuthenticated: false,
 };
 
-const userReducer = (state, action) => {
+const userReducer = (state: UserContextState, action: UserContextAction) => {
   switch (action.type) {
     case "loading":
       return {
