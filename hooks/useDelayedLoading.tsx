@@ -2,11 +2,19 @@
 
 import { useEffect, useRef, useState } from "react";
 
-function useDelayedLoading(isLoading, { delay = 250, minDuration = 300 } = {}) {
+type DelayOptions = {
+  delay: number;
+  minDuration: number;
+};
+
+function useDelayedLoading(
+  isLoading: boolean,
+  { delay = 250, minDuration = 300 }: DelayOptions,
+) {
   const [showLoading, setShowLoading] = useState(false);
-  const shownAtRef = useRef(null);
-  const delayTimerRef = useRef(null);
-  const hideTimerRef = useRef(null);
+  const shownAtRef = useRef<number | null>(null);
+  const delayTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (delayTimerRef.current) clearTimeout(delayTimerRef.current);
