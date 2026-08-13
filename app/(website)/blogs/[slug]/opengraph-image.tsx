@@ -19,7 +19,7 @@ export default async function Image({
 
   const fontData = await fetch(
     new URL(
-      "/fonts/Vazirmatn-Bold.ttf",
+      "/fonts/Vazirmatn-Bold.woff2",
       process.env.NEXT_PUBLIC_BASE_URL,
     ),
   ).then((res) => res.arrayBuffer());
