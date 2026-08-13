@@ -4,14 +4,14 @@ type Identifier = {
   toString(): string;
 };
 
-type PostUser = {
+export type PostUser = {
   _id?: Identifier;
   avatar?: string;
   avatarUrl?: string | null;
   [key: string]: unknown;
 };
 
-type AuthenticatedUser = PostUser & {
+export type AuthenticatedUser = PostUser & {
   _id: Identifier;
 };
 
@@ -22,7 +22,7 @@ type RelatedPost = {
   [key: string]: unknown;
 };
 
-type TransformablePost = {
+export type TransformablePost = {
   _id: string;
   likes?: Identifier[];
   bookmarks?: Identifier[];
@@ -54,10 +54,14 @@ export async function transformPost(
   if (post.related?.length) {
     post.related = post.related.map((item) => ({
       ...item,
-      coverImageUrl: item.coverImage ? `${process.env.NEXT_PUBLIC_STORAGE_BASE_URL}/${item.coverImage}` : null,
+      coverImageUrl: item.coverImage
+        ? `${process.env.NEXT_PUBLIC_STORAGE_BASE_URL}/${item.coverImage}`
+        : null,
       author: {
         ...item.author,
-        avatarUrl: item.author?.avatar ? `${process.env.NEXT_PUBLIC_STORAGE_BASE_URL}/${item.author.avatar}` : null,
+        avatarUrl: item.author?.avatar
+          ? `${process.env.NEXT_PUBLIC_STORAGE_BASE_URL}/${item.author.avatar}`
+          : null,
       },
     }));
   }
