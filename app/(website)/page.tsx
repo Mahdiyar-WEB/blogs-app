@@ -17,8 +17,14 @@ export default function Home() {
       <FloatingDecorationMobile />
       <main className="my-20 w-11/12 mx-auto 2xl:max-w-screen-2xl">
         <div className="flex gap-2 mx-auto justify-center items-center">
-          <div className="relative aspect-[5/5] w-10 h-10 sm:hidden">
-            <Image src="/icon.svg" alt="app icon" fill />
+          <div className="relative aspect-[5/5] w-12 h-12 sm:hidden p-2 pointer-events-none ">
+            <Image
+              src="/icon.svg"
+              alt="app icon"
+              fill
+              priority
+              className="rounded-full shadow-md shadow-orange-300"
+            />
           </div>
           <h1 className="text-center text-2xl md:text-5xl font-bold text-secondary-800">
             بلاگیتو: خوش اومدی 👋
