@@ -181,7 +181,7 @@ export default function AuthForm() {
               className={`rounded-xl py-3 text-sm font-medium transition-all duration-300 ${
                 mode === item
                   ? "bg-primary-800 text-white shadow-sm"
-                  : "text-secondary-500 hover:text-secondary-700"
+                  : "bg-gray-100 text-secondary-500 hover:bg-gray-200 hover:text-secondary-700"
               }`}
             >
               {item === "login" ? "ورود" : "ثبت‌نام"}
