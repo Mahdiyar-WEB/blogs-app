@@ -1,8 +1,8 @@
 import Header from "./Header";
-import { Suspense } from "react";
+import { ReactNode, Suspense } from "react";
 import Link from "next/link";
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <div
       className={`font-sans min-h-screen relative isolate overflow-x-hidden bg-gradient-to-r from-primary-100/20 via-transparent to-primary-100/20`}

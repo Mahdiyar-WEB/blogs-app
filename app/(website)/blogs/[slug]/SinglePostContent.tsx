@@ -11,19 +11,23 @@ import toPersianDigits from "utils/toPersianDigits";
 import PostBody from "./PostBody";
 import truncateText from "utils/truncateText";
 
-async function getCachedPost(slug) {
+async function getCachedPost(slug: string) {
   "use cache";
   cacheLife("minutes");
   return await postServices.getPostBySlug(slug);
 }
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const post = (await getCachedPost(slug)) || { title: "", briefText: "" };
   return { title: post.title, description: post.briefText };
 }
 
-const formatJalaliDate = (isoDate) => {
+const formatJalaliDate = (isoDate: string) => {
   try {
     return new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
       day: "numeric",
@@ -35,7 +39,11 @@ const formatJalaliDate = (isoDate) => {
   }
 };
 
-const SinglePostContent = async ({ params }) => {
+const SinglePostContent = async ({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) => {
   const { slug } = await params;
   let post;
   try {
@@ -64,7 +72,7 @@ const SinglePostContent = async ({ params }) => {
               alt={post.title}
               placeholder="blur"
               blurDataURL={post.coverImageBlurDataURL}
-              src={post.coverImageUrl}
+              src={post.coverImageUrl || ""}
             />
             {/* readability gradient — only bottom third, not whole image */}
             <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
@@ -112,7 +120,7 @@ const SinglePostContent = async ({ params }) => {
                   className={`rounded-full shrink-0 h-10 w-10 ${!post.author?.avatarUrl ? "bg-white" : "ring-2 ring-white/70 object-cover object-center"}`}
                   src={post.author?.avatarUrl || "/avatar.svg"}
                   placeholder={post?.author?.avatarUrl ? "blur" : "empty"}
-                  blurDataURL={post?.author?.avatarBlurDataURL}
+                  blurDataURL={post?.author?.avatarBlurDataURL || ""}
                 />
                 <span className="text-white text-xs sm:text-sm font-medium">
                   {post.author?.name || "حساب حذف شده"}

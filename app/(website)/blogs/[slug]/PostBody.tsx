@@ -8,8 +8,8 @@ if (!hljs.getLanguage("javascript")) {
   hljs.registerLanguage("javascript", javascript);
 }
 
-function PostBody({ html }) {
-  const contentRef = useRef(null);
+function PostBody({ html }: { html: string }) {
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!contentRef.current) return;
@@ -21,7 +21,8 @@ function PostBody({ html }) {
         block.classList.add("language-javascript");
       }
       try {
-        hljs.highlightElement(block);
+        const input = block as HTMLElement;
+        hljs.highlightElement(input);
       } catch (error) {}
     });
   }, [html]);

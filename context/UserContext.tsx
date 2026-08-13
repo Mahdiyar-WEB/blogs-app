@@ -123,8 +123,12 @@ export default function UserProvider({ children }: { children: ReactNode }) {
     </UserContext.Provider>
   );
 }
-export function useUser() {
+export function useUser(): UserContextValues {
   const context = useContext(UserContext);
-  if (context === undefined) throw new Error("not found Auth context");
-  return useContext(UserContext);
+
+  if (context === null) {
+    throw new Error("useUser must be used within UserProvider");
+  }
+
+  return context;
 }

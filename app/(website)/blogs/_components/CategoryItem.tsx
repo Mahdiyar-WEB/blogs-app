@@ -3,7 +3,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const CategoryItem = ({ path, text, mobile = false, prefetch = true }) => {
+const CategoryItem = ({
+  path,
+  text,
+  mobile = false,
+  prefetch = true,
+}: {
+  path: string;
+  text: string;
+  mobile?: boolean;
+  prefetch?: boolean;
+}) => {
   const pathname = usePathname();
   const isActive = pathname === path;
 

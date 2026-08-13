@@ -63,7 +63,7 @@ const Header = () => {
                     height={44}
                     src={user?.avatarUrl || "/avatar.svg"}
                     placeholder={user?.avatarUrl ? "blur" : "empty"}
-                    blurDataURL={user?.avatarBlurDataURL}
+                    blurDataURL={user?.avatarBlurDataURL || ""}
                     className="w-full h-full object-cover object-center"
                   />
                 </div>
@@ -88,6 +88,11 @@ const HeaderLink = ({
   text,
   className = "",
   prefetch = "auto",
+}: {
+  path: string;
+  text: string;
+  className?: string;
+  prefetch?: "auto";
 }) => {
   const pathName = usePathname();
 

@@ -2,7 +2,7 @@
 "use client";
 import { useEffect, useState } from "react";
 
-export default function ReadingProgress({ targetId }) {
+export default function ReadingProgress({ targetId }: { targetId: string }) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {

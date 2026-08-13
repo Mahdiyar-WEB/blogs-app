@@ -8,7 +8,11 @@ export const size = {
 
 export const contentType = "image/png";
 
-export default async function Image({ params }) {
+export default async function Image({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
 
   const post = await postServices.getPostBySlug(slug);
@@ -24,7 +28,7 @@ export default async function Image({ params }) {
       }}
     >
       <img
-        src={post.coverImageUrl}
+        src={post.coverImageUrl || ""}
         alt={post.title}
         width="1200"
         height="630"

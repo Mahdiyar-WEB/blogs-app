@@ -2,14 +2,22 @@
 import commentServices from "api/commentServices";
 import SubmitButton from "components/SubmitButton";
 import TextArea from "components/TextArea";
-import React, { useState } from "react";
+import React, { SubmitEvent, useState } from "react";
 import toast from "react-hot-toast";
 
-const CommentForm = ({ parentId = "", postId, onClose }) => {
+const CommentForm = ({
+  parentId = "",
+  postId,
+  onClose,
+}: {
+  parentId?: string;
+  postId: string;
+  onClose: () => void;
+}) => {
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const onSubmitHandler = async (e) => {
+  const onSubmitHandler = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (value.length < 5) {
       toast.error("حداقل ۵ حرف وارد کنید");
@@ -25,7 +33,8 @@ const CommentForm = ({ parentId = "", postId, onClose }) => {
       toast.success(data.message);
       onClose();
     } catch (error) {
-      toast.error(error?.message);
+      const message = error instanceof Error ? error.message : "error";
+      toast.error(message);
     } finally {
       setLoading(false);
     }

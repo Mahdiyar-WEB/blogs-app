@@ -26,13 +26,13 @@ const sortOptions = [
   },
 ];
 
-const BlogsSort = ({className}) => {
+const BlogsSort = ({ className }: { className?: string }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
   const createQueryString = useCallback(
-    (name, value) => {
+    (name: string, value: string) => {
       const params = new URLSearchParams(searchParams);
       params.set(name, value);
 
@@ -42,7 +42,9 @@ const BlogsSort = ({className}) => {
   );
 
   return (
-    <div className={`h-11 w-full md:w-1/2 xl:w-1/3 flex justify-between bg-white border border-secondary-200 rounded-lg shadow-md ${className}`}>
+    <div
+      className={`h-11 w-full md:w-1/2 xl:w-1/3 flex justify-between bg-white border border-secondary-200 rounded-lg shadow-md ${className}`}
+    >
       <Select
         onChange={(e) => {
           router.push(

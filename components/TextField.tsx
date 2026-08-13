@@ -4,10 +4,10 @@ import { ComponentProps, ForwardedRef, ReactNode } from "react";
 
 type Props = {
   label: string;
-  icon: ReactNode;
+  icon?: ReactNode;
   customIcon?: ReactNode;
   hasError?: boolean;
-  inputRef: ForwardedRef<HTMLInputElement>;
+  inputRef?: ForwardedRef<HTMLInputElement>;
 } & ComponentProps<"input">;
 
 function TextField({

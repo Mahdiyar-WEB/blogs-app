@@ -3,7 +3,11 @@ import { Category } from "lib/models/Category";
 const { default: callAPI } = require("api/callAPI");
 
 const categoryServices = {
-  getAllCategories: async (searchOptions = "") => {
+  getAllCategories: async (
+    searchOptions = "",
+  ): Promise<{
+    data: { categories: { title: string; slug: string; _id: string }[] };
+  }> => {
     const data = await callAPI.get(`category/list?${searchOptions}`);
     return data;
   },

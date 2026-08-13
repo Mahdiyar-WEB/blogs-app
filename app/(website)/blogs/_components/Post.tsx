@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useUser } from "context/UserContext";
 import truncateText from "utils/truncateText";
+import type { Post } from "lib/models/Post";
 
 const Post = ({
   title,
@@ -24,11 +25,11 @@ const Post = ({
   _id,
   isLiked,
   index = 0,
-}) => {
+}: Post & { index?: number }) => {
   const router = useRouter();
   const { user } = useUser();
 
-  const likePostHandler = async (id) => {
+  const likePostHandler = async (id: string) => {
     if (!user) {
       router.push("/login");
       toast.error("لطفا وارد حساب کاربری خود شوید");
@@ -39,11 +40,12 @@ const Post = ({
       router.refresh();
       toast.success(data.message);
     } catch (error) {
-      toast.error(error?.message);
+      const message = error instanceof Error ? error.message : "error";
+      toast.error(message);
     }
   };
 
-  const bookmarkPostHandler = async (id) => {
+  const bookmarkPostHandler = async (id: string) => {
     if (!user) {
       router.push("/login");
       toast.error("لطفا وارد حساب کاربری خود شوید");
@@ -54,7 +56,8 @@ const Post = ({
       router.refresh();
       toast.success(data.message);
     } catch (error) {
-      toast.error(error?.message);
+      const message = error instanceof Error ? error.message : "error";
+      toast.error(message);
     }
   };
 
@@ -79,14 +82,14 @@ const Post = ({
             placeholder="blur"
             blurDataURL={coverImageBlurDataURL}
             sizes="100%"
-            src={coverImageUrl}
+            src={coverImageUrl || ""}
             className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
           />
         </Link>
 
         <div className="mt-5 pb-4 px-3">
           <Link href={slugURL} className="text-secondary-700 font-semibold">
-            {truncateText(title,25)}
+            {truncateText(title, 25)}
           </Link>
 
           <div className="flex justify-between items-center mt-3">
@@ -98,10 +101,10 @@ const Post = ({
                   fill
                   src={author?.avatarUrl || "/avatar.svg"}
                   placeholder={author?.avatarUrl ? "blur" : "empty"}
-                  blurDataURL={author?.avatarBlurDataURL}
+                  blurDataURL={author?.avatarBlurDataURL || ""}
                 />
               </div>
-              <span>{truncateText(author?.name,20) || "حساب حذف شده"}</span>
+              <span>{truncateText(author?.name, 20) || "حساب حذف شده"}</span>
             </div>
 
             <div className="flex justify-center items-center gap-1 text-sm">

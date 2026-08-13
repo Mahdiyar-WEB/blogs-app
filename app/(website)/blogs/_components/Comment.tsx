@@ -1,8 +1,15 @@
 import { ArrowUturnRightIcon } from "@heroicons/react/24/outline";
 import Button from "components/Button";
+import { PostComment } from "lib/models/Post";
 import Image from "next/image";
 
-function Comment({ comment, onAddComment }) {
+function Comment({
+  comment,
+  onAddComment,
+}: {
+  comment: PostComment;
+  onAddComment: () => void;
+}) {
   return (
     <>
       <div className="flex items-center justify-between mb-5 border-b border-b-secondary-200/60 pb-2">

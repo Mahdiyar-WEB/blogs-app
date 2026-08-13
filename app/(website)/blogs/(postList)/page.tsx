@@ -12,7 +12,11 @@ export const metadata = {
   title: "بلاگ ها",
 };
 
-const Blogs = async ({ searchParams }) => {
+const Blogs = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) => {
   const cookieStore = await cookies();
   const options = await searchParams;
   const { posts, totalPages } = await postServices.getAllPosts(

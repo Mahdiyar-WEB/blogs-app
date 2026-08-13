@@ -1,8 +1,9 @@
+import { Post } from "lib/models/Post";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const RelatedPosts = ({ posts }) => {
+const RelatedPosts = ({ posts }: { posts: Post[] }) => {
   return (
     <section className="mt-5 mb-10">
       <div className="flex items-center gap-2 mb-5">
@@ -36,7 +37,7 @@ const RelatedPosts = ({ posts }) => {
                     sizes="100%"
                     placeholder="blur"
                     blurDataURL={coverImageBlurDataURL}
-                    src={coverImageUrl}
+                    src={coverImageUrl || ""}
                     className="object-cover object-center hover:scale-110 transition-all duration-300 ease-out"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
@@ -53,7 +54,7 @@ const RelatedPosts = ({ posts }) => {
                   <div className="flex justify-between items-center pt-3 border-t border-secondary-100">
                     <div className="flex justify-center items-center gap-2">
                       <Image
-                        alt={author?.name||'deleted-account'}
+                        alt={author?.name || "deleted-account"}
                         className={
                           author?.avatarUrl &&
                           "rounded-full ring-1 ring-secondary-300 w-8 h-8 object-center object-cover"
@@ -62,10 +63,10 @@ const RelatedPosts = ({ posts }) => {
                         height={28}
                         src={author?.avatarUrl || "/avatar.svg"}
                         placeholder={author?.avatarUrl ? "blur" : "empty"}
-                        blurDataURL={author?.avatarBlurDataURL}
+                        blurDataURL={author?.avatarBlurDataURL || ""}
                       />
                       <span className="font-medium text-sm text-secondary-600">
-                        {author?.name||'حساب حذف شده'}
+                        {author?.name || "حساب حذف شده"}
                       </span>
                     </div>
                     <Link

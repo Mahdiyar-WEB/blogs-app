@@ -2,10 +2,12 @@
 import TextField from "components/TextField";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import type { FieldError } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useUser } from "context/UserContext";
 import SubmitButton from "components/SubmitButton";
+import { SigninInputs, SignupInputs } from "types/authentication/auth";
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
 const EyeIcon = () => (
@@ -110,8 +112,15 @@ const schemas = {
 
 // ─── Component ─────────────────────────────────────────────────────────────
 
+type AuthFormInputs = {
+  name?: string;
+  email: string;
+  password: string;
+  confirmPassword?: string;
+};
+
 export default function AuthForm() {
-  const [mode, setMode] = useState("login");
+  const [mode, setMode] = useState<"login" | "signup">("login");
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -122,34 +131,38 @@ export default function AuthForm() {
     handleSubmit,
     control,
     formState: { errors, isSubmitting },
-  } = useForm({
+  } = useForm<AuthFormInputs>({
     resolver: yupResolver(schemas[mode]),
     mode: "onTouched",
   });
 
-  const isSignup = mode === "signup";
+  const isSignup = mode === "signup" ? true : false;
 
-  const onSubmit = async (inputs) => {
+  const onSubmit = async (inputs: SigninInputs | SignupInputs) => {
     if (isSignup) {
+      const signupInputs = inputs as SignupInputs;
+
       await signUp({
-        name: inputs.name,
-        email: inputs.email,
-        password: inputs.password,
+        name: signupInputs.name,
+        email: signupInputs.email,
+        password: signupInputs.password,
       });
 
       return;
     }
 
+    const signinInputs = inputs as SigninInputs;
+
     await signIn({
-      email: inputs.email,
-      password: inputs.password,
+      email: signinInputs.email,
+      password: signinInputs.password,
     });
   };
 
-  const switchMode = (newMode) => {
+  const switchMode = (newMode: string) => {
     if (newMode === mode) return;
 
-    setMode(newMode);
+    if (newMode === "login" || newMode === "signup") setMode(newMode);
 
     setShowPassword(false);
     setShowConfirmPassword(false);
@@ -335,7 +348,13 @@ export default function AuthForm() {
 
 // ─── Password Toggle ───────────────────────────────────────────────────────
 
-const PasswordToggle = ({ show, onToggle }) => (
+const PasswordToggle = ({
+  show,
+  onToggle,
+}: {
+  show: boolean;
+  onToggle: () => void;
+}) => (
   <button type="button" onClick={onToggle} className="textField__icon--btn">
     {show ? <EyeOffIcon /> : <EyeIcon />}
   </button>
@@ -343,5 +362,5 @@ const PasswordToggle = ({ show, onToggle }) => (
 
 // ─── Error ────────────────────────────────────────────────────────────────
 
-const FieldError = ({ error }) =>
+const FieldError = ({ error }: { error: FieldError | undefined }) =>
   error ? <span className="text-xs text-red-500">{error.message}</span> : null;

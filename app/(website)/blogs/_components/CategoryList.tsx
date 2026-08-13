@@ -11,7 +11,7 @@ const CategoryList = async ({ mobile = false }) => {
     return (
       <>
         <CategoryItem mobile path="/blogs" text="همه" />
-        {categories.map(({ title, slug, _id }, index) => (
+        {categories.map(({ title, slug, _id }) => (
           <CategoryItem
             key={_id}
             mobile

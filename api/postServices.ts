@@ -1,7 +1,8 @@
+import { Post } from "lib/models/Post";
 import callAPI from "api/callAPI";
 
 const postServices = {
-  getPostBySlug: async (postSlug: string) => {
+  getPostBySlug: async (postSlug: string): Promise<Post> => {
     const { data = {} } = await callAPI.get(`post/slug/${postSlug}`);
     const { post } = data || null;
     return post;
@@ -11,7 +12,10 @@ const postServices = {
     const { post } = data || null;
     return post;
   },
-  getAllPosts: async (cookies: string, searchOption: string) => {
+  getAllPosts: async (
+    cookies: string,
+    searchOption: string,
+  ): Promise<{ posts: Post[]; totalPages: number }> => {
     const { data } = await callAPI.get(`post/list?${searchOption}`, cookies);
     return data;
   },
@@ -19,7 +23,7 @@ const postServices = {
     category = "",
     searchOption: string,
     cookies: string,
-  ) => {
+  ): Promise<{ posts: Post[]; totalPages: number }> => {
     const { data } = await callAPI.get(
       `post/list?categorySlug=${category}&${searchOption}`,
       cookies,

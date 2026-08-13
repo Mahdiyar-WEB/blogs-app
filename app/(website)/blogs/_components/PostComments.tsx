@@ -8,19 +8,20 @@ import CommentForm from "./CommentForm";
 import { useUser } from "context/UserContext";
 import toPersianDigits from "utils/toPersianDigits";
 import toast from "react-hot-toast";
+import { Post, PostComment } from "lib/models/Post";
 
-function PostComments({ post }) {
+function PostComments({ post }: { post: Post }) {
   const { user } = useUser();
   const [isOpen, setIsOpen] = useState(false);
-  const [parent, setParent] = useState(null);
+  const [parent, setParent] = useState<PostComment | null>(null);
   const router = useRouter();
 
   const onCloseHandler = () => setIsOpen(false);
 
-  const addNewCommentHandler = (parent) => {
+  const addNewCommentHandler = (parent: PostComment | null) => {
     if (!user) {
-      router.push('/login');
-      toast.error('لطفا وارد حساب کاربری خود شوید')
+      router.push("/login");
+      toast.error("لطفا وارد حساب کاربری خود شوید");
       return;
     }
     setParent(parent);
