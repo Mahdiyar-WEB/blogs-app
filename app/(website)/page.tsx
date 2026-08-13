@@ -3,6 +3,7 @@ import SpiderwebMeshBackground from "components/ui/SpiderwebMeshBackground";
 import FloatingDecorationDesktop from "components/ui/FloatingDecorationDesktop";
 import Link from "next/link";
 import FloatingDecorationMobile from "components/ui/FloatingDecorationMobile";
+import Image from "next/image";
 
 export const metadata = {
   title: "خانه",
@@ -15,9 +16,14 @@ export default function Home() {
       <FloatingDecorationDesktop />
       <FloatingDecorationMobile />
       <main className="my-20 w-11/12 mx-auto 2xl:max-w-screen-2xl">
-        <h1 className="text-center text-2xl md:text-5xl font-bold text-secondary-800">
-          بلاگیتو: خوش اومدی 👋
-        </h1>
+        <div className="flex gap-2 mx-auto justify-center items-center">
+          <div className="relative aspect-[5/5] w-10 h-10 sm:hidden">
+            <Image src="/icon.svg" alt="app icon" fill />
+          </div>
+          <h1 className="text-center text-2xl md:text-5xl font-bold text-secondary-800">
+            بلاگیتو: خوش اومدی 👋
+          </h1>
+        </div>
         <p className="text-center mt-10 text-secondary-500 text-lg">
           جایی که قراره بتونی یک اپلیکیشن بلاگ رو مدیریت کنی!
           <br />
