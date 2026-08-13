@@ -11,8 +11,9 @@ import useGetUsers from "hooks/users/useGetUsers";
 import DeleteUserModal from "./DeleteUserModal";
 import { AnimatedTableRow } from "components/ui/TableMotion";
 import useDelayedLoading from "hooks/useDelayedLoading";
+import { User } from "lib/models/User";
 
-const UsersInformation = ({ fetchQueries }) => {
+const UsersInformation = ({ fetchQueries = "" }) => {
   const { users, isLoading } = useGetUsers(fetchQueries);
   const router = useRouter();
   const showLoading = useDelayedLoading(isLoading, {
@@ -20,7 +21,7 @@ const UsersInformation = ({ fetchQueries }) => {
     minDuration: 300,
   });
 
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   const onCloseUserAction = () => {
     setSelectedUser(null);
@@ -120,7 +121,9 @@ const UsersInformation = ({ fetchQueries }) => {
         </div>
       )}
 
-      <DeleteUserModal user={selectedUser} onClose={onCloseUserAction} />
+      {selectedUser && (
+        <DeleteUserModal user={selectedUser} onClose={onCloseUserAction} />
+      )}
     </section>
   );
 };

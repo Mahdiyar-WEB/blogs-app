@@ -6,8 +6,8 @@ import { cookies } from "next/headers";
 import EditUserForm from "./EditUserForm";
 import { imageUrlToFile } from "utils/fileFormatter";
 
-const fetchUserById = async (userId) => {
-  const cookieStore = await cookies();
+const fetchUserById = async (userId: string) => {
+  const cookieStore = (await cookies()) as unknown as string;
   try {
     const data = await userServices.getUserById(cookieStore, userId);
     return data;
@@ -16,7 +16,11 @@ const fetchUserById = async (userId) => {
   }
 };
 
-const EditUserPage = async ({ searchParams }) => {
+const EditUserPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ userId: string }>;
+}) => {
   const { userId } = await searchParams;
   const { data } = await fetchUserById(userId);
 

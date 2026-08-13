@@ -12,6 +12,7 @@ import useGetPosts from "hooks/posts/useGetPosts";
 import { useRouter } from "next/navigation";
 import { AnimatedTableRow } from "components/ui/TableMotion";
 import useDelayedLoading from "hooks/useDelayedLoading";
+import { Post } from "lib/models/Post";
 
 const postTypeValues = {
   free: {
@@ -32,7 +33,7 @@ const PostsInformation = ({ fetchQueries = "" }) => {
     minDuration: 300,
   });
 
-  const [selectedPost, setSelectedPost] = useState(null);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
   const onClosePostAction = () => {
     setSelectedPost(null);
@@ -163,8 +164,9 @@ const PostsInformation = ({ fetchQueries = "" }) => {
           <p className="text-xl font-semibold">پستی پیدا نشد!</p>
         </div>
       )}
-
-      <DeletePostModal post={selectedPost} onClose={onClosePostAction} />
+      {selectedPost && (
+        <DeletePostModal post={selectedPost} onClose={onClosePostAction} />
+      )}
     </section>
   );
 };

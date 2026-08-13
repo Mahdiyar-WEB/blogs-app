@@ -8,7 +8,11 @@ import userServices from "api/userServices";
 import generateSSRCookies from "utils/generateSSRCookies";
 import UsersInformation from "../../_components/UsersInformation";
 
-const UsersPage = async ({ searchParams }) => {
+const UsersPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) => {
   const query = queryString.stringify(await searchParams);
   const cookieStore = await cookies();
 

@@ -13,8 +13,9 @@ import DeleteCommentModal from "./DeleteCommentModal";
 import useGetComments from "hooks/comments/useGetComments";
 import { AnimatedTableRow } from "components/ui/TableMotion";
 import useDelayedLoading from "hooks/useDelayedLoading";
+import { Comment, CommentAnswer } from "lib/models/Comment";
 
-const CommentsInformation = ({ fetchQueries }) => {
+const CommentsInformation = ({ fetchQueries = "" }) => {
   const { comments = [], isLoading } = useGetComments(fetchQueries);
   const router = useRouter();
   const showLoading = useDelayedLoading(isLoading, {
@@ -22,10 +23,12 @@ const CommentsInformation = ({ fetchQueries }) => {
     minDuration: 300,
   });
 
-  const [openedComments, setOpenedComments] = useState([]);
-  const [selectedComment, setSelectedComment] = useState(null);
+  const [openedComments, setOpenedComments] = useState<string[]>([]);
+  const [selectedComment, setSelectedComment] = useState<
+    Comment | CommentAnswer | null
+  >(null);
 
-  const toggleAnswers = (commentId) => {
+  const toggleAnswers = (commentId: string) => {
     setOpenedComments((prev) =>
       prev.includes(commentId)
         ? prev.filter((id) => id !== commentId)
@@ -239,10 +242,12 @@ const CommentsInformation = ({ fetchQueries }) => {
         </div>
       )}
 
-      <DeleteCommentModal
-        comment={selectedComment}
-        onClose={onCloseCommentAction}
-      />
+      {selectedComment && (
+        <DeleteCommentModal
+          comment={selectedComment}
+          onClose={onCloseCommentAction}
+        />
+      )}
     </section>
   );
 };

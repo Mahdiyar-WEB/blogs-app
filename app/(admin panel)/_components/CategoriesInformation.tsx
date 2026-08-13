@@ -12,8 +12,9 @@ import DeleteCategoryModal from "./DeleteCategoryModal";
 import { AnimatedTableRow } from "components/ui/TableMotion";
 import useDelayedLoading from "hooks/useDelayedLoading";
 import truncateText from "utils/truncateText";
+import { Category } from "lib/models/Category";
 
-const CategoriesInformation = ({ fetchQueries }) => {
+const CategoriesInformation = ({ fetchQueries = "" }) => {
   const { categories = [], isLoading } = useGetCategories(fetchQueries);
   const router = useRouter();
   const showLoading = useDelayedLoading(isLoading, {
@@ -21,7 +22,9 @@ const CategoriesInformation = ({ fetchQueries }) => {
     minDuration: 300,
   });
 
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
+    null,
+  );
 
   const onCloseCategoryAction = () => {
     setSelectedCategory(null);
@@ -50,7 +53,7 @@ const CategoriesInformation = ({ fetchQueries }) => {
               <td>{toPersianDigits(index + 1)}</td>
               <td>{category.title}</td>
               <td>{category.englishTitle}</td>
-              <td>{truncateText(category.description,25)}</td>
+              <td>{truncateText(category.description, 25)}</td>
               <td>{toLocalDateShort(category.createdAt)}</td>
               <td>{toLocalDateShort(category.updatedAt)}</td>
               <td>
@@ -125,10 +128,12 @@ const CategoriesInformation = ({ fetchQueries }) => {
         </div>
       )}
 
-      <DeleteCategoryModal
-        category={selectedCategory}
-        onClose={onCloseCategoryAction}
-      />
+      {selectedCategory && (
+        <DeleteCategoryModal
+          category={selectedCategory}
+          onClose={onCloseCategoryAction}
+        />
+      )}
     </section>
   );
 };

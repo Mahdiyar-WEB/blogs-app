@@ -2,11 +2,21 @@ import { Category } from "lib/models/Category";
 
 const { default: callAPI } = require("api/callAPI");
 
+type UpdateCategoryData = Pick<
+  Category,
+  "title" | "englishTitle" | "description"
+>;
+
+type CreateCategoryData = Pick<
+  Category,
+  "title" | "englishTitle" | "description"
+>;
+
 const categoryServices = {
   getAllCategories: async (
     searchOptions = "",
   ): Promise<{
-    data: { categories: { title: string; slug: string; _id: string }[] };
+    data: { categories: Category[]; totalPages: number };
   }> => {
     const data = await callAPI.get(`category/list?${searchOptions}`);
     return data;
@@ -23,11 +33,11 @@ const categoryServices = {
     data,
   }: {
     id: string;
-    data: Omit<Category, "slug" | "icon">;
+    data: UpdateCategoryData;
   }) => {
     return await callAPI.patch(`category/update/${id}`, data);
   },
-  createCategory: async (data: Omit<Category, "slug" | "icon">) => {
+  createCategory: async (data: CreateCategoryData) => {
     return await callAPI.post("category/add", data);
   },
 };

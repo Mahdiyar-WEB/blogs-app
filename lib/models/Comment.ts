@@ -7,22 +7,25 @@ export interface CommentContent {
 }
 
 export interface CommentAnswer {
-  user: mongoose.Types.ObjectId;
+  _id: string;
+  user: {name:string};
   post: mongoose.Types.ObjectId;
   content: CommentContent;
   status: number;
   openToComment: boolean;
-  createdAt?: Date;
+  createdAt: string;
 }
 
 export interface Comment {
-  user: mongoose.Types.ObjectId;
-  post?: mongoose.Types.ObjectId;
+  _id: string;
+  user: { name: string };
+  post?: { title: string; slug: string };
   content: CommentContent;
   status: number;
   openToComment: boolean;
   answers: CommentAnswer[];
-  createdAt?: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 const AnswerSchema = new mongoose.Schema<CommentAnswer>(

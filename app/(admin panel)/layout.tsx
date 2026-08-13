@@ -2,9 +2,9 @@
 
 import Header from "./Header";
 import Drawer from "./Drawer";
-import { Suspense, useEffect, useState } from "react";
+import { ReactNode, Suspense, useEffect, useState } from "react";
 
-export default function Layout({ children }) {
+export default function Layout({ children }: { children: ReactNode }) {
   const [desktopOpen, setDesktopOpen] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -40,6 +40,7 @@ export default function Layout({ children }) {
       <aside className="sticky top-0 hidden h-dvh shrink-0 self-start lg:block">
         <Drawer
           isOpen={desktopOpen}
+          onClose={() => {}}
           onToggle={() => setDesktopOpen((prev) => !prev)}
         />
       </aside>

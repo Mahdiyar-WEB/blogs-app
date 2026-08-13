@@ -1,21 +1,32 @@
-import BreadCrumbs from "components/BreadCrumbs";
-import React from "react";
+import categoryServices from "api/categoryServices";
 import postServices from "api/postServices";
+import BreadCrumbs from "components/BreadCrumbs";
 import { notFound } from "next/navigation";
-import EditPostForm from "./EditPostForm";
+import React from "react";
 import { imageUrlToFile } from "utils/fileFormatter";
+import EditPostForm from "./EditPostForm";
 
-const fetchPostById = async (postId) => {
+type SearchParams = {
+  postId: string;
+};
+
+type EditPostPageProps = {
+  searchParams: Promise<SearchParams>;
+};
+
+const fetchPostById = async (postId: string) => {
   try {
-    const data = await postServices.getPostById(postId);
-    return data;
+    return await postServices.getPostById(postId);
   } catch (error) {
     notFound();
   }
 };
 
-const EditPostPage = async ({ searchParams }) => {
+const EditPostPage = async ({
+  searchParams,
+}: EditPostPageProps) => {
   const { postId } = await searchParams;
+
   const {
     title,
     briefText,
@@ -28,9 +39,11 @@ const EditPostPage = async ({ searchParams }) => {
   } = await fetchPostById(postId);
 
   const coverImageFile = await imageUrlToFile(coverImageUrl);
+
   return (
     <main className="md:p-7">
       <BreadCrumbs />
+
       <EditPostForm
         key={postId}
         initialValues={{
@@ -43,7 +56,7 @@ const EditPostPage = async ({ searchParams }) => {
         }}
         postId={_id}
         coverImage={coverImageFile}
-        coverImageName={coverImageFile.name}
+        coverImageName={coverImageFile?.name ?? ""}
         coverImageUrl={coverImageUrl}
       />
     </main>

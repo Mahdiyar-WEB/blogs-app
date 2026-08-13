@@ -6,7 +6,8 @@ import useDelayedLoading from "hooks/useDelayedLoading";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
+import { User } from "lib/models/User";
 
 const pageTitles = [
   {
@@ -36,7 +37,7 @@ const pageTitles = [
   },
 ];
 
-function getPageTitle(pathname) {
+function getPageTitle(pathname: string) {
   return (
     pageTitles.find((item) =>
       item.href === "/profile"
@@ -46,7 +47,7 @@ function getPageTitle(pathname) {
   );
 }
 
-function MobileMenuButton({ onClick }) {
+function MobileMenuButton({ onClick }: { onClick: () => void }) {
   return (
     <button
       type="button"
@@ -72,7 +73,15 @@ function MobileMenuButton({ onClick }) {
   );
 }
 
-function HeaderTitle({ title, description, className = "" }) {
+function HeaderTitle({
+  title,
+  description,
+  className = "",
+}: {
+  title: string | undefined;
+  description: string | undefined;
+  className?: string;
+}) {
   return (
     <div className={`flex flex-col items-start leading-tight ${className}`}>
       <h1 className="text-base font-bold text-secondary-900 lg:text-xl">
@@ -85,7 +94,15 @@ function HeaderTitle({ title, description, className = "" }) {
   );
 }
 
-function ProfileButton({ user, open, onToggle }) {
+function ProfileButton({
+  user,
+  open,
+  onToggle,
+}: {
+  open: boolean;
+  onToggle: () => void;
+  user: User | null;
+}) {
   return (
     <button
       type="button"
@@ -99,7 +116,7 @@ function ProfileButton({ user, open, onToggle }) {
         height={44}
         src={user?.avatarUrl || "/avatar.svg"}
         placeholder={user?.avatarUrl ? "blur" : "empty"}
-        blurDataURL={user?.avatarBlurDataURL}
+        blurDataURL={user?.avatarBlurDataURL || ""}
         className="h-11 w-11 rounded-2xl border border-secondary-200 object-cover object-center"
       />
 
@@ -153,6 +170,12 @@ function ProfileMenuItem({
   href,
   onClick,
   variant = "default",
+}: {
+  children: ReactNode;
+  icon: ReactNode;
+  href?: string;
+  onClick: () => void;
+  variant?: "default" | "danger";
 }) {
   const className =
     variant === "danger"
@@ -176,7 +199,15 @@ function ProfileMenuItem({
   );
 }
 
-function ProfileMenu({ user, onClose, onLogout }) {
+function ProfileMenu({
+  user,
+  onClose,
+  onLogout,
+}: {
+  user: User;
+  onClose: () => void;
+  onLogout: () => void;
+}) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 8, scale: 0.98 }}
@@ -239,7 +270,21 @@ function ProfileMenu({ user, onClose, onLogout }) {
   );
 }
 
-function HeaderProfile({ user, isLoading, open, onToggle, onClose, onLogout }) {
+function HeaderProfile({
+  user,
+  isLoading,
+  open,
+  onToggle,
+  onClose,
+  onLogout,
+}: {
+  user: User | null;
+  isLoading: boolean;
+  open: boolean;
+  onToggle: () => void;
+  onClose: () => void;
+  onLogout: () => void;
+}) {
   const showLoading = useDelayedLoading(isLoading, {
     delay: 180,
     minDuration: 250,
@@ -280,13 +325,17 @@ function HeaderProfile({ user, isLoading, open, onToggle, onClose, onLogout }) {
   );
 }
 
-export default function Header({ onMobileToggle }) {
+export default function Header({
+  onMobileToggle,
+}: {
+  onMobileToggle: () => void;
+}) {
   const { user, logout, isLoading } = useUser();
   const pathname = usePathname();
   const pageTitle = getPageTitle(pathname);
 
   const [open, setOpen] = useState(false);
-  const menuRef = useRef(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
 
   const onLogoutHandler = () => {
     setOpen(false);
@@ -294,8 +343,8 @@ export default function Header({ onMobileToggle }) {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
+    const handleClickOutside = (event: PointerEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setOpen(false);
       }
     };
@@ -307,17 +356,13 @@ export default function Header({ onMobileToggle }) {
     };
   }, []);
 
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
-
   return (
     <div className="flex h-20 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
       <div className="flex min-w-0 items-center gap-3">
         <MobileMenuButton onClick={onMobileToggle} />
         <HeaderTitle
-          title={pageTitle.title}
-          description={pageTitle.description}
+          title={pageTitle?.title}
+          description={pageTitle?.description}
           className="min-w-0"
         />
       </div>

@@ -1,4 +1,5 @@
 import callAPI from "api/callAPI";
+import { Comment } from "lib/models/Comment";
 
 const commentServices = {
   addNewComment: async (values: {
@@ -8,7 +9,16 @@ const commentServices = {
   }) => {
     return await callAPI.post("comment/add", values);
   },
-  getAllComments: async (cookies: string, searchOption: string) => {
+  getAllComments: async (
+    cookies?: string,
+    searchOption?: string,
+  ): Promise<{
+    data: {
+      comments: Comment[];
+      totalComments: number;
+      totalPages: number;
+    };
+  }> => {
     return await callAPI.get(`comment/list?${searchOption}`, cookies);
   },
   deleteComment: async (id: string) => {

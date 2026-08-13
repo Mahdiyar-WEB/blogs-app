@@ -7,7 +7,11 @@ import CategoriesInformation from "../../_components/CategoriesInformation";
 import queryString from "query-string";
 import BreadCrumbs from "components/BreadCrumbs";
 
-const CategoriesPage = async ({ searchParams }) => {
+const CategoriesPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) => {
   const query = queryString.stringify(await searchParams);
   const { data } = await categoryServices.getAllCategories(query);
 

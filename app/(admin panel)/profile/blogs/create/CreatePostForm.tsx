@@ -13,9 +13,20 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import type { FieldError } from "react-hook-form";
 import * as yup from "yup";
 
-const schemas = yup.object({
+type CreatePostFormValues = {
+  title: string;
+  briefText: string;
+  text: string;
+  readingTime: number;
+  slug: string;
+  category: string;
+  coverImage: File | null;
+};
+
+const schemas: yup.ObjectSchema<CreatePostFormValues> = yup.object({
   title: yup
     .string()
     .min(5, "حداقل ۵ حرف وارد کنید")
@@ -35,7 +46,7 @@ const schemas = yup.object({
 
       return text.trim().length >= 5;
     })
-    .required(),
+    .required("متن پست را وارد کنید"),
 
   readingTime: yup
     .number()
@@ -44,22 +55,20 @@ const schemas = yup.object({
     .required("زمان مطالعه پست خود را وارد کنید")
     .typeError("عدد وارد کنید"),
 
-  slug: yup.string().required("آدرس پست خودرا وارد کنید"),
+  slug: yup.string().required("آدرس پست خود را وارد کنید"),
 
   category: yup.string().required("دسته بندی را انتخاب کنید"),
 
-  coverImage: yup.mixed().required("کاور پست الزامی است"),
+  coverImage: yup.mixed<File>().nullable().required("کاور پست الزامی است"),
 });
-
 
 const CreatePostForm = () => {
   const router = useRouter();
 
-  const [coverImageURL, setCoverImageURL] = useState(null);
+  const [coverImageURL, setCoverImageURL] = useState<string | null>(null);
 
   const { selectOptions } = useGetCategories();
   const { createPost, isCreating } = useCreatePost();
-
 
   const {
     handleSubmit,
@@ -74,33 +83,30 @@ const CreatePostForm = () => {
       title: "",
       briefText: "",
       text: "",
-      readingTime: "",
+      readingTime: 0,
       slug: "",
       category: "",
-      coverImage: null,
+      coverImage: undefined,
     },
   });
 
-
-  const onSubmit = (inputs) => {
+  const onSubmit = (inputs: CreatePostFormValues) => {
     const formData = new FormData();
 
-    for (const key in inputs) {
-      formData.append(key, inputs[key]);
-    }
-
+    Object.entries(inputs).forEach(([key, value]) => {
+      if (value !== null && value !== undefined) {
+        formData.append(key, value instanceof File ? value : String(value));
+      }
+    });
 
     createPost(formData, {
       onSuccess: () => {
         router.push("/profile/blogs");
-
         reset();
-
         setCoverImageURL(null);
       },
     });
   };
-
 
   useEffect(() => {
     return () => {
@@ -110,13 +116,11 @@ const CreatePostForm = () => {
     };
   }, [coverImageURL]);
 
-
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="w-full md:w-2/3  flex flex-col gap-5 bg-white mx-auto p-5 rounded-lg shadow-md"
     >
-
       <div>
         <Controller
           name="title"
@@ -136,7 +140,6 @@ const CreatePostForm = () => {
 
         <FieldError error={errors.title} />
       </div>
-
 
       <div>
         <Controller
@@ -158,11 +161,8 @@ const CreatePostForm = () => {
         <FieldError error={errors.briefText} />
       </div>
 
-
       <div>
-        <label className="block mb-2 font-medium">
-          متن پست
-        </label>
+        <label className="block mb-2 font-medium">متن پست</label>
 
         <Controller
           name="text"
@@ -177,7 +177,6 @@ const CreatePostForm = () => {
 
         <FieldError error={errors.text} />
       </div>
-
 
       <div>
         <Controller
@@ -197,7 +196,6 @@ const CreatePostForm = () => {
         <FieldError error={errors.category} />
       </div>
 
-
       <div>
         <Controller
           name="readingTime"
@@ -210,9 +208,7 @@ const CreatePostForm = () => {
               dir="rtl"
               inputRef={ref}
               hasError={!!errors.readingTime}
-              onChange={(e) =>
-                onChange(e.target.valueAsNumber || "")
-              }
+              onChange={(e) => onChange(e.target.valueAsNumber || "")}
               {...field}
             />
           )}
@@ -220,7 +216,6 @@ const CreatePostForm = () => {
 
         <FieldError error={errors.readingTime} />
       </div>
-
 
       <div>
         <Controller
@@ -242,51 +237,40 @@ const CreatePostForm = () => {
         <FieldError error={errors.slug} />
       </div>
 
-
       <div>
-
         <Controller
           name="coverImage"
           control={control}
           render={({ field: { value, onChange, ...rest } }) => (
             <FileInput
               label="انتخاب کاور پست"
-              name="coverImage"
               value={value?.name}
               {...rest}
               onChange={(e) => {
-
                 const file = e.target.files?.[0];
 
                 if (!file) return;
 
-
                 onChange(file);
 
-                setCoverImageURL(
-                  URL.createObjectURL(file)
-                );
+                setCoverImageURL(URL.createObjectURL(file));
 
-                e.target.value = null;
+                e.target.value = "";
               }}
             />
           )}
         />
 
-
         <FieldError error={errors.coverImage} />
-
 
         {coverImageURL && (
           <div className="relative overflow-hidden aspect-[4/3] mt-5 rounded-lg">
-
             <Image
               fill
               src={coverImageURL}
               alt="cover-image"
               className="object-cover object-center"
             />
-
 
             <ButtonIcon
               type="button"
@@ -297,7 +281,6 @@ const CreatePostForm = () => {
               variant="red"
               className="absolute top-3 left-3"
             >
-
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -306,39 +289,25 @@ const CreatePostForm = () => {
                 stroke="currentColor"
                 className="size-6"
               >
-
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   d="M6 18 18 6M6 6l12 12"
                 />
-
               </svg>
-
             </ButtonIcon>
-
           </div>
         )}
-
       </div>
-
 
       <SubmitButton loading={isCreating} className="w-full">
         ثبت پست
       </SubmitButton>
-
     </form>
   );
 };
 
-
-
-const FieldError = ({ error }) =>
-  error ? (
-    <span className="text-xs text-red-500">
-      {error.message}
-    </span>
-  ) : null;
-
+const FieldError = ({ error }: { error: FieldError | undefined }) =>
+  error ? <span className="text-xs text-red-500">{error.message}</span> : null;
 
 export default CreatePostForm;

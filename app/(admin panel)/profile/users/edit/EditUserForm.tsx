@@ -11,14 +11,21 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import type { FieldError } from "react-hook-form";
 import * as yup from "yup";
 
-const schema = yup.object({
+type EditUserFormValues = {
+  name: string;
+  email: string;
+  avatar: File | null;
+};
+
+const schema: yup.ObjectSchema<EditUserFormValues> = yup.object({
   name: yup.string().min(3, "حداقل ۳ حرف وارد کنید").required("نام الزامی است"),
 
   email: yup.string().email("ایمیل معتبر نیست").required("ایمیل الزامی است"),
 
-  avatar: yup.mixed().nullable(),
+  avatar: yup.mixed<File>().nullable().defined(),
 });
 
 const EditUserForm = ({
@@ -27,6 +34,12 @@ const EditUserForm = ({
   avatar,
   avatarName,
   userId,
+}: {
+  initialValues: { name: string; email: string };
+  avatarUrl: string;
+  avatar: File | null;
+  avatarName: string;
+  userId: string;
 }) => {
   const router = useRouter();
   const { user, getUser } = useUser();
@@ -60,16 +73,11 @@ const EditUserForm = ({
 
   const { isUpdating, updateUser } = useUpdateUser();
 
-  const onSubmit = async (inputs) => {
+  const onSubmit = async (inputs: EditUserFormValues) => {
     const formData = new FormData();
 
-    for (const key in inputs) {
-      if (key === "avatar") continue;
-
-      if (inputs[key] !== null && inputs[key] !== undefined) {
-        formData.append(key, inputs[key]);
-      }
-    }
+    formData.append("name", inputs.name);
+    formData.append("email", inputs.email);
 
     if (inputs.avatar instanceof File) {
       formData.append("filename", inputs.avatar.name);
@@ -78,7 +86,7 @@ const EditUserForm = ({
     }
 
     if (inputs.avatar === null) {
-      formData.append("removeAvatar", true);
+      formData.append("removeAvatar", "true");
     }
 
     updateUser(
@@ -91,6 +99,7 @@ const EditUserForm = ({
           if (userId === user?._id) {
             getUser();
           }
+
           router.push("/profile/users");
           reset();
         },
@@ -150,19 +159,13 @@ const EditUserForm = ({
           render={({ field: { value, onChange, ...rest } }) => (
             <FileInput
               label="انتخاب عکس پروفایل"
-              name="avatar"
-              value={value?.name}
               {...rest}
               onChange={(e) => {
                 const file = e.target.files?.[0];
-
                 if (!file) return;
-
                 onChange(file);
-
                 setAvatarURL(URL.createObjectURL(file));
-
-                e.target.value = null;
+                e.target.value = "";
               }}
             />
           )}
@@ -217,7 +220,7 @@ const EditUserForm = ({
   );
 };
 
-const FieldError = ({ error }) =>
+const FieldError = ({ error }: { error: FieldError | undefined }) =>
   error ? <span className="text-xs text-red-500">{error.message}</span> : null;
 
 export default EditUserForm;

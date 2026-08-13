@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ReactNode } from "react";
 
 const DrawerLinks = [
   {
@@ -109,7 +110,13 @@ const DrawerLinks = [
   },
 ];
 
-function CollapseButton({ isOpen, onToggle }) {
+function CollapseButton({
+  isOpen,
+  onToggle,
+}: {
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
   return (
     <button
       type="button"
@@ -147,7 +154,7 @@ function CollapseButton({ isOpen, onToggle }) {
   );
 }
 
-function MobileCloseButton({ onClose }) {
+function MobileCloseButton({ onClose }: { onClose: () => void }) {
   return (
     <button
       type="button"
@@ -173,7 +180,7 @@ function MobileCloseButton({ onClose }) {
   );
 }
 
-function DrawerLogo({ isOpen }) {
+function DrawerLogo({ isOpen }: { isOpen: boolean }) {
   return (
     <div className="flex h-20 shrink-0 items-center border-b border-secondary-200 px-4">
       <div className="flex items-center gap-3 overflow-hidden">
@@ -203,7 +210,17 @@ function DrawerLogo({ isOpen }) {
   );
 }
 
-function DrawerItem({ item, isOpen, active, onClose }) {
+function DrawerItem({
+  item,
+  isOpen,
+  active,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  active: boolean;
+  item: { href: string; title: string; icon: ReactNode };
+}) {
   return (
     <li className="list-none">
       <Link
@@ -247,7 +264,13 @@ function DrawerItem({ item, isOpen, active, onClose }) {
   );
 }
 
-function DrawerFooter({ isOpen, onClose }) {
+function DrawerFooter({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) {
   return (
     <div className="border-t border-secondary-200 bg-secondary-50/70 p-3">
       <DrawerItem
@@ -279,7 +302,15 @@ function DrawerFooter({ isOpen, onClose }) {
   );
 }
 
-export default function Drawer({ isOpen, onToggle, onClose }) {
+export default function Drawer({
+  isOpen,
+  onToggle,
+  onClose,
+}: {
+  isOpen: boolean;
+  onToggle: () => void;
+  onClose: () => void;
+}) {
   const pathname = usePathname();
 
   return (

@@ -2,10 +2,17 @@ import Button from "components/Button";
 import Modal from "components/Modal";
 import { useUser } from "context/UserContext";
 import useDeleteUser from "hooks/users/useDeleteUser";
+import { User } from "lib/models/User";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const DeleteUserModal = ({ user: selectedUser, onClose }) => {
+const DeleteUserModal = ({
+  user: selectedUser,
+  onClose,
+}: {
+  user: User;
+  onClose: () => void;
+}) => {
   const { deleteUser } = useDeleteUser();
   const router = useRouter();
   const { user, logout } = useUser();

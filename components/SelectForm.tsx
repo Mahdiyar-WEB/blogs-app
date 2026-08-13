@@ -3,7 +3,7 @@ import { ComponentProps, ForwardedRef, ReactNode } from "react";
 type Props = {
   label: string;
   hasError: boolean;
-  icon: ReactNode;
+  icon?: ReactNode;
   options: { value: string; label: string }[];
   inputRef: ForwardedRef<HTMLSelectElement>;
 } & ComponentProps<"select">;

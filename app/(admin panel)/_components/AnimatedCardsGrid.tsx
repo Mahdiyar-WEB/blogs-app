@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
-import Card from "components/Card";
+import React, { ReactNode } from "react";
+import { motion, MotionProps, Variants } from "framer-motion";
+import Card, { Tone } from "components/Card";
 
 const containerVariants = {
   hidden: {},
@@ -13,7 +13,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: {
     opacity: 0,
     y: 18,
@@ -30,7 +30,17 @@ const itemVariants = {
   },
 };
 
-const AnimatedCardsGrid = ({ cards }) => {
+const AnimatedCardsGrid = ({
+  cards,
+}: {
+  cards: {
+    title: string;
+    icon: React.ReactNode;
+    content: string;
+    description: string;
+    tone: Tone;
+  }[];
+}) => {
   return (
     <motion.section
       className="mb-8 grid grid-cols-12 gap-5 lg:gap-6"

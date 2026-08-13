@@ -9,8 +9,8 @@ const SearchBox = ({
   placeholder,
   className,
 }: {
-  placeholder: string;
-  className: string;
+  placeholder?: string;
+  className?: string;
 }) => {
   const searchParams = useSearchParams();
   const router = useRouter();

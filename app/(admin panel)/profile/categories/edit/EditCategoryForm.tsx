@@ -3,12 +3,27 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import SubmitButton from "components/SubmitButton";
 import TextField from "components/TextField";
-import useCreateCategory from "hooks/categories/useCreateCategory";
+import useUpdateCategory from "hooks/categories/useUpdateCategory";
 import { useRouter } from "next/navigation";
-import { Controller, useForm } from "react-hook-form";
+import {
+  Controller,
+  FieldError as RHFFieldError,
+  useForm,
+} from "react-hook-form";
 import * as yup from "yup";
 
-const schemas = yup.object({
+type CategoryFormValues = {
+  title: string;
+  englishTitle: string;
+  description: string;
+};
+
+type EditCategoryFormProps = {
+  initialValues: CategoryFormValues;
+  categoryId: string;
+};
+
+const schemas: yup.ObjectSchema<CategoryFormValues> = yup.object({
   title: yup
     .string()
     .min(5, "حداقل ۵ حرف وارد کنید")
@@ -25,32 +40,38 @@ const schemas = yup.object({
     .required("توضیحات دسته بندی را وارد کنید"),
 });
 
-const CreateCategoryForm = () => {
+const EditCategoryForm = ({
+  initialValues,
+  categoryId,
+}: EditCategoryFormProps) => {
   const router = useRouter();
-  const { isUpdating, createCategory } = useCreateCategory();
+
+  const { isUpdating, updateCategory } = useUpdateCategory();
 
   const {
     control,
     handleSubmit,
-    reset,
     formState: { errors },
-  } = useForm({
+  } = useForm<CategoryFormValues>({
     resolver: yupResolver(schemas),
-    mode: "onTouched",
+    mode: "all",
     defaultValues: {
-      title: "",
-      englishTitle: "",
-      description: "",
+      ...initialValues,
     },
   });
 
-  const onSubmit = (inputs) => {
-    createCategory(inputs, {
-      onSuccess: () => {
-        reset();
-        router.push("/profile/categories");
+  const onSubmit = (inputs: CategoryFormValues) => {
+    updateCategory(
+      {
+        id: categoryId,
+        data: inputs,
       },
-    });
+      {
+        onSuccess: () => {
+          router.push("/profile/categories");
+        },
+      },
+    );
   };
 
   return (
@@ -119,15 +140,13 @@ const CreateCategoryForm = () => {
       </div>
 
       <SubmitButton loading={isUpdating} className="w-full">
-        ایجاد دسته بندی
+        ذخیره تغییرات
       </SubmitButton>
     </form>
   );
 };
 
-const FieldError = ({ error }) =>
-  error ? (
-    <span className="text-xs text-red-500">{error.message}</span>
-  ) : null;
+const FieldError = ({ error }: { error?: RHFFieldError }) =>
+  error ? <span className="text-xs text-red-500">{error.message}</span> : null;
 
-export default CreateCategoryForm;
+export default EditCategoryForm;

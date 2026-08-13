@@ -1,9 +1,16 @@
 import Button from "components/Button";
 import Modal from "components/Modal";
 import useDeleteComment from "hooks/comments/useDeleteComment";
+import { Comment, CommentAnswer } from "lib/models/Comment";
 import React from "react";
 
-const DeleteCommentModal = ({ comment, onClose }) => {
+const DeleteCommentModal = ({
+  comment,
+  onClose,
+}: {
+  comment: Comment | CommentAnswer;
+  onClose: () => void;
+}) => {
   const { deleteComment } = useDeleteComment();
 
   const deleteCommentHandler = async () => {

@@ -1,4 +1,5 @@
 "use client";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import ButtonIcon from "components/ButtonIcon";
 import FileInput from "components/FileInput";
@@ -11,35 +12,65 @@ import useUpdatePost from "hooks/posts/useUpdatePost";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import {
+  Controller,
+  FieldError as RHFFieldError,
+  useForm,
+} from "react-hook-form";
 import * as yup from "yup";
 
-const schemas = yup.object({
+type EditPostFormValues = {
+  title: string;
+  briefText: string;
+  text: string;
+  readingTime: number;
+  slug: string;
+  category: string;
+  coverImage: File | null;
+};
+
+type EditPostFormProps = {
+  initialValues: Omit<EditPostFormValues, "coverImage">;
+  postId: string;
+  coverImage: File | null;
+  coverImageName: string;
+  coverImageUrl: string;
+};
+
+const schemas: yup.ObjectSchema<EditPostFormValues> = yup.object({
   title: yup
     .string()
     .min(5, "حداقل ۵ حرف وارد کنید")
     .required("عنوان پست را وارد کنید"),
+
   briefText: yup
     .string()
     .min(5, "حداقل ۵ حرف وارد کنید")
     .required("توضیحات پست خود را وارد کنید"),
+
   text: yup
     .string()
     .test("text-required", "متن پست را وارد کنید", (value) => {
       if (!value) return false;
+
       const text = value.replace(/<[^>]*>/g, "");
+
       return text.trim().length >= 5;
     })
-    .required(),
+    .required("متن پست را وارد کنید"),
+
   readingTime: yup
     .number()
     .positive()
     .integer()
     .required("زمان مطالعه پست خود را وارد کنید")
     .typeError("عدد وارد کنید"),
-  slug: yup.string().required("آدرس پست خودرا وارد کنید"),
+
+  slug: yup.string().required("آدرس پست خود را وارد کنید"),
+
   category: yup.string().required("دسته بندی را انتخاب کنید"),
-  coverImage: yup.mixed().required("عکس پست خود را وارد کنید"),
+
+  coverImage: yup.mixed<File>().nullable().required("عکس پست خود را وارد کنید"),
 });
 
 const EditPostForm = ({
@@ -48,13 +79,23 @@ const EditPostForm = ({
   coverImageUrl,
   coverImage,
   coverImageName,
-}) => {
-  const defaultValues = useMemo(
+}: EditPostFormProps) => {
+  const router = useRouter();
+
+  const [coverImageURL, setCoverImageURL] = useState(coverImageUrl || "");
+
+  const { selectOptions } = useGetCategories();
+  const { isUpdating, updatePost } = useUpdatePost();
+
+  const defaultValues = useMemo<EditPostFormValues>(
     () => ({
       ...initialValues,
-      coverImage: new File([coverImage], coverImageName, {
-        type: coverImage.type,
-      }),
+      coverImage:
+        coverImage && coverImageName
+          ? new File([coverImage], coverImageName, {
+              type: coverImage.type || "image/jpeg",
+            })
+          : null,
     }),
     [initialValues, coverImage, coverImageName],
   );
@@ -64,29 +105,28 @@ const EditPostForm = ({
     setValue,
     control,
     formState: { errors },
-  } = useForm({
+  } = useForm<EditPostFormValues>({
     resolver: yupResolver(schemas),
     values: defaultValues,
     mode: "all",
   });
 
-  const router = useRouter();
-  const [coverImageURL, setCoverImageURL] = useState(coverImageUrl || "");
-  const { selectOptions } = useGetCategories();
-  const { isUpdating, updatePost } = useUpdatePost();
-
-  const onSubmit = async (inputs) => {
+  const onSubmit = (inputs: EditPostFormValues) => {
     const formData = new FormData();
 
-    for (const key in inputs) {
-      formData.append(key, inputs[key]);
-    }
+    Object.entries(inputs).forEach(([key, value]) => {
+      if (value !== null && value !== undefined) {
+        formData.append(key, value instanceof File ? value : String(value));
+      }
+    });
 
     updatePost(
-      { id: postId, data: formData },
+      {
+        id: postId,
+        data: formData,
+      },
       {
         onSuccess: () => {
-          router.refresh();
           router.push("/profile/blogs");
         },
       },
@@ -96,7 +136,7 @@ const EditPostForm = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full md:w-2/3  flex flex-col gap-5 bg-white mx-auto p-5 rounded-lg shadow-md"
+      className="w-full md:w-2/3 flex flex-col gap-5 bg-white mx-auto p-5 rounded-lg shadow-md"
     >
       <div>
         <Controller
@@ -114,8 +154,10 @@ const EditPostForm = ({
             />
           )}
         />
+
         <FieldError error={errors.title} />
       </div>
+
       <div>
         <Controller
           name="briefText"
@@ -132,6 +174,7 @@ const EditPostForm = ({
             />
           )}
         />
+
         <FieldError error={errors.briefText} />
       </div>
 
@@ -167,6 +210,7 @@ const EditPostForm = ({
             />
           )}
         />
+
         <FieldError error={errors.category} />
       </div>
 
@@ -187,6 +231,7 @@ const EditPostForm = ({
             />
           )}
         />
+
         <FieldError error={errors.readingTime} />
       </div>
 
@@ -206,6 +251,7 @@ const EditPostForm = ({
             />
           )}
         />
+
         <FieldError error={errors.slug} />
       </div>
 
@@ -213,24 +259,27 @@ const EditPostForm = ({
         <Controller
           name="coverImage"
           control={control}
-          rules={{ required: "کاور پست الزامی است" }}
           render={({ field: { value, onChange, ...rest } }) => (
             <FileInput
               label="انتخاب کاور پست"
-              name="coverImage"
-              value={value?.name}
               {...rest}
               onChange={(e) => {
                 const file = e.target.files?.[0];
+
                 if (!file) return;
+
                 onChange(file);
+
                 setCoverImageURL(URL.createObjectURL(file));
-                e.target.value = null;
+
+                e.target.value = "";
               }}
             />
           )}
         />
+
         <FieldError error={errors.coverImage} />
+
         {coverImageURL && (
           <div className="relative overflow-hidden aspect-[4/3] mt-5 rounded-lg">
             <Image
@@ -239,9 +288,10 @@ const EditPostForm = ({
               alt="cover-image"
               className="object-cover object-center"
             />
+
             <ButtonIcon
               onClick={() => {
-                setCoverImageURL(null);
+                setCoverImageURL("");
                 setValue("coverImage", null);
               }}
               variant="red"
@@ -273,7 +323,7 @@ const EditPostForm = ({
   );
 };
 
-const FieldError = ({ error }) =>
+const FieldError = ({ error }: { error?: RHFFieldError }) =>
   error ? <span className="text-xs text-red-500">{error.message}</span> : null;
 
 export default EditPostForm;

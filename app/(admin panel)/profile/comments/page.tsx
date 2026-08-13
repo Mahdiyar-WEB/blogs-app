@@ -7,7 +7,11 @@ import CommentsInformation from "../../_components/CommentsInformation";
 import SearchBox from "components/SearchBox";
 import queryString from "query-string";
 
-const CommentsPage = async ({ searchParams }) => {
+const CommentsPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) => {
   const query = queryString.stringify(await searchParams);
   const { data } = await commentServices.getAllComments("", query);
 

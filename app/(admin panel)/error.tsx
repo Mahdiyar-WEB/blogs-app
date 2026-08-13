@@ -3,7 +3,11 @@ import Button from "components/Button";
 
 // Error boundaries must be Client Components
 
-export default function Error({ unstable_retry }) {
+export default function Error({
+  unstable_retry,
+}: {
+  unstable_retry: () => void;
+}) {
   return (
     <div className="flex flex-col items-center justify-center gap-5 py-5">
       <h2 className="text-xl font-semibold">

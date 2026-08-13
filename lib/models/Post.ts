@@ -49,6 +49,7 @@ export interface Post {
   related: Post[];
   coverImageUrl: string | null;
   createdAt: string;
+  updatedAt: string;
 }
 
 const PostSchema = new mongoose.Schema<Post>(

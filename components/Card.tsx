@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 
-type Tone = "primary" | "success" | "warning";
+export type Tone = "primary" | "success" | "warning";
 
 type CardProps = {
   title: string;

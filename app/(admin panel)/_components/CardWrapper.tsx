@@ -2,10 +2,11 @@ import commentServices from "api/commentServices";
 import postServices from "api/postServices";
 import userServices from "api/userServices";
 import { cookies } from "next/headers";
-import React from "react";
+import React, { ReactNode } from "react";
 import generateSSRCookies from "utils/generateSSRCookies";
 import toPersianDigits from "utils/toPersianDigits";
 import AnimatedCardsGrid from "./AnimatedCardsGrid";
+import { Tone } from "components/Card";
 
 const fetchAppInformation = async () => {
   const cookieStore = await cookies();
@@ -30,7 +31,13 @@ const fetchAppInformation = async () => {
 const CardWrapper = async () => {
   const { usersCount, postsCount, commentsCount } = await fetchAppInformation();
 
-  const cards = [
+  const cards: {
+    title: string;
+    icon: ReactNode;
+    content: string;
+    description: string;
+    tone: Tone;
+  }[] = [
     {
       title: "تعداد کاربران",
       description: "کاربران ثبت نام شده",

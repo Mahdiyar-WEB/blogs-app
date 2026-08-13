@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 export interface User {
+  _id: string;
   name: string;
   email: string;
   password?: string;
@@ -14,6 +15,8 @@ export interface User {
   avatar?: string | null;
   avatarBlurDataURL?: string | null;
   avatarUrl?: string | null;
+  createdAt: string;
+  updatedAt: string;
 }
 
 const UserSchema = new mongoose.Schema<User>(

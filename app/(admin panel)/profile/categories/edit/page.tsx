@@ -1,27 +1,53 @@
-import BreadCrumbs from "components/BreadCrumbs";
-import React from "react";
-import { notFound } from "next/navigation";
 import categoryServices from "api/categoryServices";
+import BreadCrumbs from "components/BreadCrumbs";
+import { notFound } from "next/navigation";
+import React from "react";
 import EditCategoryForm from "./EditCategoryForm";
 
-const fetchCategoryByTitle = async (categoryTitle) => {
+type SearchParams = {
+  categoryTitle: string;
+};
+
+type Category = {
+  _id: string;
+  title: string;
+  englishTitle: string;
+  description: string;
+};
+
+type GetCategoryResponse = {
+  data: {
+    category: Category;
+  };
+};
+
+const fetchCategoryByTitle = async (
+  categoryTitle: string,
+): Promise<GetCategoryResponse> => {
   try {
     const data = await categoryServices.getCategoryByTitle(categoryTitle);
+
     return data;
   } catch (error) {
     notFound();
   }
 };
 
-const EditCategoryPage = async ({ searchParams }) => {
+const EditCategoryPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) => {
   const { categoryTitle } = await searchParams;
+
   const {
-    data: { category = {} },
+    data: { category },
   } = await fetchCategoryByTitle(categoryTitle);
 
   return (
     <main className="md:p-7">
       <BreadCrumbs slugTitle="ویرایش دسته بندی" />
+
       <EditCategoryForm
         key={category._id}
         initialValues={{

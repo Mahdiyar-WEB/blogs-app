@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import categoryServices from "api/categoryServices";
 import { Category } from "lib/models/Category";
 
-const useGetCategories = (params: string) => {
+const useGetCategories = (params?: string) => {
   const { data, isLoading } = useQuery({
     queryFn: () => {
       return categoryServices.getAllCategories(params);

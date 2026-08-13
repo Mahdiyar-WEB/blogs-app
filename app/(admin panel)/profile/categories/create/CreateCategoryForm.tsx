@@ -3,10 +3,17 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import SubmitButton from "components/SubmitButton";
 import TextField from "components/TextField";
-import useUpdateCategory from "hooks/categories/useUpdateCategory";
+import useCreateCategory from "hooks/categories/useCreateCategory";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
+import type { FieldError } from "react-hook-form";
+
 import * as yup from "yup";
+type CategoryFormValues = {
+  title: string;
+  englishTitle: string;
+  description: string;
+};
 
 const schemas = yup.object({
   title: yup
@@ -25,37 +32,32 @@ const schemas = yup.object({
     .required("توضیحات دسته بندی را وارد کنید"),
 });
 
-const EditCategoryForm = ({ initialValues, categoryId }) => {
+const CreateCategoryForm = () => {
   const router = useRouter();
-  const { isUpdating, updateCategory } = useUpdateCategory();
+  const { isUpdating, createCategory } = useCreateCategory();
 
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schemas),
-    mode: "all",
+    mode: "onTouched",
     defaultValues: {
       title: "",
       englishTitle: "",
       description: "",
-      ...initialValues,
     },
   });
 
-  const onSubmit = (inputs) => {
-    updateCategory(
-      {
-        id: categoryId,
-        data: inputs,
+  const onSubmit = (inputs: CategoryFormValues) => {
+    createCategory(inputs, {
+      onSuccess: () => {
+        reset();
+        router.push("/profile/categories");
       },
-      {
-        onSuccess: () => {
-          router.push("/profile/categories");
-        },
-      },
-    );
+    });
   };
 
   return (
@@ -124,15 +126,13 @@ const EditCategoryForm = ({ initialValues, categoryId }) => {
       </div>
 
       <SubmitButton loading={isUpdating} className="w-full">
-        ذخیره تغییرات
+        ایجاد دسته بندی
       </SubmitButton>
     </form>
   );
 };
 
-const FieldError = ({ error }) =>
-  error ? (
-    <span className="text-xs text-red-500">{error.message}</span>
-  ) : null;
+const FieldError = ({ error }: { error: FieldError | undefined }) =>
+  error ? <span className="text-xs text-red-500">{error.message}</span> : null;
 
-export default EditCategoryForm;
+export default CreateCategoryForm;

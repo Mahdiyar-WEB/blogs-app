@@ -27,10 +27,7 @@ const page = () => {
             جدیدترین محتوای ثبت شده در سایت
           </p>
         </div>
-        <PostsInformation
-          fetchQueries="sort=latest&limit=5"
-          title="آخرین پست ها"
-        />
+        <PostsInformation fetchQueries="sort=latest&limit=5" />
       </section>
     </div>
   );

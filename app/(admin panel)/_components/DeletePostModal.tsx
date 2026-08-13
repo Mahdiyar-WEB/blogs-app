@@ -1,9 +1,16 @@
 import Button from "components/Button";
 import Modal from "components/Modal";
 import useDeletePost from "hooks/posts/useDeletePost";
+import { Post } from "lib/models/Post";
 import React from "react";
 
-const DeletePostModal = ({ post, onClose }) => {
+const DeletePostModal = ({
+  post,
+  onClose,
+}: {
+  post: Post;
+  onClose: () => void;
+}) => {
   const { deletePost } = useDeletePost();
 
   const deletePostHandler = async () => {

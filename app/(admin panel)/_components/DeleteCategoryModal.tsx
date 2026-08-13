@@ -2,9 +2,16 @@ import Button from "components/Button";
 import Modal from "components/Modal";
 import useDeleteCategory from "hooks/categories/useDeleteCategory";
 import useDeleteUser from "hooks/users/useDeleteUser";
+import { Category } from "lib/models/Category";
 import React from "react";
 
-const DeleteCategoryModal = ({ category, onClose }) => {
+const DeleteCategoryModal = ({
+  category,
+  onClose,
+}: {
+  category: Category;
+  onClose: () => void;
+}) => {
   const { deleteCategory } = useDeleteCategory();
 
   const deleteCategoryHandler = async () => {

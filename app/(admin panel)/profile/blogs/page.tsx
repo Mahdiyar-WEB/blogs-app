@@ -9,7 +9,11 @@ import Pagination from "components/Pagination";
 import Link from "next/link";
 import BreadCrumbs from "components/BreadCrumbs";
 
-const page = async ({ searchParams }) => {
+const page = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) => {
   const query = queryString.stringify(await searchParams);
   const cookieStore = await cookies();
   const { totalPages } = await postServices.getAllPosts(

@@ -1,7 +1,18 @@
 import callAPI from "api/callAPI";
+import { User } from "lib/models/User";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
 const userServices = {
-  getAllUsers: async (cookies: string, searchOptions = "") => {
+  getAllUsers: async (
+    cookies: string,
+    searchOptions = "",
+  ): Promise<{
+    data: {
+      users: User[];
+      totalPages: number;
+      totalUsers: number;
+    };
+  }> => {
     return await callAPI.get(`user/list?${searchOptions}`, cookies);
   },
   deleteUser: async (id: string) => {

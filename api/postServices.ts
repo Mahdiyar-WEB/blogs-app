@@ -14,8 +14,8 @@ const postServices = {
   },
   getAllPosts: async (
     cookies: string,
-    searchOption: string,
-  ): Promise<{ posts: Post[]; totalPages: number }> => {
+    searchOption?: string,
+  ): Promise<{ posts: Post[]; totalPosts: number; totalPages: number }> => {
     const { data } = await callAPI.get(`post/list?${searchOption}`, cookies);
     return data;
   },
