@@ -16,18 +16,20 @@ export default async function Image({
   const { slug } = await params;
 
   const post = await postServices.getPostBySlug(slug);
-  
+
   if (!post.coverImageUrl) {
     throw new Error("Post cover image not found");
   }
 
-  const imageResponse = await fetch(post.coverImageUrl);
+  // استفاده از Next.js Image Optimizer
+  const imageUrl = new URL(
+    "/_next/image",
+    process.env.NEXT_PUBLIC_BASE_URL,
+  );
 
-  if (!imageResponse.ok) {
-    throw new Error("Failed to fetch cover image");
-  }
-
-  const imageBuffer = await imageResponse.arrayBuffer();
+  imageUrl.searchParams.set("url", post.coverImageUrl);
+  imageUrl.searchParams.set("w", "1200");
+  imageUrl.searchParams.set("q", "75");
 
   return new ImageResponse(
     <div
@@ -40,17 +42,20 @@ export default async function Image({
       }}
     >
       <img
-        src={`data:image/jpeg;base64,${Buffer.from(imageBuffer).toString("base64")}`}
+        src={imageUrl.toString()}
         alt={post.title}
         width="1200"
         height="630"
         style={{
           position: "absolute",
           inset: 0,
+          width: "100%",
+          height: "100%",
           objectFit: "cover",
         }}
       />
 
+      {/* Overlay */}
       <div
         style={{
           position: "absolute",
@@ -60,6 +65,7 @@ export default async function Image({
         }}
       />
 
+      {/* Content */}
       <div
         style={{
           display: "flex",
@@ -71,6 +77,7 @@ export default async function Image({
           width: "100%",
         }}
       >
+        {/* Category */}
         <div
           style={{
             fontSize: 28,
@@ -78,9 +85,10 @@ export default async function Image({
             marginBottom: 20,
           }}
         >
-          {post.category.title}
+          {post.category?.title || "بلاگیتو"}
         </div>
 
+        {/* Title */}
         <div
           style={{
             fontSize: 64,
@@ -92,6 +100,7 @@ export default async function Image({
           {post.title}
         </div>
 
+        {/* Website */}
         <div
           style={{
             fontSize: 24,
