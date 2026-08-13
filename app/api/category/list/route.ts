@@ -11,7 +11,7 @@ export const GET = withErrorHandler(async (req) => {
   const page = Number(searchParams.get("page")) || 1;
   const limit = Number(searchParams.get("limit")) || 6;
 
-  const filter = {};
+  const filter = { title: {} };
   if (search) {
     filter.title = { $regex: search, $options: "i" };
   }

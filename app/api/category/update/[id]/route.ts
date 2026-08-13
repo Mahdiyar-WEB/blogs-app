@@ -6,13 +6,18 @@ import { requireUser } from "lib/auth";
 import { withErrorHandler, ok } from "lib/apiHandler";
 import { updateCategorySchema } from "lib/validators/category.schema";
 
-export const PATCH = withErrorHandler(async (req, { params }) => {
+type RouteContext = {
+  params: Promise<{ id: string }>;
+};
+
+export const PATCH = withErrorHandler<RouteContext>(async (req, { params }) => {
   await connectDB();
   await requireUser(req);
   const { id } = await params;
 
   const category = await CategoryModel.findById(id);
-  if (!category) throw createHttpError.BadRequest("دسته بندی با این عنوان وجود ندارد.");
+  if (!category)
+    throw createHttpError.BadRequest("دسته بندی با این عنوان وجود ندارد.");
 
   const body = await req.json();
   const { title, englishTitle, description } = body;

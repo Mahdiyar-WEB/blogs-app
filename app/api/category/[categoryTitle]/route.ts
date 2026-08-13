@@ -4,7 +4,11 @@ import connectDB from "lib/db";
 import { CategoryModel } from "lib/models/Category";
 import { withErrorHandler, ok } from "lib/apiHandler";
 
-export const GET = withErrorHandler(async (req, { params }) => {
+type RouteContext = {
+  params: Promise<{ categoryTitle: string }>;
+};
+
+export const GET = withErrorHandler<RouteContext>(async (req, { params }) => {
   await connectDB();
   const { categoryTitle } = await params;
 

@@ -7,7 +7,11 @@ import { UserModel } from "lib/models/User";
 import { requireUser } from "lib/auth";
 import { withErrorHandler, ok } from "lib/apiHandler";
 
-export const POST = withErrorHandler(async (req, { params }) => {
+type RouteContext = {
+  params: Promise<{ id: string }>;
+};
+
+export const POST = withErrorHandler<RouteContext>(async (req, { params }) => {
   await connectDB();
   const user = await requireUser(req);
   const { id: postId } = await params;
@@ -17,7 +21,10 @@ export const POST = withErrorHandler(async (req, { params }) => {
   const post = await PostModel.findById(postId);
   if (!post) throw createHttpError.BadRequest("پست با این مشخصات یافت نشد");
 
-  const bookmarkedPost = await PostModel.findOne({ _id: postId, bookmarks: user._id });
+  const bookmarkedPost = await PostModel.findOne({
+    _id: postId,
+    bookmarks: user._id,
+  });
 
   const updatePostQuery = bookmarkedPost
     ? { $pull: { bookmarks: user._id } }
@@ -27,13 +34,21 @@ export const POST = withErrorHandler(async (req, { params }) => {
     ? { $pull: { bookmarkedPosts: post._id } }
     : { $push: { bookmarkedPosts: post._id } };
 
-  const postUpdate = await PostModel.updateOne({ _id: postId }, updatePostQuery);
-  const userUpdate = await UserModel.updateOne({ _id: user._id }, updateUserQuery);
+  const postUpdate = await PostModel.updateOne(
+    { _id: postId },
+    updatePostQuery,
+  );
+  const userUpdate = await UserModel.updateOne(
+    { _id: user._id },
+    updateUserQuery,
+  );
 
   if (postUpdate.modifiedCount === 0 || userUpdate.modifiedCount === 0)
     throw createHttpError.BadRequest("عملیات ناموفق بود.");
 
-  const message = !bookmarkedPost ? "پست بوکمارک شد" : "پست از بوکمارک برداشته شد";
+  const message = !bookmarkedPost
+    ? "پست بوکمارک شد"
+    : "پست از بوکمارک برداشته شد";
 
   return ok({ message }, HttpStatus.OK);
 });

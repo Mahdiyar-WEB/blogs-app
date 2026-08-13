@@ -7,7 +7,11 @@ import { UserModel } from "lib/models/User";
 import { requireUser } from "lib/auth";
 import { withErrorHandler, ok } from "lib/apiHandler";
 
-export const POST = withErrorHandler(async (req, { params }) => {
+type RouteContext = {
+  params: Promise<{ id: string }>;
+};
+
+export const POST = withErrorHandler<RouteContext>(async (req, { params }) => {
   await connectDB();
   const user = await requireUser(req);
   const { id: postId } = await params;
@@ -27,8 +31,14 @@ export const POST = withErrorHandler(async (req, { params }) => {
     ? { $pull: { likedPosts: post._id } }
     : { $push: { likedPosts: post._id } };
 
-  const postUpdate = await PostModel.updateOne({ _id: postId }, updatePostQuery);
-  const userUpdate = await UserModel.updateOne({ _id: user._id }, updateUserQuery);
+  const postUpdate = await PostModel.updateOne(
+    { _id: postId },
+    updatePostQuery,
+  );
+  const userUpdate = await UserModel.updateOne(
+    { _id: user._id },
+    updateUserQuery,
+  );
 
   if (postUpdate.modifiedCount === 0 || userUpdate.modifiedCount === 0)
     throw createHttpError.BadRequest("عملیات ناموفق بود.");

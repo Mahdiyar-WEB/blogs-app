@@ -6,11 +6,19 @@ import { PostModel } from "lib/models/Post";
 import { getUserFromRequest } from "lib/auth";
 import { withErrorHandler, ok } from "lib/apiHandler";
 import { copyObject } from "lib/utils";
-import { transformPost } from "lib/transformPost";
+import {
+  AuthenticatedUser,
+  TransformablePost,
+  transformPost,
+} from "lib/transformPost";
 
-export const GET = withErrorHandler(async (req, { params }) => {
+type RouteContext = {
+  params: Promise<{ id: string }>;
+};
+
+export const GET = withErrorHandler<RouteContext>(async (req, { params }) => {
   await connectDB();
-  const user = await getUserFromRequest(req);
+  const user = (await getUserFromRequest(req)) as unknown as AuthenticatedUser;
   const { id } = await params;
 
   if (!mongoose.isValidObjectId(id))
@@ -20,20 +28,32 @@ export const GET = withErrorHandler(async (req, { params }) => {
   if (!existing) throw createHttpError.BadRequest("پست با این مشخصات یافت نشد");
 
   const post = await PostModel.findOne({ slug: existing.slug }).populate([
-    { path: "author", model: "User", select: { name: 1, biography: 1, avatar: 1 } },
+    {
+      path: "author",
+      model: "User",
+      select: { name: 1, biography: 1, avatar: 1 },
+    },
     { path: "category", model: "Category", select: { title: 1, slug: 1 } },
     {
       path: "related",
       model: "Post",
       select: { title: 1, slug: 1, briefText: 1, coverImage: 1, author: 1 },
       populate: [
-        { path: "author", model: "User", select: { name: 1, biography: 1, avatar: 1 } },
+        {
+          path: "author",
+          model: "User",
+          select: { name: 1, biography: 1, avatar: 1 },
+        },
         { path: "category", model: "Category", select: { title: 1, slug: 1 } },
       ],
     },
   ]);
 
-  const transformedPost = copyObject(post);
+  if (!post) {
+    throw createHttpError.NotFound("پست با این مشخصات یافت نشد");
+  }
+
+  const transformedPost = copyObject(post) as unknown as TransformablePost;
   await transformPost(transformedPost, user);
 
   return ok({ post: transformedPost }, HttpStatus.OK);

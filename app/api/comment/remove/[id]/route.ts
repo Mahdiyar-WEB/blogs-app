@@ -6,7 +6,11 @@ import { requireUser } from "lib/auth";
 import { withErrorHandler, ok } from "lib/apiHandler";
 import { findCommentById } from "lib/comments";
 
-export const DELETE = withErrorHandler(async (req, { params }) => {
+type RouteContext = {
+  params: Promise<{ id: string }>;
+};
+
+export const DELETE = withErrorHandler<RouteContext>(async (req, { params }) => {
   await connectDB();
   await requireUser(req);
   const { id } = await params;

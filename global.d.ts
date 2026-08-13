@@ -1,5 +1,5 @@
 declare module "*.css";
-
+declare module "bcryptjs";
 declare module "http-errors" {
   export interface HttpError extends Error {
     status: number;

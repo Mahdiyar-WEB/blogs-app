@@ -32,8 +32,8 @@ export const POST = withErrorHandler(async (req) => {
       { _id: user._id },
       {
         $set: {
-          avatar: saved.fileAddress,
-          avatarBlurDataURL: saved.blurDataURL,
+          avatar: saved?.fileAddress,
+          avatarBlurDataURL: saved?.blurDataURL,
         },
       },
     );
@@ -42,7 +42,7 @@ export const POST = withErrorHandler(async (req) => {
       throw createError.NotFound("کاربر پیدا نشد");
     }
 
-    if (user.avatar && user.avatar !== saved.fileAddress) {
+    if (user.avatar && user.avatar !== saved?.fileAddress) {
       await deleteUploadedFile(user.avatar);
     }
 

@@ -14,7 +14,7 @@ export const GET = withErrorHandler(async (req) => {
   const limit = Number(searchParams.get("limit")) || 6;
 
   const skip = (page - 1) * limit;
-  const query = {};
+  const query = { $or: [{}] };
 
   if (search) {
     query.$or = [

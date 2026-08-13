@@ -10,7 +10,11 @@ import {
   AVATAR_IMAGE_MAX_SIZE,
 } from "lib/upload";
 
-export const PATCH = withErrorHandler(async (req, { params }) => {
+type RouteContext = {
+  params: Promise<{ userId: string }>;
+};
+
+export const PATCH = withErrorHandler<RouteContext>(async (req, { params }) => {
   await connectDB();
 
   const { userId } = await params;
@@ -23,7 +27,7 @@ export const PATCH = withErrorHandler(async (req, { params }) => {
 
   const contentType = req.headers.get("content-type") || "";
 
-  let rest = {};
+  let rest: Record<string, string> = {};
   let removeAvatar = false;
   let avatarFile = null;
 
@@ -87,8 +91,8 @@ export const PATCH = withErrorHandler(async (req, { params }) => {
         maxSize: AVATAR_IMAGE_MAX_SIZE,
       });
 
-      user.avatar = uploadedAvatar.fileAddress;
-      user.avatarBlurDataURL = uploadedAvatar.blurDataURL;
+      user.avatar = uploadedAvatar?.fileAddress;
+      user.avatarBlurDataURL = uploadedAvatar?.blurDataURL;
     } else if (removeAvatar) {
       user.avatar = null;
       user.avatarBlurDataURL = null;

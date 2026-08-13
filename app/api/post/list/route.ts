@@ -4,7 +4,12 @@ import { PostModel } from "lib/models/Post";
 import { CategoryModel } from "lib/models/Category";
 import { getUserFromRequest } from "lib/auth";
 import { withErrorHandler, ok } from "lib/apiHandler";
-import { transformPost } from "lib/transformPost";
+import {
+  AuthenticatedUser,
+  TransformablePost,
+  transformPost,
+} from "lib/transformPost";
+import { SortOrder } from "mongoose";
 
 export const GET = withErrorHandler(async (req) => {
   await connectDB();
@@ -19,7 +24,7 @@ export const GET = withErrorHandler(async (req) => {
 
   const skip = (page - 1) * limit;
 
-  const dbQuery = {};
+  const dbQuery = { $or: [{}], category: {} };
 
   if (search) {
     const searchTerm = new RegExp(search, "ig");
@@ -36,14 +41,20 @@ export const GET = withErrorHandler(async (req) => {
     const categoryIds = [];
 
     for (const item of categories) {
-      const category = await CategoryModel.findOne({ slug: item }).select("_id");
+      const category = await CategoryModel.findOne({ slug: item }).select(
+        "_id",
+      );
       if (category) categoryIds.push(category._id);
     }
 
     dbQuery.category = { $in: categoryIds };
   }
 
-  const sortQuery = {};
+  const sortQuery: Record<string, SortOrder> = {
+    createdAt: sort === "latest" ? -1 : 1,
+    likes: sort === "popular" ? -1 : 1,
+    readingTime: sort === "time_desc" ? -1 : 1,
+  };
 
   switch (sort) {
     case "latest":
@@ -121,7 +132,10 @@ export const GET = withErrorHandler(async (req) => {
   const transformedPosts = posts.map((post) => post.toJSON());
 
   for (const post of transformedPosts) {
-    await transformPost(post, user);
+    await transformPost(
+      post as unknown as TransformablePost,
+      user as unknown as AuthenticatedUser,
+    );
   }
 
   return ok(

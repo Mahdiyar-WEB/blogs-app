@@ -25,7 +25,12 @@ export function deleteInvalidPropertyInObject(
     }
 
     if (Array.isArray(value) && value.length === 0) delete data[key];
-    if (value === "" || value === " " || value === null || value === undefined) {
+    if (
+      value === "" ||
+      value === " " ||
+      value === null ||
+      value === undefined
+    ) {
       delete data[key];
     }
   });
@@ -50,9 +55,7 @@ export function toPersianNumbers(n: string | number): string {
   return n.toString().replace(/\d/g, (x) => farsiDigits[parseInt(x)]);
 }
 
-export function calculateDateDuration(
-  endTime: Date | string | number,
-): string {
+export function calculateDateDuration(endTime: Date | string | number): string {
   const { years, months, days, hours, minutes, seconds } = intervalToDuration({
     start: new Date(),
     end: new Date(endTime),

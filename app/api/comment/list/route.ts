@@ -12,7 +12,7 @@ export const GET = withErrorHandler(async (req) => {
   const limit = Number(searchParams.get("limit")) || 6;
 
   const skip = (page - 1) * limit;
-  const dbQuery = {};
+  const dbQuery = { "content.text": {} };
 
   if (search) {
     dbQuery["content.text"] = { $regex: search, $options: "i" };

@@ -5,7 +5,11 @@ import { UserModel } from "lib/models/User";
 import { requireUser } from "lib/auth";
 import { withErrorHandler, ok } from "lib/apiHandler";
 
-export const GET = withErrorHandler(async (req, { params }) => {
+type RouteContext = {
+  params: Promise<{ userId: string }>;
+};
+
+export const GET = withErrorHandler<RouteContext>(async (req, { params }) => {
   await connectDB();
   await requireUser(req);
   const { userId } = await params;

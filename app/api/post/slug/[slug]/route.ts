@@ -4,9 +4,17 @@ import connectDB from "lib/db";
 import { PostModel } from "lib/models/Post";
 import { getUserFromRequest } from "lib/auth";
 import { withErrorHandler, ok } from "lib/apiHandler";
-import { transformPost } from "lib/transformPost";
+import {
+  AuthenticatedUser,
+  TransformablePost,
+  transformPost,
+} from "lib/transformPost";
 
-export const GET = withErrorHandler(async (req, { params }) => {
+type RouteContext = {
+  params: Promise<{ slug: string }>;
+};
+
+export const GET = withErrorHandler<RouteContext>(async (req, { params }) => {
   await connectDB();
   const user = await getUserFromRequest(req);
   const { slug } = await params;
@@ -60,7 +68,10 @@ export const GET = withErrorHandler(async (req, { params }) => {
   }
 
   const transformedPost = post.toJSON();
-  await transformPost(transformedPost, user);
+  await transformPost(
+    transformedPost as unknown as TransformablePost,
+    user as unknown as AuthenticatedUser,
+  );
 
   return ok({ post: transformedPost }, HttpStatus.OK);
 });

@@ -5,7 +5,11 @@ import { UserModel } from "lib/models/User";
 import { withErrorHandler, ok } from "lib/apiHandler";
 import { deleteUploadedFile } from "lib/upload";
 
-export const DELETE = withErrorHandler(async (req, { params }) => {
+type RouteContext = {
+  params: Promise<{ userId: string }>;
+};
+
+export const DELETE = withErrorHandler<RouteContext>(async (req, { params }) => {
   await connectDB();
   const { userId } = await params;
 
