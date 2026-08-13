@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import { useUser } from "context/UserContext";
 import truncateText from "utils/truncateText";
 import type { Post as PostType } from "types/postType";
+import { useState } from "react";
 
 const Post = ({
   title,
@@ -27,6 +28,10 @@ const Post = ({
 }: PostType & { index?: number }) => {
   const router = useRouter();
   const { user } = useUser();
+  const [liked, setLiked] = useState(isLiked);
+  const [likes, setLikes] = useState(likesCount);
+
+  const [bookmarked, setBookmarked] = useState(isBookmarked);
 
   const likePostHandler = async (id: string) => {
     if (!user) {
@@ -34,12 +39,22 @@ const Post = ({
       toast.error("لطفا وارد حساب کاربری خود شوید");
       return;
     }
+
+    const previousLiked = liked;
+    const previousLikes = likes;
+
+    setLiked(!previousLiked);
+    setLikes(previousLiked ? previousLikes - 1 : previousLikes + 1);
+
     try {
       const { data } = await postServices.likePost(id);
-      router.refresh();
       toast.success(data.message);
     } catch (error) {
+      setLiked(previousLiked);
+      setLikes(previousLikes);
+
       const message = error instanceof Error ? error.message : "error";
+
       toast.error(message);
     }
   };
@@ -50,12 +65,19 @@ const Post = ({
       toast.error("لطفا وارد حساب کاربری خود شوید");
       return;
     }
+
+    const previousBookmarked = bookmarked;
+
+    setBookmarked(!previousBookmarked);
+
     try {
       const { data } = await postServices.bookmarkPost(id);
-      router.refresh();
       toast.success(data.message);
     } catch (error) {
+      setBookmarked(previousBookmarked);
+
       const message = error instanceof Error ? error.message : "error";
+
       toast.error(message);
     }
   };
@@ -180,7 +202,7 @@ const Post = ({
                 onClick={() => likePostHandler(_id)}
                 className="flex items-center justify-center gap-x-1 px-2.5 py-1.5 h-full text-sm bg-white text-red-500 hover:bg-red-500 hover:text-white transition-all duration-300 ease-out [&>svg]:w-5 [&>svg]:h-5 [&>svg]:text-inherit"
               >
-                {isLiked ? (
+                {liked ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -205,7 +227,7 @@ const Post = ({
                     />
                   </svg>
                 )}
-                <span>{toPersianDigits(likesCount)}</span>
+                <span>{toPersianDigits(likes)}</span>
               </button>
 
               <span className="w-px h-4 bg-secondary-200 shrink-0" />
@@ -215,7 +237,7 @@ const Post = ({
                 onClick={() => bookmarkPostHandler(_id)}
                 className="flex items-center justify-center gap-x-1 px-2.5 py-1.5 h-full text-xs bg-white text-primary-700 hover:bg-primary-700 hover:text-white transition-all duration-300 ease-out [&>svg]:w-5 [&>svg]:h-5 [&>svg]:text-inherit"
               >
-                {isBookmarked ? (
+                {bookmarked ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
