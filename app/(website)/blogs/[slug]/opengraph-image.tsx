@@ -16,6 +16,18 @@ export default async function Image({
   const { slug } = await params;
 
   const post = await postServices.getPostBySlug(slug);
+  
+  if (!post.coverImageUrl) {
+    throw new Error("Post cover image not found");
+  }
+
+  const imageResponse = await fetch(post.coverImageUrl);
+
+  if (!imageResponse.ok) {
+    throw new Error("Failed to fetch cover image");
+  }
+
+  const imageBuffer = await imageResponse.arrayBuffer();
 
   return new ImageResponse(
     <div
@@ -28,7 +40,7 @@ export default async function Image({
       }}
     >
       <img
-        src={post.coverImageUrl || ""}
+        src={`data:image/jpeg;base64,${Buffer.from(imageBuffer).toString("base64")}`}
         alt={post.title}
         width="1200"
         height="630"
