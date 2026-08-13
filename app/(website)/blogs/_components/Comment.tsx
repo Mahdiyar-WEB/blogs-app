@@ -14,16 +14,18 @@ function Comment({
     <>
       <div className="flex items-center justify-between mb-5 border-b border-b-secondary-200/60 pb-2">
         <div className="flex items-center gap-2">
-          <Image
-            alt={comment.user?.name || "-"}
-            className={
-              comment.user?.avatarUrl &&
-              "rounded-full ring-1 ring-secondary-300"
-            }
-            width={34}
-            height={34}
-            src={comment.user?.avatarUrl || "/avatar.svg"}
-          />
+          <div className="relative aspect-[5/5] sm:aspect-[16/10] lg:aspect-[21/9] w-10 h-10">
+            <Image
+              alt={comment.user?.name || "-"}
+              className={`object-cover object-center ${
+                comment.user?.avatarUrl &&
+                "rounded-full ring-1 ring-secondary-300"
+              }`}
+              fill
+              src={comment.user?.avatarUrl || "/avatar.svg"}
+            />
+          </div>
+
           <div className="text-sm w-full text-secondary-600">
             <span className="font-bold block mb-1">
               {comment.user?.name || "حساب حذف شده"}
