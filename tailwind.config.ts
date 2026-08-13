@@ -1,14 +1,13 @@
-/** @type {import('tailwindcss').Config} */
-
 import { fontFamily } from "tailwindcss/defaultTheme";
 import tailwindFormPlugin from "@tailwindcss/forms";
 import typography from "@tailwindcss/typography";
 
-function withOpacity(variableName) {
-  return ({ opacityValue }) => {
+function withOpacity(variableName: string) {
+  return ({ opacityValue }: { opacityValue?: string | number }) => {
     if (opacityValue !== undefined) {
       return `rgba(var(${variableName}), ${opacityValue})`;
     }
+
     return `rgb(var(${variableName}))`;
   };
 }
@@ -65,7 +64,7 @@ export default {
         sans: ["var(--font-vazir)", ...fontFamily.sans],
       },
 
-      typography: ({ theme }) => ({
+      typography: ({ theme }: { theme: (path: string) => string }) => ({
         DEFAULT: {
           css: {
             color: theme("colors.secondary.700"),
