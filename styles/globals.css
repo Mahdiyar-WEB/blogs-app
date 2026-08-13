@@ -309,12 +309,15 @@ table td {
   position: absolute;
   right: -15px;
   top: 76px;
-  width: 4px;
+  width: 3px;
   background-color: rgb(var(--color-secondary-200));
 }
 
 @media (max-width: 640px) {
   .post-comments .post-comments__answer::before {
+    display: none;
+  }
+  .post-comments .post-comments__answer .last-item:after {
     display: none;
   }
 
@@ -413,14 +416,8 @@ table td {
   font-size: 0.875rem;
   line-height: 1.9;
   font-family:
-    ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    Monaco,
-    Consolas,
-    "Liberation Mono",
-    "Courier New",
-    monospace;
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
 }
 
 .tiptap :not(pre) > code,
