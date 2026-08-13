@@ -55,7 +55,7 @@ const FloatingDecorationDesktop = () => {
           </div>
         </div>
         {/* heart icon */}
-        <div className="bg-white rounded-full p-[10px] shadow-lg shadow-primary-200/80 w-fit xl:ms-auto xl:mt-5 2xl:mt-0 xl:me-12 2xl:me-8">
+        <div className="bg-white rounded-full p-[10px] shadow-lg shadow-primary-200/80 w-fit xl:ms-64 xl:mt-5 2xl:mt-0 xl:me-12 2xl:me-8">
           <div className="text-red-400 p-[4px] rounded-full bg-red-100/80">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -148,7 +148,7 @@ const FloatingDecorationDesktop = () => {
           </div>
         </div>
         {/* message icon */}
-        <div className="bg-white text-primary-800 rounded-xl p-3 shadow-lg shadow-primary-200/80 w-fit ms-auto -mt-3 -rotate-3 2xl:block hidden">
+        <div className="bg-white text-primary-800 rounded-xl p-3 shadow-lg shadow-primary-200/80 w-fit ms-80 -mt-3 -rotate-3 2xl:block hidden">
           <svg
             fill="currentColor"
             className="size-6"
