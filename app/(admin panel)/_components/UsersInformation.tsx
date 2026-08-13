@@ -17,7 +17,7 @@ const UsersInformation = ({ fetchQueries = "" }) => {
   const { users, isLoading } = useGetUsers(fetchQueries);
   const router = useRouter();
   const showLoading = useDelayedLoading(isLoading, {
-    delay: 250,
+    delay: 0,
     minDuration: 300,
   });
 

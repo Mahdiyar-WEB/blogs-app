@@ -19,7 +19,7 @@ const CommentsInformation = ({ fetchQueries = "" }) => {
   const { comments = [], isLoading } = useGetComments(fetchQueries);
   const router = useRouter();
   const showLoading = useDelayedLoading(isLoading, {
-    delay: 250,
+    delay: 0,
     minDuration: 300,
   });
 

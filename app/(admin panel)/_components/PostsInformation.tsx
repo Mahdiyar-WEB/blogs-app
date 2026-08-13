@@ -29,7 +29,7 @@ const PostsInformation = ({ fetchQueries = "" }) => {
   const router = useRouter();
   const { posts = [], isLoading } = useGetPosts(fetchQueries);
   const showLoading = useDelayedLoading(isLoading, {
-    delay: 250,
+    delay: 0,
     minDuration: 300,
   });
 
