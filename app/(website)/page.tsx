@@ -17,7 +17,7 @@ export default function Home() {
       <FloatingDecorationMobile />
       <main className="my-20 w-11/12 mx-auto 2xl:max-w-screen-2xl">
         <div className="flex gap-2 mx-auto justify-center items-center">
-          <div className="relative aspect-[5/5] w-12 h-12 sm:hidden p-2 pointer-events-none ">
+          <div className="relative aspect-[5/5] w-12 h-12 sm:hidden pointer-events-none ">
             <Image
               src="/icon.svg"
               alt="app icon"
