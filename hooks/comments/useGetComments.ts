@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import commentServices from "api/commentServices";
-import { Comment } from "lib/models/Comment";
+import { Comment } from "types/commentType";
 
 const useGetComments = (params: string) => {
   const { data, isLoading } = useQuery<{

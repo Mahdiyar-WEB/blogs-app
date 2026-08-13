@@ -1,7 +1,6 @@
-import { Post } from "lib/models/Post";
+import { Post } from "types/postType";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 const RelatedPosts = ({ posts }: { posts: Post[] }) => {
   return (

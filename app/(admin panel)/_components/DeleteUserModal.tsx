@@ -2,7 +2,7 @@ import Button from "components/Button";
 import Modal from "components/Modal";
 import { useUser } from "context/UserContext";
 import useDeleteUser from "hooks/users/useDeleteUser";
-import { User } from "lib/models/User";
+import { User } from "types/userType";
 import { useRouter } from "next/navigation";
 import React from "react";
 

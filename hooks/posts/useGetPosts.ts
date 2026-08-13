@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import postServices from "api/postServices";
-import { Post } from "lib/models/Post";
+import { Post } from "types/postType";
 
 const useGetPosts = (params: string) => {
   const { data, isLoading } = useQuery<{

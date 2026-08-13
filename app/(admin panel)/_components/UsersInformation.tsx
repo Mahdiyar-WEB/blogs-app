@@ -11,7 +11,7 @@ import useGetUsers from "hooks/users/useGetUsers";
 import DeleteUserModal from "./DeleteUserModal";
 import { AnimatedTableRow } from "components/ui/TableMotion";
 import useDelayedLoading from "hooks/useDelayedLoading";
-import { User } from "lib/models/User";
+import { User } from "types/userType";
 
 const UsersInformation = ({ fetchQueries = "" }) => {
   const { users, isLoading } = useGetUsers(fetchQueries);

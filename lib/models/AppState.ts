@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
 
-export interface AppState {
+interface AppStateDocument {
   key: string;
   lastDemoResetAt: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-const AppStateSchema = new mongoose.Schema<AppState>(
+const AppStateSchema = new mongoose.Schema<AppStateDocument>(
   {
     key: {
       type: String,
@@ -13,6 +15,7 @@ const AppStateSchema = new mongoose.Schema<AppState>(
       unique: true,
       index: true,
     },
+
     lastDemoResetAt: {
       type: Number,
       default: 0,
@@ -24,5 +27,5 @@ const AppStateSchema = new mongoose.Schema<AppState>(
 );
 
 export const AppStateModel =
-  (mongoose.models.AppState as mongoose.Model<AppState> | undefined) ||
-  mongoose.model<AppState>("AppState", AppStateSchema);
+  (mongoose.models.AppState as mongoose.Model<AppStateDocument> | undefined) ||
+  mongoose.model<AppStateDocument>("AppState", AppStateSchema);

@@ -1,7 +1,7 @@
 import Button from "components/Button";
 import Modal from "components/Modal";
 import useDeleteComment from "hooks/comments/useDeleteComment";
-import { Comment, CommentAnswer } from "lib/models/Comment";
+import { Comment, CommentAnswer } from "types/commentType";
 import React from "react";
 
 const DeleteCommentModal = ({

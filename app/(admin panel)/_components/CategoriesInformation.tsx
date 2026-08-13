@@ -12,7 +12,7 @@ import DeleteCategoryModal from "./DeleteCategoryModal";
 import { AnimatedTableRow } from "components/ui/TableMotion";
 import useDelayedLoading from "hooks/useDelayedLoading";
 import truncateText from "utils/truncateText";
-import { Category } from "lib/models/Category";
+import { Category } from "types/categoryType";
 
 const CategoriesInformation = ({ fetchQueries = "" }) => {
   const { categories = [], isLoading } = useGetCategories(fetchQueries);

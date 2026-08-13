@@ -84,13 +84,13 @@ async function deleteStoragePrefix(prefix: string): Promise<void> {
         Bucket: bucket,
         Prefix: prefix,
         ContinuationToken: continuationToken,
-      })
+      }),
     );
 
     // تایپ اشیاء برای حذف باید با ObjectIdentifier مطابقت داشته باشد
     const objects: ObjectIdentifier[] =
       listResult.Contents?.flatMap((item) =>
-        item.Key ? [{ Key: item.Key }] : []
+        item.Key ? [{ Key: item.Key }] : [],
       ) ?? [];
 
     if (objects.length > 0) {
@@ -101,7 +101,7 @@ async function deleteStoragePrefix(prefix: string): Promise<void> {
             Objects: objects,
             Quiet: true,
           },
-        })
+        }),
       );
     }
 

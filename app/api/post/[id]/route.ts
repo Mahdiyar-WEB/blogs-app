@@ -13,48 +13,100 @@ import {
 } from "lib/transformPost";
 
 type RouteContext = {
-  params: Promise<{ id: string }>;
+  params: Promise<{
+    id: string;
+  }>;
 };
 
-export const GET = withErrorHandler<RouteContext>(async (req, { params }) => {
-  await connectDB();
-  const user = (await getUserFromRequest(req)) as unknown as AuthenticatedUser;
-  const { id } = await params;
+export const GET = withErrorHandler<RouteContext>(
+  async (req, { params }) => {
+    await connectDB();
 
-  if (!mongoose.isValidObjectId(id))
-    throw createHttpError.BadRequest("شناسه پست نامعتبر است");
+    const user =
+      (await getUserFromRequest(req)) as unknown as AuthenticatedUser;
 
-  const existing = await PostModel.findById(id);
-  if (!existing) throw createHttpError.BadRequest("پست با این مشخصات یافت نشد");
+    const { id } = await params;
 
-  const post = await PostModel.findOne({ slug: existing.slug }).populate([
-    {
-      path: "author",
-      model: "User",
-      select: { name: 1, biography: 1, avatar: 1 },
-    },
-    { path: "category", model: "Category", select: { title: 1, slug: 1 } },
-    {
-      path: "related",
-      model: "Post",
-      select: { title: 1, slug: 1, briefText: 1, coverImage: 1, author: 1 },
-      populate: [
-        {
-          path: "author",
-          model: "User",
-          select: { name: 1, biography: 1, avatar: 1 },
+    if (!mongoose.isValidObjectId(id)) {
+      throw createHttpError.BadRequest("شناسه پست نامعتبر است");
+    }
+
+    const existing = await PostModel.findById(id);
+
+    if (!existing) {
+      throw createHttpError.BadRequest(
+        "پست با این مشخصات یافت نشد",
+      );
+    }
+
+    const post = await PostModel.findOne({
+      slug: existing.slug,
+    }).populate([
+      {
+        path: "author",
+        model: "User",
+        select: {
+          name: 1,
+          biography: 1,
+          avatar: 1,
         },
-        { path: "category", model: "Category", select: { title: 1, slug: 1 } },
-      ],
-    },
-  ]);
+      },
+      {
+        path: "category",
+        model: "Category",
+        select: {
+          title: 1,
+          slug: 1,
+        },
+      },
+      {
+        path: "related",
+        model: "Post",
+        select: {
+          title: 1,
+          slug: 1,
+          briefText: 1,
+          coverImage: 1,
+          author: 1,
+        },
+        populate: [
+          {
+            path: "author",
+            model: "User",
+            select: {
+              name: 1,
+              biography: 1,
+              avatar: 1,
+            },
+          },
+          {
+            path: "category",
+            model: "Category",
+            select: {
+              title: 1,
+              slug: 1,
+            },
+          },
+        ],
+      },
+    ]);
 
-  if (!post) {
-    throw createHttpError.NotFound("پست با این مشخصات یافت نشد");
-  }
+    if (!post) {
+      throw createHttpError.NotFound(
+        "پست با این مشخصات یافت نشد",
+      );
+    }
 
-  const transformedPost = copyObject(post) as unknown as TransformablePost;
-  await transformPost(transformedPost, user);
+    const transformedPost =
+      copyObject(post) as unknown as TransformablePost;
 
-  return ok({ post: transformedPost }, HttpStatus.OK);
-});
+    await transformPost(transformedPost, user);
+
+    return ok(
+      {
+        post: transformedPost,
+      },
+      HttpStatus.OK,
+    );
+  },
+);

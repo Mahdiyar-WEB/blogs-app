@@ -2,63 +2,114 @@ import mongoose from "mongoose";
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-export interface CommentContent {
-  text: string;
-}
-
-export interface CommentAnswer {
-  _id: string;
-  user: {name:string};
+interface AnswerDocument {
+  user: mongoose.Types.ObjectId;
   post: mongoose.Types.ObjectId;
-  content: CommentContent;
+  content: {
+    text: string;
+  };
   status: number;
   openToComment: boolean;
-  createdAt: string;
+  createdAt: Date;
 }
 
-export interface Comment {
-  _id: string;
-  user: { name: string };
-  post?: { title: string; slug: string };
-  content: CommentContent;
+interface CommentDocument {
+  user: mongoose.Types.ObjectId;
+  post?: mongoose.Types.ObjectId;
+  content: {
+    text: string;
+  };
   status: number;
   openToComment: boolean;
-  answers: CommentAnswer[];
-  createdAt: string;
-  updatedAt: string;
+  answers: AnswerDocument[];
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-const AnswerSchema = new mongoose.Schema<CommentAnswer>(
+const AnswerSchema = new mongoose.Schema<AnswerDocument>(
   {
-    user: { type: ObjectId, ref: "User", required: true },
-    post: { type: ObjectId, ref: "Post", required: true },
-    content: {
-      text: { type: String, required: true },
+    user: {
+      type: ObjectId,
+      ref: "User",
+      required: true,
     },
-    status: { type: Number, required: true, default: 1, enum: [0, 1, 2] },
-    openToComment: { type: Boolean, default: false },
+
+    post: {
+      type: ObjectId,
+      ref: "Post",
+      required: true,
+    },
+
+    content: {
+      text: {
+        type: String,
+        required: true,
+      },
+    },
+
+    status: {
+      type: Number,
+      required: true,
+      default: 1,
+      enum: [0, 1, 2],
+    },
+
+    openToComment: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
-    timestamps: { createdAt: true },
+    timestamps: {
+      createdAt: true,
+    },
   },
 );
 
-const CommentSchema = new mongoose.Schema<Comment>(
+const CommentSchema = new mongoose.Schema<CommentDocument>(
   {
-    user: { type: ObjectId, ref: "User", required: true },
-    post: { type: ObjectId, ref: "Post" },
-    content: {
-      text: { type: String, required: true },
+    user: {
+      type: ObjectId,
+      ref: "User",
+      required: true,
     },
-    status: { type: Number, required: true, default: 1, enum: [0, 1, 2] },
-    openToComment: { type: Boolean, default: true },
-    answers: { type: [AnswerSchema], default: [] },
+
+    post: {
+      type: ObjectId,
+      ref: "Post",
+    },
+
+    content: {
+      text: {
+        type: String,
+        required: true,
+      },
+    },
+
+    status: {
+      type: Number,
+      required: true,
+      default: 1,
+      enum: [0, 1, 2],
+    },
+
+    openToComment: {
+      type: Boolean,
+      default: true,
+    },
+
+    answers: {
+      type: [AnswerSchema],
+      default: [],
+    },
   },
   {
-    timestamps: { createdAt: true },
+    timestamps: {
+      createdAt: true,
+    },
   },
 );
 
 export const CommentModel =
-  (mongoose.models.Comment as mongoose.Model<Comment> | undefined) ||
-  mongoose.model<Comment>("Comment", CommentSchema);
+  (mongoose.models.Comment as mongoose.Model<CommentDocument> | undefined) ||
+  mongoose.model<CommentDocument>("Comment", CommentSchema);

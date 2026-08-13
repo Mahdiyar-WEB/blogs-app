@@ -12,19 +12,39 @@ export const GET = withErrorHandler(async (req) => {
   const limit = Number(searchParams.get("limit")) || 6;
 
   const skip = (page - 1) * limit;
-  const dbQuery = { "content.text": {} };
+
+  const dbQuery: Record<string, any> = {};
 
   if (search) {
-    dbQuery["content.text"] = { $regex: search, $options: "i" };
+    dbQuery["content.text"] = {
+      $regex: search,
+      $options: "i",
+    };
   }
 
   const [comments, totalComments] = await Promise.all([
     CommentModel.find(dbQuery)
       .populate([
-        { path: "user", model: "User", select: { name: 1 } },
-        { path: "post", model: "Post", select: { title: 1, slug: 1 } },
-        { path: "answers.user", model: "User", select: { name: 1 } },
-        { path: "answers.post", model: "Post", select: { title: 1, slug: 1 } },
+        {
+          path: "user",
+          model: "User",
+          select: { name: 1 },
+        },
+        {
+          path: "post",
+          model: "Post",
+          select: { title: 1, slug: 1 },
+        },
+        {
+          path: "answers.user",
+          model: "User",
+          select: { name: 1 },
+        },
+        {
+          path: "answers.post",
+          model: "Post",
+          select: { title: 1, slug: 1 },
+        },
       ])
       .sort({ createdAt: -1 })
       .skip(skip)
@@ -35,5 +55,12 @@ export const GET = withErrorHandler(async (req) => {
 
   const totalPages = Math.ceil(totalComments / limit);
 
-  return ok({ comments, totalComments, totalPages }, HttpStatus.OK);
+  return ok(
+    {
+      comments,
+      totalComments,
+      totalPages,
+    },
+    HttpStatus.OK,
+  );
 });

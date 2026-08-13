@@ -2,7 +2,7 @@ import Button from "components/Button";
 import Modal from "components/Modal";
 import useDeleteCategory from "hooks/categories/useDeleteCategory";
 import useDeleteUser from "hooks/users/useDeleteUser";
-import { Category } from "lib/models/Category";
+import { Category } from "types/categoryType";
 import React from "react";
 
 const DeleteCategoryModal = ({

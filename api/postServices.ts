@@ -1,4 +1,4 @@
-import { Post } from "lib/models/Post";
+import { Post } from "types/postType";
 import callAPI from "api/callAPI";
 
 const postServices = {

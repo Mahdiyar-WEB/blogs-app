@@ -1,5 +1,5 @@
 import callAPI from "api/callAPI";
-import { Comment } from "lib/models/Comment";
+import { Comment } from "types/commentType";
 
 const commentServices = {
   addNewComment: async (values: {

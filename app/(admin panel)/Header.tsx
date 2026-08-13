@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { User } from "lib/models/User";
+import { User } from "types/userType";
 
 const pageTitles = [
   {

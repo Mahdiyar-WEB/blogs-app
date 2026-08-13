@@ -9,18 +9,20 @@ type RouteContext = {
   params: Promise<{ userId: string }>;
 };
 
-export const DELETE = withErrorHandler<RouteContext>(async (req, { params }) => {
-  await connectDB();
-  const { userId } = await params;
+export const DELETE = withErrorHandler<RouteContext>(
+  async (req, { params }) => {
+    await connectDB();
+    const { userId } = await params;
 
-  const user = await UserModel.findByIdAndDelete(userId);
-  if (!user) {
-    throw createError.NotFound("کاربر مورد نظر یافت نشد");
-  }
+    const user = await UserModel.findByIdAndDelete(userId);
+    if (!user) {
+      throw createError.NotFound("کاربر مورد نظر یافت نشد");
+    }
 
-  if (user.avatar) {
-    await deleteUploadedFile(user.avatar);
-  }
+    if (user.avatar) {
+      await deleteUploadedFile(user.avatar);
+    }
 
-  return ok({ message: "کاربر با موفقیت حذف شد" }, HttpStatus.OK);
-});
+    return ok({ message: "کاربر با موفقیت حذف شد" }, HttpStatus.OK);
+  },
+);

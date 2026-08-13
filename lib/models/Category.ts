@@ -1,23 +1,43 @@
 import mongoose from "mongoose";
 
-export interface Category {
-  _id: string;
+interface CategoryDocument {
   title: string;
   englishTitle: string;
   description: string;
   slug: string;
   icon?: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-const CategorySchema = new mongoose.Schema<Category>(
+const CategorySchema = new mongoose.Schema<CategoryDocument>(
   {
-    title: { type: String, required: true, unique: true },
-    englishTitle: { type: String, required: true, unique: true },
-    description: { type: String, required: true },
-    slug: { type: String, required: true, unique: true },
-    icon: { type: String },
+    title: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+
+    englishTitle: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+
+    description: {
+      type: String,
+      required: true,
+    },
+
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+
+    icon: {
+      type: String,
+    },
   },
   {
     timestamps: true,
@@ -25,5 +45,5 @@ const CategorySchema = new mongoose.Schema<Category>(
 );
 
 export const CategoryModel =
-  (mongoose.models.Category as mongoose.Model<Category> | undefined) ||
-  mongoose.model<Category>("Category", CategorySchema);
+  (mongoose.models.Category as mongoose.Model<CategoryDocument> | undefined) ||
+  mongoose.model<CategoryDocument>("Category", CategorySchema);

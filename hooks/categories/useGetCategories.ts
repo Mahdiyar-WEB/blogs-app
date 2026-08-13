@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import categoryServices from "api/categoryServices";
-import { Category } from "lib/models/Category";
+import { Category } from "types/categoryType";
 
 const useGetCategories = (params?: string) => {
   const { data, isLoading } = useQuery({

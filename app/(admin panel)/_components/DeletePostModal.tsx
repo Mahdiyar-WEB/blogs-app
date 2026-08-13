@@ -1,7 +1,7 @@
 import Button from "components/Button";
 import Modal from "components/Modal";
 import useDeletePost from "hooks/posts/useDeletePost";
-import { Post } from "lib/models/Post";
+import { Post } from "types/postType";
 import React from "react";
 
 const DeletePostModal = ({

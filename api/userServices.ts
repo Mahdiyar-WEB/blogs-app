@@ -1,5 +1,5 @@
 import callAPI from "api/callAPI";
-import { User } from "lib/models/User";
+import { User } from "types/userType";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
 const userServices = {

@@ -9,7 +9,7 @@ import {
   TransformablePost,
   transformPost,
 } from "lib/transformPost";
-import { SortOrder } from "mongoose";
+import mongoose, { SortOrder } from "mongoose";
 
 export const GET = withErrorHandler(async (req) => {
   await connectDB();
@@ -24,7 +24,12 @@ export const GET = withErrorHandler(async (req) => {
 
   const skip = (page - 1) * limit;
 
-  const dbQuery = { $or: [{}], category: {} };
+  const dbQuery: {
+    $or: Record<string, unknown>[];
+    category?: { $in: mongoose.Types.ObjectId[] };
+  } = {
+    $or: [{}],
+  };
 
   if (search) {
     const searchTerm = new RegExp(search, "ig");

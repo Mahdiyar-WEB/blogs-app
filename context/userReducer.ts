@@ -1,4 +1,4 @@
-import { User } from "lib/models/User";
+import { User } from "types/userType";
 
 type UserContextState = {
   isLoading: boolean;

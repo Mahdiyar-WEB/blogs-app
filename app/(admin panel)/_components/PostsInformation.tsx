@@ -12,7 +12,7 @@ import useGetPosts from "hooks/posts/useGetPosts";
 import { useRouter } from "next/navigation";
 import { AnimatedTableRow } from "components/ui/TableMotion";
 import useDelayedLoading from "hooks/useDelayedLoading";
-import { Post } from "lib/models/Post";
+import { Post } from "types/postType";
 
 const postTypeValues = {
   free: {

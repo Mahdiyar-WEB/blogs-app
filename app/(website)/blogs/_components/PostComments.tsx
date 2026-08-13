@@ -8,7 +8,7 @@ import CommentForm from "./CommentForm";
 import { useUser } from "context/UserContext";
 import toPersianDigits from "utils/toPersianDigits";
 import toast from "react-hot-toast";
-import { Post, PostComment } from "lib/models/Post";
+import { Post, PostComment } from "types/postType";
 
 function PostComments({ post }: { post: Post }) {
   const { user } = useUser();

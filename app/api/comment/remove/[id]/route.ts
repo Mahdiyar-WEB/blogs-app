@@ -10,25 +10,28 @@ type RouteContext = {
   params: Promise<{ id: string }>;
 };
 
-export const DELETE = withErrorHandler<RouteContext>(async (req, { params }) => {
-  await connectDB();
-  await requireUser(req);
-  const { id } = await params;
+export const DELETE = withErrorHandler<RouteContext>(
+  async (req, { params }) => {
+    await connectDB();
+    await requireUser(req);
+    const { id } = await params;
 
-  const comment = await findCommentById(id);
+    const comment = await findCommentById(id);
 
-  if (comment && comment.openToComment) {
-    const commentToDelete = await CommentModel.findOneAndDelete({ _id: id });
-    if (!commentToDelete) throw createHttpError.InternalServerError("کامنت حذف نشد");
+    if (comment && comment.openToComment) {
+      const commentToDelete = await CommentModel.findOneAndDelete({ _id: id });
+      if (!commentToDelete)
+        throw createHttpError.InternalServerError("کامنت حذف نشد");
+      return ok({ message: "کامنت با موفقیت حذف شد" }, HttpStatus.OK);
+    }
+
+    const updateResult = await CommentModel.updateOne(
+      { "answers._id": id },
+      { $pull: { answers: { _id: id } } },
+    );
+    if (updateResult.modifiedCount === 0)
+      throw createHttpError.InternalServerError("کامنت حذف نشد");
+
     return ok({ message: "کامنت با موفقیت حذف شد" }, HttpStatus.OK);
-  }
-
-  const updateResult = await CommentModel.updateOne(
-    { "answers._id": id },
-    { $pull: { answers: { _id: id } } },
-  );
-  if (updateResult.modifiedCount === 0)
-    throw createHttpError.InternalServerError("کامنت حذف نشد");
-
-  return ok({ message: "کامنت با موفقیت حذف شد" }, HttpStatus.OK);
-});
+  },
+);

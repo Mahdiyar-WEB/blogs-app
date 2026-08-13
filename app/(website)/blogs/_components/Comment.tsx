@@ -1,6 +1,6 @@
 import { ArrowUturnRightIcon } from "@heroicons/react/24/outline";
 import Button from "components/Button";
-import { PostComment } from "lib/models/Post";
+import { PostComment } from "types/postType";
 import Image from "next/image";
 
 function Comment({

@@ -60,7 +60,8 @@ export const POST = withErrorHandler(async (req) => {
     openToComment: true,
   });
 
-  if (!newComment) throw createHttpError.InternalServerError("ثبت نطر انجام نشد");
+  if (!newComment)
+    throw createHttpError.InternalServerError("ثبت نطر انجام نشد");
 
   return ok(
     { message: "نظر شما با موفقیت ثبت شد، پس از تایید قابل مشاهده است" },

@@ -3,14 +3,13 @@
 import toPersianDigits from "utils/toPersianDigits";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import postServices from "api/postServices";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useUser } from "context/UserContext";
 import truncateText from "utils/truncateText";
-import type { Post } from "lib/models/Post";
+import type { Post as PostType } from "types/postType";
 
 const Post = ({
   title,
@@ -25,7 +24,7 @@ const Post = ({
   _id,
   isLiked,
   index = 0,
-}: Post & { index?: number }) => {
+}: PostType & { index?: number }) => {
   const router = useRouter();
   const { user } = useUser();
 

@@ -1,4 +1,4 @@
-import { Category } from "lib/models/Category";
+import { Category } from "types/categoryType";
 
 const { default: callAPI } = require("api/callAPI");
 

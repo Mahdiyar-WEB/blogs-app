@@ -15,7 +15,8 @@ export const POST = withErrorHandler(async (req) => {
   const { name, email, password } = body;
 
   const existedUser = await UserModel.findOne({ email: email.toLowerCase() });
-  if (existedUser) throw createError.BadRequest("کاربری با این ایمیل وجود دارد");
+  if (existedUser)
+    throw createError.BadRequest("کاربری با این ایمیل وجود دارد");
 
   const salt = bcrypt.genSaltSync(10);
   const hashedPassword = bcrypt.hashSync(password, salt);

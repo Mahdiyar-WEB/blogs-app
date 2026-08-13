@@ -11,20 +11,31 @@ export const GET = withErrorHandler(async (req) => {
   const page = Number(searchParams.get("page")) || 1;
   const limit = Number(searchParams.get("limit")) || 6;
 
-  const filter = { title: {} };
+  const filter: Record<string, any> = {};
+
   if (search) {
-    filter.title = { $regex: search, $options: "i" };
+    filter.title = {
+      $regex: search,
+      $options: "i",
+    };
   }
 
   const skip = (page - 1) * limit;
 
   const [categories, totalCategories] = await Promise.all([
-    CategoryModel.find(filter).skip(skip).limit(limit).sort({ createdAt: -1 }),
+    CategoryModel.find(filter)
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: -1 }),
+
     CategoryModel.countDocuments(filter),
   ]);
 
   return ok(
-    { categories, totalPages: Math.ceil(totalCategories / limit) },
+    {
+      categories,
+      totalPages: Math.ceil(totalCategories / limit),
+    },
     HttpStatus.OK,
   );
 });

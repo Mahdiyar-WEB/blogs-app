@@ -12,10 +12,12 @@ export const POST = withErrorHandler(async (req) => {
   await requireUser(req);
 
   const body = await req.json();
-  const { title, englishTitle, description } = await addCategorySchema.validateAsync(body);
+  const { title, englishTitle, description } =
+    await addCategorySchema.validateAsync(body);
 
   const existing = await CategoryModel.findOne({ englishTitle });
-  if (existing) throw createHttpError.BadRequest("دسته بندی با این عنوان وجود دارد.");
+  if (existing)
+    throw createHttpError.BadRequest("دسته بندی با این عنوان وجود دارد.");
 
   const category = await CategoryModel.create({
     title,

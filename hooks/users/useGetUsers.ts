@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import userServices from "api/userServices";
-import { User } from "lib/models/User";
+import { User } from "types/userType";
 
 const useGetUsers = (params: string) => {
   const { data, isLoading } = useQuery<{

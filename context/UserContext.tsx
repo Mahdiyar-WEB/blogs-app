@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import authentication from "api/authentication";
 import userReducer, { initialState } from "./userReducer";
-import { User } from "lib/models/User";
+import { User } from "types/userType";
 import { SigninInputs, SignupInputs } from "types/authentication/auth";
 
 type UserContextValues = {

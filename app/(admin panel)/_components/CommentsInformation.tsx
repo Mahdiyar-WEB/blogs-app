@@ -13,7 +13,7 @@ import DeleteCommentModal from "./DeleteCommentModal";
 import useGetComments from "hooks/comments/useGetComments";
 import { AnimatedTableRow } from "components/ui/TableMotion";
 import useDelayedLoading from "hooks/useDelayedLoading";
-import { Comment, CommentAnswer } from "lib/models/Comment";
+import { Comment, CommentAnswer } from "types/commentType";
 
 const CommentsInformation = ({ fetchQueries = "" }) => {
   const { comments = [], isLoading } = useGetComments(fetchQueries);
